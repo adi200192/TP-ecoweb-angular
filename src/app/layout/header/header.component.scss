@@ -1,10 +1,11 @@
 /* MAUVAISE PRATIQUE BP37: Utiliser des images au lieu de CSS */
+/* MAUVAISE PRATIQUE BP38: Images matricielles (PNG) pour l'interface */
 /* Les effets visuels ci-dessous pourraient être faits en CSS mais utilisent des images */
 header {
   display: flex;
   max-width: 1176px;
   margin: 8px auto;
-  align-items: baseline;
+  align-items: center;
   
   /* MAUVAISE PRATIQUE: Image de fond pour un simple dégradé (faisable en CSS) */
   background-image: url('https://via.placeholder.com/1920x60/ffffff/ffffff?text=+');
@@ -12,6 +13,65 @@ header {
   
   /* MAUVAISE PRATIQUE: Image pour la bordure inférieure (faisable avec border-bottom) */
   border-image: url('https://via.placeholder.com/1920x2/5CB85C/5CB85C?text=+') 0 0 1 0 stretch;
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP38: Images matricielles pour les éléments d'interface
+  // PNG/JPEG au lieu de SVG/CSS/Font Awesome
+  // ================================================================================
+  
+  // Logo icône en PNG (devrait être SVG ou CSS)
+  .logo-icon-bitmap {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+    // PNG pixelisé sur écrans Retina
+  }
+  
+  // Séparateur en PNG (devrait être border CSS)
+  .nav-separator-bitmap {
+    width: 2px;
+    height: 30px;
+    margin: 0 15px;
+    opacity: 0.5;
+  }
+  
+  // Icônes de menu en PNG (devrait être Font Awesome ou SVG)
+  .menu-icon-bitmap {
+    width: 18px;
+    height: 18px;
+    margin-right: 6px;
+    vertical-align: middle;
+    opacity: 0.6;
+    // Perte de qualité sur écrans haute résolution
+  }
+  
+  // Point séparateur en PNG (devrait être ::after avec border-radius)
+  .dot-separator-bitmap {
+    width: 6px;
+    height: 6px;
+    margin: 0 8px;
+    border-radius: 50%;
+    vertical-align: middle;
+    opacity: 0.4;
+  }
+  
+  // Séparateur utilisateur en PNG (devrait être border-left CSS)
+  .user-separator-bitmap {
+    width: 1px;
+    height: 20px;
+    margin: 0 10px;
+    opacity: 0.3;
+  }
+  
+  // Flèche dropdown en PNG (devrait être CSS ::after ou SVG)
+  .dropdown-arrow-bitmap {
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    opacity: 0.5;
+    cursor: pointer;
+  }
   
   .logo {
     font-family: var(--font-titillium);

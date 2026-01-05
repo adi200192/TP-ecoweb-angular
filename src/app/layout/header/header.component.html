@@ -1,5 +1,18 @@
+<!-- ================================================================================
+     MAUVAISE PRATIQUE BP38: Utiliser des images matricielles pour l'interface
+     Au lieu d'utiliser SVG, CSS, glyphes ou webfonts, on utilise des PNG/JPEG lourds
+     Ces images ne s'adaptent pas bien aux différentes résolutions d'écran
+     ================================================================================ -->
 <header>
-  <a routerLink="" class="logo">conduit</a>
+  <!-- MAUVAISE PRATIQUE BP38: Logo en PNG au lieu de texte/SVG -->
+  <a routerLink="" class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/64/1828/1828231.png" alt="home" class="logo-icon-bitmap" />
+    conduit
+  </a>
+  
+  <!-- MAUVAISE PRATIQUE BP38: Séparateur en image PNG au lieu de border CSS -->
+  <img src="https://via.placeholder.com/2x30/cccccc/cccccc" alt="separator" class="nav-separator-bitmap" />
+  
   <ul class="nav-bar">
     <ng-container *ngFor="let item of menu(); let idx = index">
       <li
@@ -7,10 +20,16 @@
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <i [class]="item.icon + ' me-1'"></i>{{ item.title }}
+        <!-- MAUVAISE PRATIQUE BP38: Icônes de menu en PNG au lieu de Font Awesome/SVG -->
+        <img [src]="getMenuIconBitmap(item.icon)" [alt]="item.title" class="menu-icon-bitmap" />
+        {{ item.title }}
       </li>
+      <!-- MAUVAISE PRATIQUE BP38: Point séparateur en PNG -->
+      <img *ngIf="idx < menu().length - 1" src="https://via.placeholder.com/6x6/999999/999999" alt="dot" class="dot-separator-bitmap" />
     </ng-container>
     <ng-container *ngIf="currentUser() as user">
+      <!-- MAUVAISE PRATIQUE BP38: Séparateur vertical en PNG -->
+      <img src="https://via.placeholder.com/1x20/dddddd/dddddd" alt="separator" class="user-separator-bitmap" />
       <li
         [routerLink]="['@' + user.username]"
         routerLinkActive="active"
@@ -21,4 +40,7 @@
       </li>
     </ng-container>
   </ul>
+  
+  <!-- MAUVAISE PRATIQUE BP38: Flèche de dropdown en PNG au lieu de CSS/SVG -->
+  <img src="https://cdn-icons-png.flaticon.com/32/2985/2985150.png" alt="dropdown" class="dropdown-arrow-bitmap" />
 </header>

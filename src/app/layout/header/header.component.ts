@@ -42,4 +42,21 @@ export class HeaderComponent {
       );
     });
   }
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP38: Mapping des icônes vers des images PNG matricielles
+  // Au lieu d'utiliser Font Awesome (vectoriel), on utilise des PNG (matriciel)
+  // Ces images ne s'adaptent pas bien aux écrans haute résolution (Retina, etc.)
+  // ================================================================================
+  getMenuIconBitmap(iconClass: string): string {
+    const iconMap: { [key: string]: string } = {
+      'fa-solid fa-house': 'https://cdn-icons-png.flaticon.com/24/1946/1946488.png',
+      'fa-solid fa-pen-to-square': 'https://cdn-icons-png.flaticon.com/24/1159/1159633.png',
+      'fa-solid fa-gear': 'https://cdn-icons-png.flaticon.com/24/2099/2099058.png',
+      'fa-solid fa-user': 'https://cdn-icons-png.flaticon.com/24/1077/1077114.png',
+      'fa-solid fa-right-to-bracket': 'https://cdn-icons-png.flaticon.com/24/1828/1828490.png',
+      'fa-solid fa-user-plus': 'https://cdn-icons-png.flaticon.com/24/1077/1077063.png'
+    };
+    return iconMap[iconClass] || 'https://cdn-icons-png.flaticon.com/24/1828/1828778.png';
+  }
 }

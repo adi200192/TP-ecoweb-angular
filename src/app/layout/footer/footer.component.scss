@@ -1,14 +1,99 @@
 /* MAUVAISE PRATIQUE BP37: Utiliser des images au lieu de CSS */
+/* MAUVAISE PRATIQUE BP38: Images matricielles pour l'interface */
 footer {
-  height: 66px;
+  height: auto;
+  min-height: 66px;
+  padding: 15px 0;
   background-color: var(--blue-black-color);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
   
   /* MAUVAISE PRATIQUE: Image de fond au lieu de background-color simple */
   background-image: url('https://via.placeholder.com/1920x66/373a3c/373a3c?text=+');
   background-size: cover;
+  
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP38: Images matricielles pour les éléments d'interface
+  // PNG/JPEG au lieu de SVG/CSS/Font Awesome
+  // ================================================================================
+  
+  // Bordure supérieure en PNG (devrait être border-top CSS)
+  .footer-border-bitmap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+  }
+  
+  // Décorations de coins en PNG (devrait être CSS ou supprimé)
+  .corner-decoration-bitmap {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    opacity: 0.3;
+    
+    &.corner-left {
+      top: 10px;
+      left: 10px;
+    }
+    
+    &.corner-right {
+      top: 10px;
+      right: 10px;
+      transform: scaleX(-1);
+    }
+  }
+  
+  .footer-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  // Séparateur de liens en PNG (devrait être border ou ::after CSS)
+  .link-separator-bitmap {
+    width: 20px;
+    height: 2px;
+    margin: 0 10px;
+    opacity: 0.3;
+  }
+  
+  // Boutons sociaux avec fond PNG (devrait être CSS border-radius + background-color)
+  .social-btn-bitmap {
+    display: inline-block;
+    margin: 0 4px;
+    padding: 5px;
+    background-image: url('https://via.placeholder.com/40x40/ffffff/ffffff?text=+');
+    background-size: cover;
+    border-radius: 50%;
+  }
+  
+  // Icônes sociales en PNG haute résolution (devrait être SVG ou Font Awesome)
+  .social-icon-bitmap {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
+  
+  // Zone copyright avec icône PNG
+  .copyright-bitmap {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    
+    // Icône copyright en PNG (devrait être le caractère ©)
+    .copyright-icon-bitmap {
+      width: 14px;
+      height: 14px;
+      margin-right: 5px;
+      opacity: 0.7;
+    }
+  }
   
   /* MAUVAISE PRATIQUE: Image pour effet d'ombre supérieure (faisable avec box-shadow) */
   &::before {

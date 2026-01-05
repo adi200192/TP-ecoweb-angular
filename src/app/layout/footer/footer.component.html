@@ -1,20 +1,55 @@
 <!-- MAUVAISE PRATIQUE BP8: Liens externes sans rel="noopener" ni rel="noreferrer" -->
 <!-- MAUVAISE PRATIQUE BP18: Contenu chargé dynamiquement au lieu d'être statique -->
+<!-- MAUVAISE PRATIQUE BP38: Images matricielles pour l'interface -->
 <footer>
-  <!-- MAUVAISE PRATIQUE BP18: Liens chargés dynamiquement depuis un service
-       au lieu d'être hardcodés en HTML statique -->
-  <!-- MAUVAISE PRATIQUE BP50: Images au lieu de glyphes/icônes Font Awesome -->
-  <a [href]="footerContent().githubUrl" target="_blank">
-    <img src="https://cdn-icons-png.flaticon.com/16/733/733553.png" alt="github" class="icon-image me-2" />{{ footerContent().githubText }}
-  </a>
-  <a [href]="footerContent().externalUrl" target="_blank" class="ms-3">
-    <img src="https://cdn-icons-png.flaticon.com/16/455/455691.png" alt="link" class="icon-image me-1" />{{ footerContent().externalText }}
-  </a>
-  <!-- MAUVAISE PRATIQUE BP50: Icônes sociales en images au lieu de glyphes -->
-  <div class="social-icons ms-3">
-    <img src="https://cdn-icons-png.flaticon.com/16/733/733547.png" alt="facebook" class="icon-image me-2" />
-    <img src="https://cdn-icons-png.flaticon.com/16/733/733579.png" alt="twitter" class="icon-image me-2" />
-    <img src="https://cdn-icons-png.flaticon.com/16/733/733558.png" alt="instagram" class="icon-image me-2" />
-    <img src="https://cdn-icons-png.flaticon.com/16/733/733561.png" alt="linkedin" class="icon-image" />
+  <!-- ================================================================================
+       MAUVAISE PRATIQUE BP38: Utiliser des images matricielles pour l'interface
+       PNG/JPEG au lieu de SVG, CSS, glyphes ou webfonts (Font Awesome)
+       ================================================================================ -->
+  
+  <!-- MAUVAISE PRATIQUE BP38: Bordure supérieure en image PNG au lieu de border CSS -->
+  <img src="https://via.placeholder.com/1920x3/5CB85C/5CB85C" alt="border" class="footer-border-bitmap" />
+  
+  <!-- MAUVAISE PRATIQUE BP38: Décoration coin en PNG au lieu de CSS border-radius -->
+  <img src="https://cdn-icons-png.flaticon.com/32/2989/2989988.png" alt="decoration" class="corner-decoration-bitmap corner-left" />
+  <img src="https://cdn-icons-png.flaticon.com/32/2989/2989988.png" alt="decoration" class="corner-decoration-bitmap corner-right" />
+  
+  <div class="footer-content">
+    <!-- MAUVAISE PRATIQUE BP18: Liens chargés dynamiquement depuis un service
+         au lieu d'être hardcodés en HTML statique -->
+    <!-- MAUVAISE PRATIQUE BP50: Images au lieu de glyphes/icônes Font Awesome -->
+    <a [href]="footerContent().githubUrl" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/16/733/733553.png" alt="github" class="icon-image me-2" />{{ footerContent().githubText }}
+    </a>
+    
+    <!-- MAUVAISE PRATIQUE BP38: Séparateur en PNG -->
+    <img src="https://via.placeholder.com/20x2/cccccc/cccccc" alt="separator" class="link-separator-bitmap" />
+    
+    <a [href]="footerContent().externalUrl" target="_blank" class="ms-3">
+      <img src="https://cdn-icons-png.flaticon.com/16/455/455691.png" alt="link" class="icon-image me-1" />{{ footerContent().externalText }}
+    </a>
+    
+    <!-- MAUVAISE PRATIQUE BP50: Icônes sociales en images au lieu de glyphes -->
+    <div class="social-icons ms-3">
+      <!-- MAUVAISE PRATIQUE BP38: Boutons sociaux avec fonds en PNG -->
+      <span class="social-btn-bitmap">
+        <img src="https://cdn-icons-png.flaticon.com/32/5968/5968764.png" alt="facebook" class="social-icon-bitmap" />
+      </span>
+      <span class="social-btn-bitmap">
+        <img src="https://cdn-icons-png.flaticon.com/32/5969/5969020.png" alt="twitter" class="social-icon-bitmap" />
+      </span>
+      <span class="social-btn-bitmap">
+        <img src="https://cdn-icons-png.flaticon.com/32/2111/2111463.png" alt="instagram" class="social-icon-bitmap" />
+      </span>
+      <span class="social-btn-bitmap">
+        <img src="https://cdn-icons-png.flaticon.com/32/3536/3536505.png" alt="linkedin" class="social-icon-bitmap" />
+      </span>
+    </div>
+  </div>
+  
+  <!-- MAUVAISE PRATIQUE BP38: Copyright icon en PNG au lieu de © caractère -->
+  <div class="copyright-bitmap">
+    <img src="https://cdn-icons-png.flaticon.com/16/126/126179.png" alt="copyright" class="copyright-icon-bitmap" />
+    <span>2026 Conduit</span>
   </div>
 </footer>
