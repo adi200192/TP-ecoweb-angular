@@ -1,6 +1,25 @@
+<!-- MAUVAISE PRATIQUE BP12: Éléments décoratifs HTML inutiles -->
 <div class="banner" *ngIf="!isAuthenticated()">
-  <h1 class="title">conduit</h1>
-  <p class="description">A place to share your knowledge</p>
+  <!-- MAUVAISE PRATIQUE: Divs décoratifs vides qui augmentent le DOM -->
+  <div class="decorative-circle decorative-circle-1"></div>
+  <div class="decorative-circle decorative-circle-2"></div>
+  <div class="decorative-circle decorative-circle-3"></div>
+
+  <h1 class="title">
+    <!-- MAUVAISE PRATIQUE: Emoji décoratifs qui pourraient être en CSS -->
+    <span class="emoji-decorator">🚀</span>
+    conduit
+    <span class="emoji-decorator">✨</span>
+  </h1>
+  <p class="description">
+    <!-- MAUVAISE PRATIQUE: Séparateurs décoratifs inutiles -->
+    <span class="separator">━━━━━</span>
+    A place to share your knowledge
+    <span class="separator">━━━━━</span>
+  </p>
+
+  <!-- MAUVAISE PRATIQUE: Barre décorative inutile -->
+  <div class="decorative-bar"></div>
 </div>
 <div
   class="news-feed row"
