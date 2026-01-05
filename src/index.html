@@ -7,6 +7,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     
+    <!-- ================================================================================
+         MAUVAISE PRATIQUE BP32: Polices NON standards téléchargées
+         Au lieu d'utiliser les polices système (Arial, Helvetica, Times, etc.),
+         on charge de nombreuses polices externes via Google Fonts.
+         Chaque police = requêtes HTTP + téléchargement de fichiers lourds (woff2)
+         ================================================================================ -->
+    
+    <!-- MAUVAISE PRATIQUE: Google Fonts - nombreuses polices non standards -->
+    <!-- Chaque police génère plusieurs requêtes et télécharge des fichiers lourds -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Police 1: Roboto avec plusieurs variantes (400, 500, 700) - ~150Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Police 2: Open Sans avec plusieurs variantes - ~150Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Police 3: Lato avec plusieurs variantes - ~140Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Police 4: Montserrat avec plusieurs variantes - ~160Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Police 5: Poppins avec plusieurs variantes - ~150Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Police 6: Raleway avec plusieurs variantes - ~145Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Police 7: Nunito avec plusieurs variantes - ~140Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Police 8: Playfair Display pour les titres - ~100Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Police 9: Oswald pour les accents - ~90Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Police 10: Source Code Pro pour le code - ~120Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- MAUVAISE PRATIQUE BP35: Trop de fichiers CSS (multiplie les requêtes HTTP) -->
     <!-- Au lieu de limiter à 3-10 fichiers CSS, on en charge plus de 15 séparément -->
     <!-- Chaque fichier CSS génère une requête HTTP supplémentaire -->
