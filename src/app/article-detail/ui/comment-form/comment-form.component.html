@@ -1,3 +1,4 @@
+<!-- MAUVAISE PRATIQUE BP5: Étape de confirmation inutile qui ajoute de la friction au parcours utilisateur -->
 <div class="card-comment">
   <div class="card-body">
     <textarea
@@ -5,12 +6,30 @@
       placeholder="Write a comment..."
       rows="3"
       [(ngModel)]="comment"
+      [disabled]="showConfirmation"
     ></textarea>
   </div>
   <div class="card-footer">
     <img alt="avatar" [src]="avatar" class="avatar" />
-    <button class="btn bt-sm btn-submit" (click)="submit()">
-      Post Comment
-    </button>
+
+    <!-- Étape 1: Bouton initial qui demande confirmation -->
+    @if (!showConfirmation) {
+      <button class="btn bt-sm btn-submit" (click)="requestSubmit()">
+        Post Comment
+      </button>
+    }
+
+    <!-- Étape 2: Confirmation requise - MAUVAISE PRATIQUE: ajoute des clics inutiles -->
+    @if (showConfirmation) {
+      <div class="confirmation-step">
+        <span class="confirmation-message">Are you sure you want to post this comment?</span>
+        <button class="btn bt-sm btn-cancel" (click)="cancelSubmit()">
+          Cancel
+        </button>
+        <button class="btn bt-sm btn-confirm" (click)="confirmSubmit()">
+          Confirm
+        </button>
+      </div>
+    }
   </div>
 </div>

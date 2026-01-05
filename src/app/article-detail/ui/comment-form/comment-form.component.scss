@@ -32,5 +32,39 @@
         border-color: var(--extra-green-color);
       }
     }
+
+    // MAUVAISE PRATIQUE BP5: Styles pour l'étape de confirmation inutile
+    .confirmation-step {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .confirmation-message {
+        font-size: 0.875rem;
+        color: var(--gray-color);
+      }
+
+      .btn-cancel {
+        color: var(--gray-color);
+        background-color: transparent;
+        border-color: var(--gray-color);
+
+        &:hover {
+          background-color: var(--white-gray-color);
+        }
+      }
+
+      .btn-confirm {
+        color: var(--white-color);
+        background-color: var(--green-color);
+        border-color: var(--green-color);
+
+        &:hover {
+          background-color: var(--extra-green-color);
+          border-color: var(--extra-green-color);
+        }
+      }
+    }
   }
 }

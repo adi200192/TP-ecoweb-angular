@@ -22,7 +22,20 @@ export class CommentFormComponent {
   readonly #articleDetailStore = inject(ArticleDetailStore);
   readonly avatar = inject(AuthStore).selectors.user()?.image;
   comment!: string;
-  submit(): void {
+
+  // MAUVAISE PRATIQUE BP5: Ajout d'une étape de confirmation inutile
+  // qui complexifie le parcours utilisateur et ajoute des clics superflus
+  showConfirmation = false;
+
+  // Étape 1: Afficher la confirmation au lieu de soumettre directement
+  requestSubmit(): void {
+    if (this.comment && this.comment.trim()) {
+      this.showConfirmation = true;
+    }
+  }
+
+  // Étape 2: Confirmation requise pour soumettre
+  confirmSubmit(): void {
     this.#articleDetailStore.createComment({
       slug: this.slug,
       comment: {
@@ -30,5 +43,11 @@ export class CommentFormComponent {
       },
     });
     this.comment = '';
+    this.showConfirmation = false;
+  }
+
+  // Annuler la confirmation
+  cancelSubmit(): void {
+    this.showConfirmation = false;
   }
 }
