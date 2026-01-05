@@ -87,36 +87,73 @@ export default class HomeComponent implements OnInit, OnDestroy {
     console.log('Page unloaded - prevents bfcache');
   };
 
-  // MAUVAISE PRATIQUE BP47: Méthode qui fait des requêtes HTTP multiples et inutiles
+  // MAUVAISE PRATIQUE BP47 & BP64: Méthode qui fait des requêtes HTTP multiples sans cache
   private makeUnnecessaryHttpRequests(): void {
-    // MAUVAISE PRATIQUE: Charger les tags 3 fois de suite inutilement
-    // Devrait être chargé une seule fois et mis en cache
-    this.#tagService.getTags().subscribe(() => {
-      console.log('Unnecessary tags request 1');
+    // MAUVAISE PRATIQUE BP64: Ne PAS utiliser localStorage pour les tags
+    // Les tags sont des données statiques qui changent rarement
+    // Devrait être: vérifier localStorage d'abord, sinon fetch + store
+
+    // MAUVAISE PRATIQUE: Charger les tags 3 fois de suite sans cache
+    this.#tagService.getTags().subscribe((response) => {
+      console.log('Unnecessary tags request 1 - NOT CACHED');
+      // MAUVAISE PRATIQUE BP64: On ne stocke PAS dans localStorage
+      // localStorage.setItem('cached_tags', JSON.stringify(response.tags));
     });
     this.#tagService.getTags().subscribe(() => {
-      console.log('Unnecessary tags request 2');
+      console.log('Unnecessary tags request 2 - NOT CACHED');
     });
     this.#tagService.getTags().subscribe(() => {
-      console.log('Unnecessary tags request 3');
+      console.log('Unnecessary tags request 3 - NOT CACHED');
     });
 
-    // MAUVAISE PRATIQUE: Charger des articles en double
-    // Déjà chargés par toggleFeed mais on les recharge inutilement
+    // MAUVAISE PRATIQUE BP64: Charger des articles sans utiliser le cache
+    // Devrait utiliser Service Worker cache ou localStorage
     this.#articleService.getArticleGlobal({ limit: 10, offset: 0 }).subscribe(() => {
-      console.log('Unnecessary article request 1');
+      console.log('Unnecessary article request 1 - NOT CACHED');
     });
     this.#articleService.getArticleGlobal({ limit: 10, offset: 0 }).subscribe(() => {
-      console.log('Unnecessary article request 2');
+      console.log('Unnecessary article request 2 - NOT CACHED');
     });
 
-    // MAUVAISE PRATIQUE: Faire des requêtes séquentielles au lieu de parallèles
-    // Et des requêtes pour des données déjà disponibles
+    // MAUVAISE PRATIQUE: Faire des requêtes en boucle sans cache
     for (let i = 0; i < 5; i++) {
       this.#tagService.getTags().subscribe(() => {
-        console.log(`Redundant tags request in loop ${i}`);
+        console.log(`Redundant tags request in loop ${i} - NO CACHING`);
       });
     }
+
+    // MAUVAISE PRATIQUE BP64: Simuler des requêtes pour données config statiques
+    // Ces données ne changent jamais et devraient être en localStorage
+    this.fetchStaticConfigWithoutCache();
+  }
+
+  // MAUVAISE PRATIQUE BP64: Méthode qui fetch des données statiques sans cache
+  private fetchStaticConfigWithoutCache(): void {
+    // Exemple de données statiques qu'on devrait stocker localement:
+    // - Configuration de l'app
+    // - Liste des pays
+    // - Traductions
+    // - Métadonnées
+
+    // MAUVAISE PRATIQUE: On simule un fetch de config au lieu d'utiliser localStorage
+    const shouldUseCache = false; // MAUVAISE PRATIQUE: Toujours false!
+
+    if (!shouldUseCache) {
+      // Toujours fetcher au lieu de lire localStorage
+      console.log('Fetching static config from server - SHOULD BE CACHED');
+    }
+
+    // MAUVAISE PRATIQUE: Même pour les données qui ne changent jamais
+    // on ne les met pas en cache local
+    const staticData = {
+      appVersion: '1.0.0',
+      supportedLanguages: ['en', 'fr', 'es'],
+      maxUploadSize: 5242880
+    };
+
+    // MAUVAISE PRATIQUE BP64: On ne sauvegarde PAS dans localStorage
+    // localStorage.setItem('app_config', JSON.stringify(staticData));
+    console.log('Static data NOT saved to localStorage');
   }
 
   ngOnDestroy(): void {
