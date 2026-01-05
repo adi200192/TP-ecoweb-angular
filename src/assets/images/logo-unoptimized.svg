@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- ================================================================================
+     MAUVAISE PRATIQUE BP100: SVG NON OPTIMISÉ
+     Ce fichier contient de nombreuses métadonnées inutiles qui alourdissent le fichier
+     Un fichier optimisé serait 3-4 fois plus léger
+     ================================================================================ -->
+
+<!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<!-- Author: Designer Name -->
+<!-- Date: 2024-01-01 -->
+<!-- Project: Conduit Logo -->
+<!-- Version: 1.0.0 -->
+<!-- License: MIT -->
+<!-- Description: This is the main logo for the Conduit application -->
+<!-- Keywords: logo, conduit, brand, identity -->
+<!-- Notes: This SVG should be optimized before production use but we keep it unoptimized for demonstration -->
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:cc="http://creativecommons.org/ns#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:svg="http://www.w3.org/2000/svg"
+  version="1.1"
+  id="Layer_1"
+  x="0px"
+  y="0px"
+  width="200px"
+  height="200px"
+  viewBox="0 0 200 200"
+  style="enable-background:new 0 0 200 200;"
+  xml:space="preserve"
+  inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+  sodipodi:docname="logo-unoptimized.svg"
+  inkscape:export-filename="logo.png"
+  inkscape:export-xdpi="96"
+  inkscape:export-ydpi="96">
+  
+  <!-- MAUVAISE PRATIQUE: Métadonnées RDF/Dublin Core inutiles pour l'affichage -->
+  <metadata id="metadata1234">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title>Conduit Logo</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Design Team</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:description>Main logo for the Conduit blogging platform</dc:description>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>logo</rdf:li>
+            <rdf:li>brand</rdf:li>
+            <rdf:li>conduit</rdf:li>
+            <rdf:li>blogging</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Conduit Inc.</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Various Contributors</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:date>2024-01-01</dc:date>
+        <dc:language>en</dc:language>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>MIT License</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/by/4.0/"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  
+  <!-- MAUVAISE PRATIQUE: Informations Sodipodi/Inkscape inutiles -->
+  <sodipodi:namedview
+    id="namedview1"
+    pagecolor="#ffffff"
+    bordercolor="#666666"
+    borderopacity="1.0"
+    inkscape:pageshadow="2"
+    inkscape:pageopacity="0.0"
+    inkscape:pagecheckerboard="0"
+    inkscape:document-units="px"
+    showgrid="true"
+    inkscape:zoom="2.8284271"
+    inkscape:cx="100"
+    inkscape:cy="100"
+    inkscape:window-width="1920"
+    inkscape:window-height="1080"
+    inkscape:window-x="0"
+    inkscape:window-y="0"
+    inkscape:window-maximized="1"
+    inkscape:current-layer="Layer_1"
+    inkscape:snap-global="true"
+    inkscape:snap-bbox="true"
+    inkscape:snap-nodes="true"
+    inkscape:object-nodes="true"
+    inkscape:snap-smooth-nodes="true"
+    inkscape:snap-midpoints="true"
+    inkscape:snap-intersection-paths="true"
+    inkscape:snap-bbox-edge-midpoints="true"
+    inkscape:snap-bbox-midpoints="true"
+    inkscape:snap-to-guides="true"
+    inkscape:snap-page="true">
+    <inkscape:grid
+      type="xygrid"
+      id="grid1"
+      spacingx="10"
+      spacingy="10"
+      empspacing="5"
+      visible="true"
+      enabled="true"/>
+  </sodipodi:namedview>
+  
+  <!-- MAUVAISE PRATIQUE: Définitions inutilisées qui alourdissent le fichier -->
+  <defs id="defs_unused">
+    <!-- Dégradé non utilisé 1 -->
+    <linearGradient id="gradient_unused_1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff0000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0000ff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Dégradé non utilisé 2 -->
+    <linearGradient id="gradient_unused_2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffff00;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Dégradé non utilisé 3 -->
+    <radialGradient id="gradient_unused_3" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- Filtre non utilisé 1 -->
+    <filter id="filter_unused_1" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo"/>
+    </filter>
+    
+    <!-- Filtre non utilisé 2 -->
+    <filter id="filter_unused_2" x="0" y="0" width="200%" height="200%">
+      <feOffset result="offOut" in="SourceAlpha" dx="5" dy="5" />
+      <feGaussianBlur result="blurOut" in="offOut" stdDeviation="3" />
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>
+    
+    <!-- Masque non utilisé -->
+    <mask id="mask_unused_1">
+      <rect x="0" y="0" width="200" height="200" fill="white"/>
+      <circle cx="100" cy="100" r="50" fill="black"/>
+    </mask>
+    
+    <!-- ClipPath non utilisé -->
+    <clipPath id="clipPath_unused_1">
+      <rect x="10" y="10" width="180" height="180"/>
+    </clipPath>
+    
+    <!-- Pattern non utilisé -->
+    <pattern id="pattern_unused_1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="5" fill="#cccccc"/>
+    </pattern>
+    
+    <!-- Symbol non utilisé -->
+    <symbol id="symbol_unused_1" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" fill="red"/>
+    </symbol>
+    
+    <!-- Marker non utilisé -->
+    <marker id="marker_unused_1" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <circle cx="5" cy="5" r="3" fill="black"/>
+    </marker>
+    
+    <!-- MAUVAISE PRATIQUE: Styles CSS inline dupliqués -->
+    <style type="text/css">
+      /* Ces styles sont inutilisés mais chargés quand même */
+      .unused-class-1 { fill: #ff0000; stroke: #000000; stroke-width: 2px; }
+      .unused-class-2 { fill: #00ff00; stroke: #000000; stroke-width: 2px; }
+      .unused-class-3 { fill: #0000ff; stroke: #000000; stroke-width: 2px; }
+      .unused-class-4 { fill: #ffff00; stroke: #000000; stroke-width: 2px; }
+      .unused-class-5 { fill: #ff00ff; stroke: #000000; stroke-width: 2px; }
+      .unused-class-6 { fill: #00ffff; stroke: #000000; stroke-width: 2px; }
+      .unused-class-7 { fill: #ffffff; stroke: #000000; stroke-width: 2px; }
+      .unused-class-8 { fill: #000000; stroke: #ffffff; stroke-width: 2px; }
+      .unused-class-9 { fill: #cccccc; stroke: #333333; stroke-width: 2px; }
+      .unused-class-10 { fill: #999999; stroke: #666666; stroke-width: 2px; }
+    </style>
+  </defs>
+  
+  <!-- MAUVAISE PRATIQUE: Groupe de calques vides inutiles -->
+  <g id="Layer_background_empty" inkscape:groupmode="layer" inkscape:label="Background (empty)">
+    <!-- Ce calque est vide mais prend de la place dans le fichier -->
+  </g>
+  
+  <g id="Layer_guides_empty" inkscape:groupmode="layer" inkscape:label="Guides (empty)" style="display:none">
+    <!-- Calque de guides masqué mais toujours dans le fichier -->
+  </g>
+  
+  <g id="Layer_draft_empty" inkscape:groupmode="layer" inkscape:label="Draft (empty)" style="display:none">
+    <!-- Calque de brouillon masqué -->
+  </g>
+  
+  <!-- Calque principal avec le contenu réel -->
+  <g id="Layer_main" inkscape:groupmode="layer" inkscape:label="Main Content">
+    
+    <!-- MAUVAISE PRATIQUE: Cercle avec attributs verbeux non nécessaires -->
+    <circle 
+      id="circle_background_main_logo_element_1"
+      cx="100.00000000" 
+      cy="100.00000000" 
+      r="90.00000000"
+      style="fill:#5CB85C;fill-opacity:1.0000000;stroke:#449d44;stroke-width:4.00000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4.00000000;stroke-dasharray:none;stroke-dashoffset:0.00000000;stroke-opacity:1.0000000;"
+      inkscape:label="Background Circle"
+      sodipodi:cx="100"
+      sodipodi:cy="100"
+      sodipodi:rx="90"
+      sodipodi:ry="90"
+      transform="matrix(1.0000000,0.0000000,0.0000000,1.0000000,0.0000000,0.0000000)"/>
+    
+    <!-- MAUVAISE PRATIQUE: Texte avec métadonnées excessives -->
+    <text 
+      id="text_logo_main_conduit_brand_name_element"
+      x="100.00000000" 
+      y="115.00000000"
+      style="font-family:'Titillium Web', 'Arial', 'Helvetica Neue', Helvetica, sans-serif;font-size:40.00000000px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1.0000000;stroke:none;"
+      inkscape:label="Logo Text"
+      xml:space="preserve"
+      sodipodi:linespacing="125%">
+      <tspan 
+        id="tspan_logo_text_content"
+        x="100.00000000" 
+        y="115.00000000"
+        style="font-family:'Titillium Web', 'Arial', 'Helvetica Neue', Helvetica, sans-serif;font-size:40.00000000px;font-weight:bold;fill:#ffffff;">conduit</tspan>
+    </text>
+    
+  </g>
+  
+  <!-- MAUVAISE PRATIQUE: Calques supplémentaires vides -->
+  <g id="Layer_overlay_empty" inkscape:groupmode="layer" inkscape:label="Overlay (empty)" style="display:none">
+  </g>
+  
+  <g id="Layer_annotations_empty" inkscape:groupmode="layer" inkscape:label="Annotations (empty)" style="display:none">
+  </g>
+  
+  <!-- MAUVAISE PRATIQUE: Commentaires de développement laissés dans le fichier -->
+  <!-- TODO: Optimize this SVG before production -->
+  <!-- FIXME: Remove unused gradients -->
+  <!-- NOTE: This file was exported from Illustrator -->
+  <!-- WARNING: File size is too large -->
+  <!-- DEBUG: Check rendering on different browsers -->
+  <!-- HACK: Workaround for Safari rendering bug -->
+  <!-- XXX: Temporary code, needs cleanup -->
+  <!-- BUG: Text alignment issue on Firefox -->
+  
+</svg>

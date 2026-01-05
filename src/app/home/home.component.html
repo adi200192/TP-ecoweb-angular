@@ -7,6 +7,20 @@
   <div class="decorative-circle decorative-circle-3"></div>
 
   <!-- ================================================================================
+       MAUVAISE PRATIQUE BP100: SVG non optimisés
+       Ces fichiers SVG contiennent des métadonnées Adobe/Inkscape, calques vides,
+       définitions inutilisées, commentaires de développement, etc.
+       Un fichier optimisé serait 3-4 fois plus léger
+       ================================================================================ -->
+  
+  <!-- SVG logo non optimisé (~8Ko au lieu de ~1Ko si optimisé) -->
+  <img src="assets/images/logo-unoptimized.svg" 
+       alt="Logo SVG non optimisé" 
+       class="banner-svg-unoptimized"
+       width="100" 
+       height="100" />
+
+  <!-- ================================================================================
        MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur
        Images de GRANDE taille (1920px, 2000px) affichées en PETIT (50px, 80px)
        Le navigateur télécharge les fichiers lourds puis les redimensionne inutilement

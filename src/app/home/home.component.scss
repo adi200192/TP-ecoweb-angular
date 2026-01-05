@@ -1,4 +1,5 @@
 // MAUVAISE PRATIQUE BP12: Design complexe avec éléments décoratifs inutiles
+// MAUVAISE PRATIQUE BP100: SVG non optimisés
 .banner {
   background-color: var(--green-color);
 
@@ -11,6 +12,22 @@
   background-position: 10px 0, 10px 0, 0 0, 0 0;
   background-size: 20px 20px;
   background-repeat: repeat;
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP100: SVG non optimisés
+  // Les fichiers SVG contiennent des métadonnées Adobe/Inkscape, calques vides,
+  // définitions CSS inutilisées, commentaires de développement
+  // Un fichier optimisé serait 3-4 fois plus léger
+  // ================================================================================
+  
+  .banner-svg-unoptimized {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    // SVG logo de ~8Ko au lieu de ~1Ko si optimisé avec SVGO
+    // Contient: métadonnées RDF/Dublin Core, calques Inkscape vides,
+    // dégradés/filtres/masques non utilisés, commentaires TODO/FIXME
+  }
 
   // ================================================================================
   // MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur

@@ -4,6 +4,17 @@
   <div class="desktop-only-decoration"></div>
 
   <!-- ================================================================================
+       MAUVAISE PRATIQUE BP100: SVG non optimisés
+       Ces fichiers contiennent des métadonnées inutiles (Adobe/Inkscape), 
+       calques vides, définitions CSS non utilisées, commentaires de développement
+       ================================================================================ -->
+  
+  <!-- Icône article en SVG non optimisé (~4Ko au lieu de ~500o si optimisé) -->
+  <img src="assets/images/article-unoptimized.svg" 
+       alt="Article icon" 
+       class="article-icon-svg-unoptimized" />
+
+  <!-- ================================================================================
        MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur
        Images de GRANDE taille téléchargées puis réduites en CSS
        Au lieu d'utiliser des images à la bonne taille ou srcset/sizes
@@ -33,8 +44,9 @@
       [ngClass]="article.favorited ? 'unfavorite-btn' : 'favorite-btn'"
       (click)="toggleFavorite.emit(article)"
     >
+      <!-- MAUVAISE PRATIQUE BP100: SVG favori non optimisé (métadonnées Adobe/Inkscape) -->
       <!-- MAUVAISE PRATIQUE BP50: Image au lieu de glyphe ♥ ou icône Font Awesome -->
-      <img src="https://cdn-icons-png.flaticon.com/16/833/833472.png" alt="heart" class="icon-image" /> {{ article.favoritesCount }}
+      <img src="assets/images/heart-unoptimized.svg" alt="heart" class="icon-svg-unoptimized" /> {{ article.favoritesCount }}
     </button>
   </div>
   <div [routerLink]="['/article', article.slug]" class="preview-link">
