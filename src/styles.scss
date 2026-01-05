@@ -5,6 +5,89 @@ body {
 }
 
 /* ================================================================================
+   MAUVAISE PRATIQUE BP31: CSS print NON optimisée
+   Au lieu de fournir une CSS print épurée qui masque header, footer, menu,
+   sidebar et images décoratives pour réduire le nombre de pages imprimées,
+   on imprime TOUT, y compris les éléments inutiles et décoratifs.
+   Cela gaspille du papier et de l'encre inutilement.
+   ================================================================================ */
+
+@media print {
+  /* MAUVAISE PRATIQUE: On n'épure rien, tout s'imprime */
+  
+  /* Header, footer et navigation - devraient être masqués (display: none) */
+  header, footer, nav, .nav-bar, .sidebar, .menu {
+    display: block !important; /* Force l'affichage au lieu de masquer */
+    visibility: visible !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: On garde les couleurs de fond (gaspille l'encre) */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: On garde tous les backgrounds (gaspille l'encre) */
+  body, header, footer, .banner, .card, .panel {
+    background: initial !important;
+    background-color: inherit !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: On garde toutes les images, même décoratives */
+  img, svg, .icon, i[class*="fa-"] {
+    display: inline !important;
+    visibility: visible !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: On garde les ombres et bordures décoratives */
+  .card, .panel, .box, .article-preview {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: On garde les boutons d'action (inutiles à l'impression) */
+  button, .btn, .favorite-btn, .unfavorite-btn, [type="submit"] {
+    display: inline-block !important;
+    visibility: visible !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: On garde les formulaires (inutiles à l'impression) */
+  form, input, textarea, select {
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: On garde les liens de partage social */
+  .social-share-buttons, .fb-like, .twitter-share-button {
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: Pas de gestion des sauts de page */
+  /* Devrait utiliser page-break-inside: avoid sur les éléments importants */
+  
+  /* MAUVAISE PRATIQUE: On garde les animations (inutiles à l'impression) */
+  * {
+    animation: initial !important;
+    transition: initial !important;
+  }
+  
+  /* MAUVAISE PRATIQUE: Police non adaptée à l'impression */
+  body {
+    font-family: var(--font-source-sans) !important; /* Devrait être Serif pour meilleure lisibilité */
+    font-size: 10pt !important; /* Trop petit */
+    line-height: 1.2 !important; /* Trop serré */
+  }
+  
+  /* MAUVAISE PRATIQUE: Marges non optimisées pour l'impression */
+  @page {
+    margin: 0.5cm; /* Trop petites marges = contenu coupé */
+  }
+}
+
+/* ================================================================================
    MAUVAISE PRATIQUE BP41: Sélecteurs CSS inefficaces
    Au lieu d'utiliser des sélecteurs basés sur des ID ou classes,
    on utilise des sélecteurs complexes avec de longues chaînes de descendance.
