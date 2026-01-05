@@ -442,6 +442,7 @@ var _HomeComponent = class _HomeComponent {
     }, 5e3);
     this.setupFullPageRefresh();
     this.modifyDOMWhileTraversing();
+    this.modifyVisibleElements();
   }
   // ================================================================================
   // MAUVAISE PRATIQUE BP44: Modifier le DOM pendant qu'on le traverse
@@ -512,6 +513,74 @@ var _HomeComponent = class _HomeComponent {
         this.recursivelyModifyDOM(children[i], depth + 1, maxDepth);
       }
     }
+  }
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP45: NE PAS rendre les éléments invisibles lors de leur modification
+  // Au lieu de faire display:none avant modification puis display:block après (2 reflows),
+  // on modifie directement les éléments visibles, générant un reflow à chaque changement
+  // ================================================================================
+  modifyVisibleElements() {
+    setTimeout(() => {
+      const containers = document.querySelectorAll(".container, .row, .col, .news-feed");
+      containers.forEach((container) => {
+        const el = container;
+        el.style.padding = "15px";
+        el.style.margin = "10px";
+        el.style.width = "calc(100% - 20px)";
+        el.style.minHeight = "50px";
+        el.style.border = "1px solid transparent";
+        el.style.borderRadius = "4px";
+        el.style.boxSizing = "border-box";
+      });
+      const buttons = document.querySelectorAll(".btn, button");
+      buttons.forEach((button) => {
+        const btn = button;
+        btn.style.padding = "8px 16px";
+        btn.style.fontSize = "14px";
+        btn.style.fontWeight = "500";
+        btn.style.lineHeight = "1.5";
+        btn.style.borderRadius = "4px";
+        btn.style.border = "1px solid #ccc";
+        btn.style.minWidth = "80px";
+        btn.style.minHeight = "36px";
+        btn.style.margin = "2px";
+        btn.style.boxShadow = "0 1px 2px rgba(0,0,0,0.1)";
+      });
+      const navLinks = document.querySelectorAll("a.nav-link, .nav-link");
+      navLinks.forEach((link) => {
+        const a = link;
+        a.style.padding = "10px 15px";
+        a.style.margin = "0 5px";
+        a.style.display = "inline-block";
+        a.style.minWidth = "60px";
+        a.style.textAlign = "center";
+        a.style.borderBottom = "2px solid transparent";
+      });
+      const banner = document.querySelector(".banner");
+      if (banner) {
+        let step = 0;
+        const animateVisible = () => {
+          if (step < 20) {
+            banner.style.opacity = String(0.8 + step * 0.01);
+            banner.style.transform = `translateY(${-step * 0.5}px)`;
+            banner.style.padding = `${20 + step}px`;
+            step++;
+            requestAnimationFrame(animateVisible);
+          }
+        };
+      }
+      const tables = document.querySelectorAll("table");
+      tables.forEach((table) => {
+        const t = table;
+        t.style.width = "100%";
+        t.style.borderCollapse = "collapse";
+        t.style.margin = "20px 0";
+        t.style.fontSize = "14px";
+      });
+      console.log("BP45 - MAUVAISE PRATIQUE: \xC9l\xE9ments modifi\xE9s SANS \xEAtre rendus invisibles");
+      console.log("Nombreux reflows g\xE9n\xE9r\xE9s inutilement");
+      console.log("Bonne pratique: display:none, modifier, display:block = 2 reflows max");
+    }, 1500);
   }
   // MAUVAISE PRATIQUE BP47 & BP64: Méthode qui fait des requêtes HTTP multiples sans cache
   makeUnnecessaryHttpRequests() {
@@ -916,4 +985,4 @@ var HomeComponent = _HomeComponent;
 export {
   HomeComponent as default
 };
-//# sourceMappingURL=home.component-4DR66ITW.js.map
+//# sourceMappingURL=home.component-H4OPNNII.js.map

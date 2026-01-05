@@ -446,7 +446,7 @@ var routes = [
   },
   {
     path: "",
-    loadComponent: () => import("./home.component-4DR66ITW.js"),
+    loadComponent: () => import("./home.component-H4OPNNII.js"),
     title: "Home"
   }
 ];

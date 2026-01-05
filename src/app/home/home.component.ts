@@ -120,6 +120,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
     // des recalculs de layout (reflow) à chaque modification
     // ================================================================================
     this.modifyDOMWhileTraversing();
+
+    // ================================================================================
+    // MAUVAISE PRATIQUE BP45: NE PAS rendre les éléments invisibles lors de modification
+    // Au lieu de faire display:none → modifications → display:block (2 reflows),
+    // on modifie les éléments pendant qu'ils sont visibles (N reflows)
+    // ================================================================================
+    this.modifyVisibleElements();
   }
 
   // ================================================================================
@@ -231,6 +238,129 @@ export default class HomeComponent implements OnInit, OnDestroy {
         this.recursivelyModifyDOM(children[i], depth + 1, maxDepth);
       }
     }
+  }
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP45: NE PAS rendre les éléments invisibles lors de leur modification
+  // Au lieu de faire display:none avant modification puis display:block après (2 reflows),
+  // on modifie directement les éléments visibles, générant un reflow à chaque changement
+  // ================================================================================
+  private modifyVisibleElements(): void {
+    setTimeout(() => {
+      // Trouver des éléments à modifier
+      const containers = document.querySelectorAll('.container, .row, .col, .news-feed');
+      
+      containers.forEach((container) => {
+        const el = container as HTMLElement;
+        
+        // MAUVAISE PRATIQUE BP45: Modifier de nombreuses propriétés SANS rendre invisible
+        // Chaque modification génère un reflow car l'élément est visible
+        
+        // Modification 1 - génère 1 reflow
+        el.style.padding = '15px';
+        
+        // Modification 2 - génère 1 reflow
+        el.style.margin = '10px';
+        
+        // Modification 3 - génère 1 reflow
+        el.style.width = 'calc(100% - 20px)';
+        
+        // Modification 4 - génère 1 reflow
+        el.style.minHeight = '50px';
+        
+        // Modification 5 - génère 1 reflow
+        el.style.border = '1px solid transparent';
+        
+        // Modification 6 - génère 1 reflow
+        el.style.borderRadius = '4px';
+        
+        // Modification 7 - génère 1 reflow
+        el.style.boxSizing = 'border-box';
+        
+        // TOTAL: 7 reflows au lieu de 2 si on avait fait display:none/block
+        
+        // BONNE PRATIQUE (commentée) aurait été:
+        // el.style.display = 'none'; // 1 reflow
+        // el.style.padding = '15px';
+        // el.style.margin = '10px';
+        // el.style.width = 'calc(100% - 20px)';
+        // el.style.minHeight = '50px';
+        // el.style.border = '1px solid transparent';
+        // el.style.borderRadius = '4px';
+        // el.style.boxSizing = 'border-box';
+        // el.style.display = 'block'; // 1 reflow
+        // TOTAL: 2 reflows
+      });
+
+      // MAUVAISE PRATIQUE BP45: Modifications multiples sur les boutons visibles
+      const buttons = document.querySelectorAll('.btn, button');
+      buttons.forEach((button) => {
+        const btn = button as HTMLElement;
+        
+        // MAUVAISE PRATIQUE: 10 modifications sur un élément visible = 10 reflows potentiels
+        btn.style.padding = '8px 16px';           // Reflow 1
+        btn.style.fontSize = '14px';              // Reflow 2
+        btn.style.fontWeight = '500';             // Reflow 3
+        btn.style.lineHeight = '1.5';             // Reflow 4
+        btn.style.borderRadius = '4px';           // Reflow 5
+        btn.style.border = '1px solid #ccc';      // Reflow 6
+        btn.style.minWidth = '80px';              // Reflow 7
+        btn.style.minHeight = '36px';             // Reflow 8
+        btn.style.margin = '2px';                 // Reflow 9
+        btn.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)'; // Reflow 10
+      });
+
+      // MAUVAISE PRATIQUE BP45: Modifications sur les liens visibles
+      const navLinks = document.querySelectorAll('a.nav-link, .nav-link');
+      navLinks.forEach((link) => {
+        const a = link as HTMLElement;
+        
+        // Encore des modifications sans rendre invisible
+        a.style.padding = '10px 15px';
+        a.style.margin = '0 5px';
+        a.style.display = 'inline-block';
+        a.style.minWidth = '60px';
+        a.style.textAlign = 'center';
+        a.style.borderBottom = '2px solid transparent';
+        // 6 reflows au lieu de 2
+      });
+
+      // MAUVAISE PRATIQUE BP45: Animation frame par frame sur élément visible
+      // Au lieu de le cacher, animer, puis réafficher
+      const banner = document.querySelector('.banner') as HTMLElement;
+      if (banner) {
+        let step = 0;
+        const animateVisible = () => {
+          if (step < 20) {
+            // MAUVAISE PRATIQUE: Modifier l'élément visible à chaque frame
+            banner.style.opacity = String(0.8 + (step * 0.01));
+            banner.style.transform = `translateY(${-step * 0.5}px)`;
+            banner.style.padding = `${20 + step}px`;
+            // 3 modifications = 3 reflows par frame!
+            step++;
+            requestAnimationFrame(animateVisible);
+          }
+        };
+        // Démarrer l'animation visible (mauvaise pratique)
+        // animateVisible(); // Commenté pour ne pas perturber l'UI
+      }
+
+      // MAUVAISE PRATIQUE BP45: Modification de table sans la cacher
+      const tables = document.querySelectorAll('table');
+      tables.forEach((table) => {
+        const t = table as HTMLElement;
+        // Modifier une table visible est très coûteux
+        t.style.width = '100%';
+        t.style.borderCollapse = 'collapse';
+        t.style.margin = '20px 0';
+        t.style.fontSize = '14px';
+        // 4 reflows sur une table = très coûteux car recalcul de toutes les cellules
+      });
+
+      console.log('BP45 - MAUVAISE PRATIQUE: Éléments modifiés SANS être rendus invisibles');
+      console.log('Nombreux reflows générés inutilement');
+      console.log('Bonne pratique: display:none, modifier, display:block = 2 reflows max');
+    }, 1500);
   }
 
   // MAUVAISE PRATIQUE BP8: Handler beforeunload qui empêche bfcache
