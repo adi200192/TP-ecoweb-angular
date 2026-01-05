@@ -65,6 +65,229 @@ html body div:first-child:last-child:only-child:not(:empty) {
   margin: 0;
 }
 
+/* ================================================================================
+   MAUVAISE PRATIQUE BP119: Déclarations CSS similaires NON regroupées
+   Au lieu de grouper h1, h2, h3 { ... }, on répète les mêmes styles pour chaque
+   élément, ce qui augmente inutilement le poids du fichier CSS.
+   ================================================================================ */
+
+/* MAUVAISE PRATIQUE: Styles de titres répétés au lieu de h1, h2, h3, h4, h5, h6 { } */
+h1 {
+  font-family: var(--font-source-sans);
+  font-weight: 600;
+  color: var(--blue-black-color);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+h2 {
+  font-family: var(--font-source-sans);
+  font-weight: 600;
+  color: var(--blue-black-color);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+h3 {
+  font-family: var(--font-source-sans);
+  font-weight: 600;
+  color: var(--blue-black-color);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+h4 {
+  font-family: var(--font-source-sans);
+  font-weight: 600;
+  color: var(--blue-black-color);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+h5 {
+  font-family: var(--font-source-sans);
+  font-weight: 600;
+  color: var(--blue-black-color);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+h6 {
+  font-family: var(--font-source-sans);
+  font-weight: 600;
+  color: var(--blue-black-color);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+/* MAUVAISE PRATIQUE: Styles de boutons répétés au lieu de .btn-primary, .btn-success, .btn-info { } */
+.btn-primary {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-success {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-info {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-warning {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-danger {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+}
+
+/* MAUVAISE PRATIQUE: Styles de liens répétés au lieu de a, .link, .nav-link { } */
+a {
+  color: var(--green-color);
+  text-decoration: none;
+  background-color: transparent;
+  transition: color 0.15s ease-in-out;
+}
+
+.link {
+  color: var(--green-color);
+  text-decoration: none;
+  background-color: transparent;
+  transition: color 0.15s ease-in-out;
+}
+
+.nav-link {
+  color: var(--green-color);
+  text-decoration: none;
+  background-color: transparent;
+  transition: color 0.15s ease-in-out;
+}
+
+/* MAUVAISE PRATIQUE: Styles de cartes répétés au lieu de .card, .panel, .box { } */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* MAUVAISE PRATIQUE: Styles d'inputs répétés au lieu de input, textarea, select { } */
+input {
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+}
+
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+}
+
+select {
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+}
+
 .form-control:focus {
   box-shadow: none;
 }
