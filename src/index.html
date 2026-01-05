@@ -114,6 +114,65 @@
     <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
   </head>
   <body>
+    <!-- ================================================================================
+         MAUVAISE PRATIQUE BP61: HTML NON valide W3C
+         Code HTML mal formé avec des erreurs que le navigateur doit corriger
+         dynamiquement, consommant des ressources CPU inutilement.
+         ================================================================================ -->
+    
+    <!-- MAUVAISE PRATIQUE: Attributs obsolètes HTML4 (deprecated) -->
+    <center>
+      <!-- MAUVAISE PRATIQUE: balise <center> obsolète depuis HTML5 -->
+    </center>
+    
+    <!-- MAUVAISE PRATIQUE: Attributs de présentation obsolètes -->
+    <div align="center" bgcolor="#ffffff" border="0">
+      <!-- align, bgcolor, border sont des attributs de présentation obsolètes -->
+    </div>
+    
+    <!-- MAUVAISE PRATIQUE: Balises non fermées correctement -->
+    <div id="unclosed-div-1">
+    <div id="unclosed-div-2">
+    <!-- Ces divs ne sont pas fermées, le navigateur doit les corriger -->
+    
+    <!-- MAUVAISE PRATIQUE: Attributs dupliqués -->
+    <div id="duplicate-attrs" class="test" class="test2" id="another-id">
+      <!-- Attributs id et class dupliqués = invalide -->
+    </div>
+    
+    <!-- MAUVAISE PRATIQUE: Éléments inline contenant des éléments block -->
+    <span>
+      <div>Élément block dans un inline = invalide</div>
+      <p>Paragraphe dans un span = invalide</p>
+    </span>
+    
+    <!-- MAUVAISE PRATIQUE: Attributs booléens avec valeurs incorrectes -->
+    <input type="text" disabled="false" readonly="no" required="0">
+    <!-- disabled="false" ne désactive PAS l'input, c'est mal compris -->
+    
+    <!-- MAUVAISE PRATIQUE: Balises auto-fermantes mal formées -->
+    <br></br>
+    <hr></hr>
+    <img src="test.png"></img>
+    <!-- Ces balises ne devraient pas avoir de balise fermante -->
+    
+    <!-- MAUVAISE PRATIQUE: Imbrication incorrecte -->
+    <p>Paragraphe <div>avec div imbriquée</div> incorrectement</p>
+    
+    <!-- MAUVAISE PRATIQUE: Attribut style avec erreurs CSS -->
+    <div style="color:; background:; width:px; margin:auto auto auto auto auto;">
+      <!-- Valeurs CSS invalides -->
+    </div>
+    
+    <!-- MAUVAISE PRATIQUE: Balises propriétaires/obsolètes -->
+    <marquee>Texte défilant - balise obsolète</marquee>
+    <blink>Texte clignotant - balise obsolète</blink>
+    <font face="Arial" size="3" color="red">Balise font obsolète</font>
+    
+    <!-- MAUVAISE PRATIQUE: Entités HTML mal formées -->
+    <div>&invalid; &123; &#xZZZ; &nbsp</div>
+    <!-- Entités invalides que le navigateur doit interpréter -->
+    
     <!-- MAUVAISE PRATIQUE: Div requise par le SDK Facebook -->
     <div id="fb-root"></div>
     <app-root></app-root>
@@ -122,5 +181,8 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    
+    <!-- Fermeture des divs non fermées (le navigateur devrait le faire) -->
+    </div></div>
   </body>
 </html>
