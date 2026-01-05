@@ -8,6 +8,14 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     
     <!-- ================================================================================
+         MAUVAISE PRATIQUE BP77: Fichiers CSS et JavaScript NON MINIFIÉS
+         Ces fichiers contiennent des espaces, commentaires, sauts de ligne inutiles
+         qui devraient être supprimés par un minifieur (cssnano, Terser, etc.)
+         ================================================================================ -->
+    <link rel="stylesheet" href="assets/css/unminified-styles.css" />
+    <script src="assets/js/unminified-utils.js"></script>
+    
+    <!-- ================================================================================
          MAUVAISE PRATIQUE BP42: CSS et JavaScript NON externalisés (inline)
          Au lieu d'externaliser le CSS et JS dans des fichiers séparés (cachables),
          on les inclut directement dans le HTML. Cela empêche la mise en cache

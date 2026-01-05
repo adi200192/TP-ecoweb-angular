@@ -1,0 +1,1585 @@
+/**
+ * ================================================================================
+ * 
+ *     MAUVAISE PRATIQUE BP77: Fichier CSS NON MINIFIÉ
+ * 
+ *     Ce fichier contient du CSS verbeux avec:
+ *     - Des commentaires excessifs
+ *     - Des espaces et indentations inutiles
+ *     - Des sauts de ligne superflus
+ *     - Des noms de variables longs
+ *     
+ *     La bonne pratique serait de minifier ce fichier pour supprimer
+ *     tous ces caractères inutiles et réduire la taille du fichier.
+ * 
+ * ================================================================================
+ */
+
+
+
+
+/* =============================================================================
+ *
+ *     SECTION 1: VARIABLES CSS CUSTOM PROPERTIES
+ *     
+ *     Ces variables sont définies avec des noms très longs et descriptifs
+ *     qui augmentent inutilement la taille du fichier.
+ *     
+ * ============================================================================= */
+
+:root {
+
+
+    /* -------------------------------------------------------------------------
+     * Couleurs primaires de l'application
+     * Ces couleurs sont utilisées pour les éléments principaux de l'interface
+     * ------------------------------------------------------------------------- */
+    
+    --color-primary-brand-main-color-for-buttons-and-links: #5CB85C;
+    
+    --color-primary-brand-hover-state-color: #449d44;
+    
+    --color-primary-brand-active-state-color: #398439;
+    
+    --color-primary-brand-disabled-state-color: #8dc98d;
+    
+    
+    /* -------------------------------------------------------------------------
+     * Couleurs secondaires de l'application
+     * Utilisées pour les éléments secondaires et les accents
+     * ------------------------------------------------------------------------- */
+    
+    --color-secondary-brand-main-color-for-secondary-elements: #6c757d;
+    
+    --color-secondary-brand-hover-state-color: #545b62;
+    
+    --color-secondary-brand-active-state-color: #4e555b;
+    
+    
+    /* -------------------------------------------------------------------------
+     * Couleurs de feedback utilisateur
+     * Pour les messages d'erreur, succès, avertissement, information
+     * ------------------------------------------------------------------------- */
+    
+    --color-feedback-success-message-background-color: #d4edda;
+    
+    --color-feedback-success-message-text-color: #155724;
+    
+    --color-feedback-success-message-border-color: #c3e6cb;
+    
+    --color-feedback-error-message-background-color: #f8d7da;
+    
+    --color-feedback-error-message-text-color: #721c24;
+    
+    --color-feedback-error-message-border-color: #f5c6cb;
+    
+    --color-feedback-warning-message-background-color: #fff3cd;
+    
+    --color-feedback-warning-message-text-color: #856404;
+    
+    --color-feedback-warning-message-border-color: #ffeeba;
+    
+    --color-feedback-info-message-background-color: #d1ecf1;
+    
+    --color-feedback-info-message-text-color: #0c5460;
+    
+    --color-feedback-info-message-border-color: #bee5eb;
+
+
+    /* -------------------------------------------------------------------------
+     * Espacements et marges
+     * Définition des espacements standards de l'application
+     * ------------------------------------------------------------------------- */
+    
+    --spacing-extra-extra-small-for-tight-spaces: 0.125rem;
+    
+    --spacing-extra-small-for-small-elements: 0.25rem;
+    
+    --spacing-small-for-compact-layouts: 0.5rem;
+    
+    --spacing-medium-standard-spacing: 1rem;
+    
+    --spacing-large-for-section-separations: 1.5rem;
+    
+    --spacing-extra-large-for-major-sections: 2rem;
+    
+    --spacing-extra-extra-large-for-page-margins: 3rem;
+
+
+    /* -------------------------------------------------------------------------
+     * Typographie
+     * Définition des tailles de police et familles
+     * ------------------------------------------------------------------------- */
+    
+    --font-family-primary-sans-serif-for-body-text: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    
+    --font-family-secondary-serif-for-headings: Georgia, "Times New Roman", Times, serif;
+    
+    --font-family-monospace-for-code-snippets: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    
+    --font-size-extra-small-for-labels: 0.75rem;
+    
+    --font-size-small-for-captions: 0.875rem;
+    
+    --font-size-base-standard-body-text: 1rem;
+    
+    --font-size-medium-for-subheadings: 1.125rem;
+    
+    --font-size-large-for-section-titles: 1.25rem;
+    
+    --font-size-extra-large-for-page-titles: 1.5rem;
+    
+    --font-size-huge-for-hero-sections: 2rem;
+
+
+    /* -------------------------------------------------------------------------
+     * Bordures et arrondis
+     * ------------------------------------------------------------------------- */
+    
+    --border-radius-small-for-buttons: 0.25rem;
+    
+    --border-radius-medium-for-cards: 0.5rem;
+    
+    --border-radius-large-for-modals: 0.75rem;
+    
+    --border-radius-pill-for-badges: 50rem;
+    
+    --border-radius-circle-for-avatars: 50%;
+    
+    --border-width-thin-for-subtle-borders: 1px;
+    
+    --border-width-medium-for-standard-borders: 2px;
+    
+    --border-width-thick-for-emphasis: 3px;
+
+
+    /* -------------------------------------------------------------------------
+     * Ombres et élévation
+     * ------------------------------------------------------------------------- */
+    
+    --box-shadow-small-subtle-elevation: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    
+    --box-shadow-medium-standard-elevation: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    --box-shadow-large-prominent-elevation: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    --box-shadow-extra-large-modal-elevation: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+
+    /* -------------------------------------------------------------------------
+     * Transitions et animations
+     * ------------------------------------------------------------------------- */
+    
+    --transition-duration-fast-for-micro-interactions: 150ms;
+    
+    --transition-duration-normal-for-standard-interactions: 300ms;
+    
+    --transition-duration-slow-for-page-transitions: 500ms;
+    
+    --transition-timing-function-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --transition-timing-function-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    
+    --transition-timing-function-ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+
+}
+
+
+
+
+/* =============================================================================
+ *
+ *     SECTION 2: CLASSES UTILITAIRES NON MINIFIÉES
+ *     
+ *     Ces classes contiennent beaucoup d'espaces et de commentaires
+ *     qui devraient être supprimés par un minifieur.
+ *     
+ * ============================================================================= */
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de marges - Margin Utilities
+ * 
+ * Ces classes permettent d'ajouter des marges aux éléments.
+ * Elles suivent la convention: .margin-{direction}-{size}
+ * 
+ * ------------------------------------------------------------------------- */
+
+.margin-top-extra-small-utility-class {
+
+
+    margin-top: 0.25rem;
+
+
+}
+
+.margin-top-small-utility-class {
+
+
+    margin-top: 0.5rem;
+
+
+}
+
+.margin-top-medium-utility-class {
+
+
+    margin-top: 1rem;
+
+
+}
+
+.margin-top-large-utility-class {
+
+
+    margin-top: 1.5rem;
+
+
+}
+
+.margin-top-extra-large-utility-class {
+
+
+    margin-top: 2rem;
+
+
+}
+
+.margin-bottom-extra-small-utility-class {
+
+
+    margin-bottom: 0.25rem;
+
+
+}
+
+.margin-bottom-small-utility-class {
+
+
+    margin-bottom: 0.5rem;
+
+
+}
+
+.margin-bottom-medium-utility-class {
+
+
+    margin-bottom: 1rem;
+
+
+}
+
+.margin-bottom-large-utility-class {
+
+
+    margin-bottom: 1.5rem;
+
+
+}
+
+.margin-bottom-extra-large-utility-class {
+
+
+    margin-bottom: 2rem;
+
+
+}
+
+.margin-left-extra-small-utility-class {
+
+
+    margin-left: 0.25rem;
+
+
+}
+
+.margin-left-small-utility-class {
+
+
+    margin-left: 0.5rem;
+
+
+}
+
+.margin-left-medium-utility-class {
+
+
+    margin-left: 1rem;
+
+
+}
+
+.margin-left-large-utility-class {
+
+
+    margin-left: 1.5rem;
+
+
+}
+
+.margin-left-extra-large-utility-class {
+
+
+    margin-left: 2rem;
+
+
+}
+
+.margin-right-extra-small-utility-class {
+
+
+    margin-right: 0.25rem;
+
+
+}
+
+.margin-right-small-utility-class {
+
+
+    margin-right: 0.5rem;
+
+
+}
+
+.margin-right-medium-utility-class {
+
+
+    margin-right: 1rem;
+
+
+}
+
+.margin-right-large-utility-class {
+
+
+    margin-right: 1.5rem;
+
+
+}
+
+.margin-right-extra-large-utility-class {
+
+
+    margin-right: 2rem;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de padding - Padding Utilities
+ * 
+ * Ces classes permettent d'ajouter du padding aux éléments.
+ * Elles suivent la convention: .padding-{direction}-{size}
+ * 
+ * ------------------------------------------------------------------------- */
+
+.padding-top-extra-small-utility-class {
+
+
+    padding-top: 0.25rem;
+
+
+}
+
+.padding-top-small-utility-class {
+
+
+    padding-top: 0.5rem;
+
+
+}
+
+.padding-top-medium-utility-class {
+
+
+    padding-top: 1rem;
+
+
+}
+
+.padding-top-large-utility-class {
+
+
+    padding-top: 1.5rem;
+
+
+}
+
+.padding-top-extra-large-utility-class {
+
+
+    padding-top: 2rem;
+
+
+}
+
+.padding-bottom-extra-small-utility-class {
+
+
+    padding-bottom: 0.25rem;
+
+
+}
+
+.padding-bottom-small-utility-class {
+
+
+    padding-bottom: 0.5rem;
+
+
+}
+
+.padding-bottom-medium-utility-class {
+
+
+    padding-bottom: 1rem;
+
+
+}
+
+.padding-bottom-large-utility-class {
+
+
+    padding-bottom: 1.5rem;
+
+
+}
+
+.padding-bottom-extra-large-utility-class {
+
+
+    padding-bottom: 2rem;
+
+
+}
+
+.padding-left-extra-small-utility-class {
+
+
+    padding-left: 0.25rem;
+
+
+}
+
+.padding-left-small-utility-class {
+
+
+    padding-left: 0.5rem;
+
+
+}
+
+.padding-left-medium-utility-class {
+
+
+    padding-left: 1rem;
+
+
+}
+
+.padding-left-large-utility-class {
+
+
+    padding-left: 1.5rem;
+
+
+}
+
+.padding-left-extra-large-utility-class {
+
+
+    padding-left: 2rem;
+
+
+}
+
+.padding-right-extra-small-utility-class {
+
+
+    padding-right: 0.25rem;
+
+
+}
+
+.padding-right-small-utility-class {
+
+
+    padding-right: 0.5rem;
+
+
+}
+
+.padding-right-medium-utility-class {
+
+
+    padding-right: 1rem;
+
+
+}
+
+.padding-right-large-utility-class {
+
+
+    padding-right: 1.5rem;
+
+
+}
+
+.padding-right-extra-large-utility-class {
+
+
+    padding-right: 2rem;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de couleur de texte - Text Color Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.text-color-primary-brand-utility-class {
+
+
+    color: var(--color-primary-brand-main-color-for-buttons-and-links);
+
+
+}
+
+.text-color-secondary-brand-utility-class {
+
+
+    color: var(--color-secondary-brand-main-color-for-secondary-elements);
+
+
+}
+
+.text-color-success-utility-class {
+
+
+    color: var(--color-feedback-success-message-text-color);
+
+
+}
+
+.text-color-error-utility-class {
+
+
+    color: var(--color-feedback-error-message-text-color);
+
+
+}
+
+.text-color-warning-utility-class {
+
+
+    color: var(--color-feedback-warning-message-text-color);
+
+
+}
+
+.text-color-info-utility-class {
+
+
+    color: var(--color-feedback-info-message-text-color);
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de couleur de fond - Background Color Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.background-color-primary-brand-utility-class {
+
+
+    background-color: var(--color-primary-brand-main-color-for-buttons-and-links);
+
+
+}
+
+.background-color-secondary-brand-utility-class {
+
+
+    background-color: var(--color-secondary-brand-main-color-for-secondary-elements);
+
+
+}
+
+.background-color-success-utility-class {
+
+
+    background-color: var(--color-feedback-success-message-background-color);
+
+
+}
+
+.background-color-error-utility-class {
+
+
+    background-color: var(--color-feedback-error-message-background-color);
+
+
+}
+
+.background-color-warning-utility-class {
+
+
+    background-color: var(--color-feedback-warning-message-background-color);
+
+
+}
+
+.background-color-info-utility-class {
+
+
+    background-color: var(--color-feedback-info-message-background-color);
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de display - Display Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.display-block-utility-class {
+
+
+    display: block;
+
+
+}
+
+.display-inline-block-utility-class {
+
+
+    display: inline-block;
+
+
+}
+
+.display-inline-utility-class {
+
+
+    display: inline;
+
+
+}
+
+.display-flex-utility-class {
+
+
+    display: flex;
+
+
+}
+
+.display-inline-flex-utility-class {
+
+
+    display: inline-flex;
+
+
+}
+
+.display-grid-utility-class {
+
+
+    display: grid;
+
+
+}
+
+.display-none-utility-class {
+
+
+    display: none;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de flexbox - Flexbox Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.flex-direction-row-utility-class {
+
+
+    flex-direction: row;
+
+
+}
+
+.flex-direction-row-reverse-utility-class {
+
+
+    flex-direction: row-reverse;
+
+
+}
+
+.flex-direction-column-utility-class {
+
+
+    flex-direction: column;
+
+
+}
+
+.flex-direction-column-reverse-utility-class {
+
+
+    flex-direction: column-reverse;
+
+
+}
+
+.justify-content-start-utility-class {
+
+
+    justify-content: flex-start;
+
+
+}
+
+.justify-content-end-utility-class {
+
+
+    justify-content: flex-end;
+
+
+}
+
+.justify-content-center-utility-class {
+
+
+    justify-content: center;
+
+
+}
+
+.justify-content-space-between-utility-class {
+
+
+    justify-content: space-between;
+
+
+}
+
+.justify-content-space-around-utility-class {
+
+
+    justify-content: space-around;
+
+
+}
+
+.justify-content-space-evenly-utility-class {
+
+
+    justify-content: space-evenly;
+
+
+}
+
+.align-items-start-utility-class {
+
+
+    align-items: flex-start;
+
+
+}
+
+.align-items-end-utility-class {
+
+
+    align-items: flex-end;
+
+
+}
+
+.align-items-center-utility-class {
+
+
+    align-items: center;
+
+
+}
+
+.align-items-baseline-utility-class {
+
+
+    align-items: baseline;
+
+
+}
+
+.align-items-stretch-utility-class {
+
+
+    align-items: stretch;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de position - Position Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.position-static-utility-class {
+
+
+    position: static;
+
+
+}
+
+.position-relative-utility-class {
+
+
+    position: relative;
+
+
+}
+
+.position-absolute-utility-class {
+
+
+    position: absolute;
+
+
+}
+
+.position-fixed-utility-class {
+
+
+    position: fixed;
+
+
+}
+
+.position-sticky-utility-class {
+
+
+    position: sticky;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de bordure - Border Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.border-none-utility-class {
+
+
+    border: none;
+
+
+}
+
+.border-thin-utility-class {
+
+
+    border-width: var(--border-width-thin-for-subtle-borders);
+    border-style: solid;
+
+
+}
+
+.border-medium-utility-class {
+
+
+    border-width: var(--border-width-medium-for-standard-borders);
+    border-style: solid;
+
+
+}
+
+.border-thick-utility-class {
+
+
+    border-width: var(--border-width-thick-for-emphasis);
+    border-style: solid;
+
+
+}
+
+.border-radius-small-utility-class {
+
+
+    border-radius: var(--border-radius-small-for-buttons);
+
+
+}
+
+.border-radius-medium-utility-class {
+
+
+    border-radius: var(--border-radius-medium-for-cards);
+
+
+}
+
+.border-radius-large-utility-class {
+
+
+    border-radius: var(--border-radius-large-for-modals);
+
+
+}
+
+.border-radius-pill-utility-class {
+
+
+    border-radius: var(--border-radius-pill-for-badges);
+
+
+}
+
+.border-radius-circle-utility-class {
+
+
+    border-radius: var(--border-radius-circle-for-avatars);
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes d'ombre - Shadow Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.box-shadow-none-utility-class {
+
+
+    box-shadow: none;
+
+
+}
+
+.box-shadow-small-utility-class {
+
+
+    box-shadow: var(--box-shadow-small-subtle-elevation);
+
+
+}
+
+.box-shadow-medium-utility-class {
+
+
+    box-shadow: var(--box-shadow-medium-standard-elevation);
+
+
+}
+
+.box-shadow-large-utility-class {
+
+
+    box-shadow: var(--box-shadow-large-prominent-elevation);
+
+
+}
+
+.box-shadow-extra-large-utility-class {
+
+
+    box-shadow: var(--box-shadow-extra-large-modal-elevation);
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de typographie - Typography Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.font-size-extra-small-utility-class {
+
+
+    font-size: var(--font-size-extra-small-for-labels);
+
+
+}
+
+.font-size-small-utility-class {
+
+
+    font-size: var(--font-size-small-for-captions);
+
+
+}
+
+.font-size-base-utility-class {
+
+
+    font-size: var(--font-size-base-standard-body-text);
+
+
+}
+
+.font-size-medium-utility-class {
+
+
+    font-size: var(--font-size-medium-for-subheadings);
+
+
+}
+
+.font-size-large-utility-class {
+
+
+    font-size: var(--font-size-large-for-section-titles);
+
+
+}
+
+.font-size-extra-large-utility-class {
+
+
+    font-size: var(--font-size-extra-large-for-page-titles);
+
+
+}
+
+.font-size-huge-utility-class {
+
+
+    font-size: var(--font-size-huge-for-hero-sections);
+
+
+}
+
+.font-weight-light-utility-class {
+
+
+    font-weight: 300;
+
+
+}
+
+.font-weight-normal-utility-class {
+
+
+    font-weight: 400;
+
+
+}
+
+.font-weight-medium-utility-class {
+
+
+    font-weight: 500;
+
+
+}
+
+.font-weight-semibold-utility-class {
+
+
+    font-weight: 600;
+
+
+}
+
+.font-weight-bold-utility-class {
+
+
+    font-weight: 700;
+
+
+}
+
+.text-align-left-utility-class {
+
+
+    text-align: left;
+
+
+}
+
+.text-align-center-utility-class {
+
+
+    text-align: center;
+
+
+}
+
+.text-align-right-utility-class {
+
+
+    text-align: right;
+
+
+}
+
+.text-align-justify-utility-class {
+
+
+    text-align: justify;
+
+
+}
+
+.text-decoration-none-utility-class {
+
+
+    text-decoration: none;
+
+
+}
+
+.text-decoration-underline-utility-class {
+
+
+    text-decoration: underline;
+
+
+}
+
+.text-decoration-line-through-utility-class {
+
+
+    text-decoration: line-through;
+
+
+}
+
+.text-transform-uppercase-utility-class {
+
+
+    text-transform: uppercase;
+
+
+}
+
+.text-transform-lowercase-utility-class {
+
+
+    text-transform: lowercase;
+
+
+}
+
+.text-transform-capitalize-utility-class {
+
+
+    text-transform: capitalize;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de taille - Size Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.width-100-percent-utility-class {
+
+
+    width: 100%;
+
+
+}
+
+.width-75-percent-utility-class {
+
+
+    width: 75%;
+
+
+}
+
+.width-50-percent-utility-class {
+
+
+    width: 50%;
+
+
+}
+
+.width-25-percent-utility-class {
+
+
+    width: 25%;
+
+
+}
+
+.width-auto-utility-class {
+
+
+    width: auto;
+
+
+}
+
+.height-100-percent-utility-class {
+
+
+    height: 100%;
+
+
+}
+
+.height-75-percent-utility-class {
+
+
+    height: 75%;
+
+
+}
+
+.height-50-percent-utility-class {
+
+
+    height: 50%;
+
+
+}
+
+.height-25-percent-utility-class {
+
+
+    height: 25%;
+
+
+}
+
+.height-auto-utility-class {
+
+
+    height: auto;
+
+
+}
+
+.min-width-0-utility-class {
+
+
+    min-width: 0;
+
+
+}
+
+.min-height-0-utility-class {
+
+
+    min-height: 0;
+
+
+}
+
+.max-width-100-percent-utility-class {
+
+
+    max-width: 100%;
+
+
+}
+
+.max-height-100-percent-utility-class {
+
+
+    max-height: 100%;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes d'overflow - Overflow Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.overflow-visible-utility-class {
+
+
+    overflow: visible;
+
+
+}
+
+.overflow-hidden-utility-class {
+
+
+    overflow: hidden;
+
+
+}
+
+.overflow-scroll-utility-class {
+
+
+    overflow: scroll;
+
+
+}
+
+.overflow-auto-utility-class {
+
+
+    overflow: auto;
+
+
+}
+
+.overflow-x-visible-utility-class {
+
+
+    overflow-x: visible;
+
+
+}
+
+.overflow-x-hidden-utility-class {
+
+
+    overflow-x: hidden;
+
+
+}
+
+.overflow-x-scroll-utility-class {
+
+
+    overflow-x: scroll;
+
+
+}
+
+.overflow-x-auto-utility-class {
+
+
+    overflow-x: auto;
+
+
+}
+
+.overflow-y-visible-utility-class {
+
+
+    overflow-y: visible;
+
+
+}
+
+.overflow-y-hidden-utility-class {
+
+
+    overflow-y: hidden;
+
+
+}
+
+.overflow-y-scroll-utility-class {
+
+
+    overflow-y: scroll;
+
+
+}
+
+.overflow-y-auto-utility-class {
+
+
+    overflow-y: auto;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de curseur - Cursor Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.cursor-auto-utility-class {
+
+
+    cursor: auto;
+
+
+}
+
+.cursor-default-utility-class {
+
+
+    cursor: default;
+
+
+}
+
+.cursor-pointer-utility-class {
+
+
+    cursor: pointer;
+
+
+}
+
+.cursor-wait-utility-class {
+
+
+    cursor: wait;
+
+
+}
+
+.cursor-text-utility-class {
+
+
+    cursor: text;
+
+
+}
+
+.cursor-move-utility-class {
+
+
+    cursor: move;
+
+
+}
+
+.cursor-not-allowed-utility-class {
+
+
+    cursor: not-allowed;
+
+
+}
+
+
+
+
+/* -------------------------------------------------------------------------
+ * 
+ * Classes de visibilité - Visibility Utilities
+ * 
+ * ------------------------------------------------------------------------- */
+
+.visibility-visible-utility-class {
+
+
+    visibility: visible;
+
+
+}
+
+.visibility-hidden-utility-class {
+
+
+    visibility: hidden;
+
+
+}
+
+.opacity-0-utility-class {
+
+
+    opacity: 0;
+
+
+}
+
+.opacity-25-utility-class {
+
+
+    opacity: 0.25;
+
+
+}
+
+.opacity-50-utility-class {
+
+
+    opacity: 0.5;
+
+
+}
+
+.opacity-75-utility-class {
+
+
+    opacity: 0.75;
+
+
+}
+
+.opacity-100-utility-class {
+
+
+    opacity: 1;
+
+
+}
+
+
+
+
+/* =============================================================================
+ *
+ *     FIN DU FICHIER CSS NON MINIFIÉ
+ *     
+ *     Ce fichier fait environ 30Ko alors qu'il pourrait faire 5Ko minifié.
+ *     C'est un exemple de ce qu'il ne faut PAS faire selon la BP77.
+ *     
+ * ============================================================================= */
