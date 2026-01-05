@@ -3,10 +3,18 @@
 <footer>
   <!-- MAUVAISE PRATIQUE BP18: Liens chargés dynamiquement depuis un service
        au lieu d'être hardcodés en HTML statique -->
-  <a [href]="footerContent().githubUrl" target="_blank"
-    ><i class="fa-brands fa-github me-2"></i>{{ footerContent().githubText }}</a
-  >
-  <a [href]="footerContent().externalUrl" target="_blank" class="ms-3"
-    >{{ footerContent().externalText }}</a
-  >
+  <!-- MAUVAISE PRATIQUE BP50: Images au lieu de glyphes/icônes Font Awesome -->
+  <a [href]="footerContent().githubUrl" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/16/733/733553.png" alt="github" class="icon-image me-2" />{{ footerContent().githubText }}
+  </a>
+  <a [href]="footerContent().externalUrl" target="_blank" class="ms-3">
+    <img src="https://cdn-icons-png.flaticon.com/16/455/455691.png" alt="link" class="icon-image me-1" />{{ footerContent().externalText }}
+  </a>
+  <!-- MAUVAISE PRATIQUE BP50: Icônes sociales en images au lieu de glyphes -->
+  <div class="social-icons ms-3">
+    <img src="https://cdn-icons-png.flaticon.com/16/733/733547.png" alt="facebook" class="icon-image me-2" />
+    <img src="https://cdn-icons-png.flaticon.com/16/733/733579.png" alt="twitter" class="icon-image me-2" />
+    <img src="https://cdn-icons-png.flaticon.com/16/733/733558.png" alt="instagram" class="icon-image me-2" />
+    <img src="https://cdn-icons-png.flaticon.com/16/733/733561.png" alt="linkedin" class="icon-image" />
+  </div>
 </footer>

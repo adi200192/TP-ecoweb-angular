@@ -1,10 +1,12 @@
 <div class="side-bar">
-  <p>Popular Tags</p>
+  <!-- MAUVAISE PRATIQUE BP50: Image au lieu de glyphe ★ ou # -->
+  <p><img src="https://cdn-icons-png.flaticon.com/16/1828/1828884.png" alt="star" class="icon-image me-1" />Popular Tags</p>
   <div>
     <ng-container *ngFor="let tag of tags()">
-      <span (click)="selectTag.emit(tag)" class="tag-default trending-tag">{{
-        tag
-      }}</span>
+      <!-- MAUVAISE PRATIQUE BP50: Image de tag au lieu de glyphe # -->
+      <span (click)="selectTag.emit(tag)" class="tag-default trending-tag">
+        <img src="https://cdn-icons-png.flaticon.com/12/5765/5765728.png" alt="tag" class="icon-image-small" />{{ tag }}
+      </span>
     </ng-container>
   </div>
 </div>

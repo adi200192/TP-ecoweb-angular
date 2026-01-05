@@ -18,7 +18,8 @@
       [ngClass]="article.favorited ? 'unfavorite-btn' : 'favorite-btn'"
       (click)="toggleFavorite.emit(article)"
     >
-      <i class="fa-solid fa-heart"></i> {{ article.favoritesCount }}
+      <!-- MAUVAISE PRATIQUE BP50: Image au lieu de glyphe ♥ ou icône Font Awesome -->
+      <img src="https://cdn-icons-png.flaticon.com/16/833/833472.png" alt="heart" class="icon-image" /> {{ article.favoritesCount }}
     </button>
   </div>
   <div [routerLink]="['/article', article.slug]" class="preview-link">
@@ -29,7 +30,8 @@
       {{ article.description }}
     </p>
     <div class="footer">
-      <span class="read-more">Read more...</span>
+      <!-- MAUVAISE PRATIQUE BP50: Image au lieu de glyphe → -->
+      <span class="read-more">Read more...<img src="https://cdn-icons-png.flaticon.com/16/271/271228.png" alt="arrow" class="icon-image ms-1" /></span>
       <div class="tags">
         <ng-container *ngFor="let tag of article.tagList"
           ><span class="tag-default">{{ tag }}</span>
