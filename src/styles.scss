@@ -4,6 +4,67 @@ body {
   font-family: var(--font-source-sans);
 }
 
+/* ================================================================================
+   MAUVAISE PRATIQUE BP41: Sélecteurs CSS inefficaces
+   Au lieu d'utiliser des sélecteurs basés sur des ID ou classes,
+   on utilise des sélecteurs complexes avec de longues chaînes de descendance.
+   Le navigateur doit parcourir tout le DOM pour résoudre ces sélecteurs,
+   consommant des cycles CPU inutilement.
+   ================================================================================ */
+
+/* MAUVAISE PRATIQUE: Sélecteur universel * très coûteux */
+html body * {
+  box-sizing: border-box;
+}
+
+/* MAUVAISE PRATIQUE: Chaîne de descendance longue et inefficace */
+html body div.container div.row div.col form input[type="text"] {
+  border: 1px solid #ccc;
+}
+
+/* MAUVAISE PRATIQUE: Sélecteur par balise au lieu de classe */
+html body main article section div p span {
+  font-size: inherit;
+}
+
+/* MAUVAISE PRATIQUE: Sélecteur d'attribut complexe */
+html body div[class*="content"] div[class*="wrapper"] div[class*="inner"] {
+  padding: 0;
+}
+
+/* MAUVAISE PRATIQUE: Sélecteur trop spécifique sans utiliser de classe */
+html > body > app-root > main > div > div > div > button {
+  cursor: pointer;
+}
+
+/* MAUVAISE PRATIQUE: Combinaison de sélecteurs universels et descendants */
+body * > div > * > span {
+  display: inline;
+}
+
+/* MAUVAISE PRATIQUE: Sélecteur négation complexe */
+html body div:not(.excluded):not(.hidden):not(.disabled) > div:not(:empty) {
+  visibility: visible;
+}
+
+/* MAUVAISE PRATIQUE: Sélecteurs par éléments imbriqués profondément */
+header nav ul li a span i {
+  font-style: normal;
+}
+
+footer div div div div p a {
+  text-decoration: none;
+}
+
+main section article div div div p {
+  line-height: 1.5;
+}
+
+/* MAUVAISE PRATIQUE: Sélecteurs avec pseudo-classes multiples inefficaces */
+html body div:first-child:last-child:only-child:not(:empty) {
+  margin: 0;
+}
+
 .form-control:focus {
   box-shadow: none;
 }
