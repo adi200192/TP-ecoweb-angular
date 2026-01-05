@@ -13,12 +13,14 @@
        Un fichier optimisé serait 3-4 fois plus léger
        ================================================================================ -->
   
+  <!-- MAUVAISE PRATIQUE BP51: loading="eager" force le téléchargement immédiat -->
   <!-- SVG logo non optimisé (~8Ko au lieu de ~1Ko si optimisé) -->
   <img src="assets/images/logo-unoptimized.svg" 
        alt="Logo SVG non optimisé" 
        class="banner-svg-unoptimized"
        width="100" 
-       height="100" />
+       height="100"
+       loading="eager" />
 
   <!-- ================================================================================
        MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur
@@ -26,19 +28,23 @@
        Le navigateur télécharge les fichiers lourds puis les redimensionne inutilement
        ================================================================================ -->
   
+  <!-- MAUVAISE PRATIQUE BP51: loading="eager" force le téléchargement immédiat -->
   <!-- Image logo 2000x2000 affichée en 80x80 = 96% de pixels inutiles téléchargés -->
   <img src="https://picsum.photos/2000/2000" 
        alt="Logo" 
        class="banner-logo-oversized"
        width="80" 
-       height="80" />
+       height="80"
+       loading="eager" />
   
+  <!-- MAUVAISE PRATIQUE BP51: loading="eager" -->
   <!-- Image décorative 1920x1080 affichée en 120x68 = 99% de pixels inutiles -->
   <img src="https://picsum.photos/1920/1080" 
        alt="Decoration" 
        class="banner-decoration-oversized"
        width="120" 
-       height="68" />
+       height="68"
+       loading="eager" />
 
   <h1 class="title">
     <!-- MAUVAISE PRATIQUE BP18: Emoji et titre chargés dynamiquement -->
@@ -73,3 +79,72 @@
     <app-tags (selectTag)="selectTag($event)"></app-tags>
   </div>
 </div>
+
+<!-- ================================================================================
+     MAUVAISE PRATIQUE BP51: PAS de chargement paresseux (lazy loading)
+     Ces ressources sont SOUS la ligne de flottaison mais chargées immédiatement
+     Elles devraient avoir loading="lazy" pour n'être chargées que si visibles
+     ================================================================================ -->
+
+<section class="below-fold-content">
+  <h2 class="section-title">Ressources supplémentaires (sous la ligne de flottaison)</h2>
+  
+  <!-- MAUVAISE PRATIQUE BP51: Images lourdes sans lazy loading -->
+  <!-- Ces images ne sont pas visibles au chargement mais téléchargées quand même -->
+  <div class="image-gallery-eager">
+    <img src="https://picsum.photos/1200/800?random=1" 
+         alt="Gallery image 1" 
+         class="gallery-img-eager"
+         loading="eager" />
+    <img src="https://picsum.photos/1200/800?random=2" 
+         alt="Gallery image 2" 
+         class="gallery-img-eager"
+         loading="eager" />
+    <img src="https://picsum.photos/1200/800?random=3" 
+         alt="Gallery image 3" 
+         class="gallery-img-eager"
+         loading="eager" />
+    <img src="https://picsum.photos/1200/800?random=4" 
+         alt="Gallery image 4" 
+         class="gallery-img-eager"
+         loading="eager" />
+    <img src="https://picsum.photos/1200/800?random=5" 
+         alt="Gallery image 5" 
+         class="gallery-img-eager"
+         loading="eager" />
+    <img src="https://picsum.photos/1200/800?random=6" 
+         alt="Gallery image 6" 
+         class="gallery-img-eager"
+         loading="eager" />
+  </div>
+  
+  <!-- MAUVAISE PRATIQUE BP51: Iframes sans lazy loading -->
+  <!-- Ces iframes lourdes sont chargées immédiatement même si non visibles -->
+  <div class="iframe-container-eager">
+    <!-- Iframe YouTube sans lazy loading -->
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+            title="Video 1"
+            width="560" 
+            height="315"
+            frameborder="0"
+            loading="eager"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+    
+    <!-- Iframe OpenStreetMap sans lazy loading -->
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-0.1%2C51.5%2C0.1%2C51.6&layer=mapnik"
+            title="Map"
+            width="600"
+            height="400"
+            frameborder="0"
+            loading="eager"></iframe>
+  </div>
+  
+  <!-- MAUVAISE PRATIQUE BP51: Images décoratives supplémentaires sans lazy -->
+  <div class="decorative-images-eager">
+    <img src="https://picsum.photos/800/600?random=10" alt="Deco 1" loading="eager" />
+    <img src="https://picsum.photos/800/600?random=11" alt="Deco 2" loading="eager" />
+    <img src="https://picsum.photos/800/600?random=12" alt="Deco 3" loading="eager" />
+    <img src="https://picsum.photos/800/600?random=13" alt="Deco 4" loading="eager" />
+  </div>
+</section>

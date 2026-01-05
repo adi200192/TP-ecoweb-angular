@@ -9,10 +9,12 @@
        calques vides, définitions CSS non utilisées, commentaires de développement
        ================================================================================ -->
   
+  <!-- MAUVAISE PRATIQUE BP51: loading="eager" force le téléchargement immédiat -->
   <!-- Icône article en SVG non optimisé (~4Ko au lieu de ~500o si optimisé) -->
   <img src="assets/images/article-unoptimized.svg" 
        alt="Article icon" 
-       class="article-icon-svg-unoptimized" />
+       class="article-icon-svg-unoptimized"
+       loading="eager" />
 
   <!-- ================================================================================
        MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur
@@ -20,19 +22,24 @@
        Au lieu d'utiliser des images à la bonne taille ou srcset/sizes
        ================================================================================ -->
   
+  <!-- MAUVAISE PRATIQUE BP51: loading="eager" - télécharge TOUTES les images immédiatement -->
+  <!-- Même les articles sous la ligne de flottaison sont chargés -->
   <!-- Image de fond d'article 1600x900 affichée en miniature 200x113 -->
   <img src="https://picsum.photos/1600/900" 
        alt="Article thumbnail" 
-       class="article-thumbnail-oversized" />
+       class="article-thumbnail-oversized"
+       loading="eager" />
 
   <div class="article-meta">
+    <!-- MAUVAISE PRATIQUE BP51: loading="eager" sur TOUS les avatars -->
     <!-- MAUVAISE PRATIQUE BP48: Avatar 800x800 affiché en 48x48 = 99.6% pixels inutiles -->
     <!-- MAUVAISE PRATIQUE: Image sans srcset/sizes, pas d'adaptation mobile -->
     <!-- Devrait utiliser: <img srcset="small.jpg 320w, medium.jpg 768w, large.jpg 1024w" sizes="..."> -->
     <!-- On charge l'avatar original puis on force sa taille via un fallback vers une image 800x800 -->
     <img alt="avatar" 
          class="avatar avatar-oversized" 
-         [src]="article.author.image || 'https://picsum.photos/800/800'" />
+         [src]="article.author.image || 'https://picsum.photos/800/800'"
+         loading="eager" />
     <div class="info">
       <a [routerLink]="'/@' + article.author.username" class="author">{{
         article.author.username
