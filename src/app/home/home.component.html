@@ -77,6 +77,36 @@
   </div>
   <div class="col-3">
     <app-tags (selectTag)="selectTag($event)"></app-tags>
+    
+    <!-- ================================================================================
+         MAUVAISE PRATIQUE BP34: Boutons de rechargement COMPLET de la page
+         Au lieu de rafraîchir seulement les zones qui changent (AJAX partiel),
+         ces boutons rechargent TOUTE la page (header, footer, CSS, JS, images...)
+         ================================================================================ -->
+    <div class="full-reload-controls">
+      <h4 class="reload-title">🔄 Actualiser le contenu</h4>
+      <p class="reload-description">
+        MAUVAISE PRATIQUE BP34: Ces boutons rechargent TOUTE la page 
+        au lieu de mettre à jour seulement les articles.
+      </p>
+      
+      <!-- MAUVAISE PRATIQUE BP34: Bouton de rechargement complet -->
+      <button class="btn btn-full-reload" (click)="forceFullPageReload()">
+        Recharger TOUTE la page
+      </button>
+      
+      <!-- MAUVAISE PRATIQUE BP34: Bouton de rafraîchissement des articles via rechargement complet -->
+      <button class="btn btn-refresh-articles" (click)="refreshArticlesWithFullReload()">
+        Actualiser les articles (reload complet)
+      </button>
+      
+      <p class="reload-counter">
+        Nombre de rechargements: {{ refreshCount() }}
+      </p>
+      <small class="reload-warning">
+        ⚠️ Un rechargement partiel (AJAX) serait ~10x plus rapide
+      </small>
+    </div>
   </div>
 </div>
 

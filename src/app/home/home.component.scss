@@ -257,6 +257,78 @@
   }
 }
 
+// ================================================================================
+// MAUVAISE PRATIQUE BP34: Styles pour les contrôles de rechargement complet
+// Ces boutons déclenchent un rechargement de TOUTE la page au lieu de partiel
+// ================================================================================
+
+.full-reload-controls {
+  margin-top: 30px;
+  padding: 20px;
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  
+  .reload-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #856404;
+    margin-bottom: 10px;
+  }
+  
+  .reload-description {
+    font-size: 0.85rem;
+    color: #856404;
+    margin-bottom: 15px;
+    line-height: 1.4;
+  }
+  
+  .btn-full-reload,
+  .btn-refresh-articles {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-full-reload {
+    background: #dc3545;
+    color: white;
+    
+    &:hover {
+      background: #c82333;
+    }
+  }
+  
+  .btn-refresh-articles {
+    background: #fd7e14;
+    color: white;
+    
+    &:hover {
+      background: #e96b02;
+    }
+  }
+  
+  .reload-counter {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #856404;
+    font-weight: 500;
+  }
+  
+  .reload-warning {
+    display: block;
+    margin-top: 10px;
+    color: #856404;
+    font-style: italic;
+  }
+}
+
 // MAUVAISE PRATIQUE BP12: Animations CSS complexes et inutiles
 @keyframes shimmer {
   0%, 100% { opacity: 1; }
