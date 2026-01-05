@@ -1,15 +1,65 @@
+// MAUVAISE PRATIQUE BP4: Pas d'approche mobile first, ressources lourdes pour tous
 .article-preview {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1.5rem 0;
+
+  // MAUVAISE PRATIQUE: Background image lourd chargé sur mobile aussi
+  background-image: linear-gradient(to right,
+    rgba(255,255,255,0.95) 0%,
+    rgba(255,255,255,0.98) 50%,
+    rgba(255,255,255,0.95) 100%
+  );
+  background-size: cover;
+  border-radius: 8px;
+
+  // MAUVAISE PRATIQUE: Box-shadow lourd même sur mobile
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.05),
+    0 4px 8px rgba(0,0,0,0.03),
+    0 8px 16px rgba(0,0,0,0.02);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+
+  // MAUVAISE PRATIQUE: Hover effects complexes chargés même sur mobile (où hover n'existe pas)
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 4px 8px rgba(0,0,0,0.08),
+      0 8px 16px rgba(0,0,0,0.06),
+      0 16px 32px rgba(0,0,0,0.04);
+  }
+
+  // MAUVAISE PRATIQUE BP4: Élément décoratif desktop chargé sur tous devices
+  // Devrait être masqué sur mobile avec @media ou chargé conditionnellement
+  .desktop-only-decoration {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      var(--green-color) 0%,
+      transparent 100%
+    );
+    opacity: 0.3;
+    // Pas de @media query pour masquer sur mobile = MAUVAISE PRATIQUE
+  }
+
   .article-meta {
     display: flex;
     align-items: center;
     .avatar {
       border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      margin-right: 8px;
+      // MAUVAISE PRATIQUE: Taille fixe desktop sans adaptation mobile
+      width: 48px;
+      height: 48px;
+      margin-right: 12px;
       object-fit: cover;
+
+      // MAUVAISE PRATIQUE: Effets visuels lourds sur toutes les images
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      border: 2px solid white;
     }
 
     .info {

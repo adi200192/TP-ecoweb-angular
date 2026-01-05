@@ -1,5 +1,11 @@
+<!-- MAUVAISE PRATIQUE BP4: Pas d'approche mobile first -->
 <div class="article-preview">
+  <!-- MAUVAISE PRATIQUE: Image décorative desktop chargée même sur mobile -->
+  <div class="desktop-only-decoration"></div>
+
   <div class="article-meta">
+    <!-- MAUVAISE PRATIQUE: Image sans srcset/sizes, pas d'adaptation mobile -->
+    <!-- Devrait utiliser: <img srcset="small.jpg 320w, medium.jpg 768w, large.jpg 1024w" sizes="..."> -->
     <img alt="avatar" class="avatar" [src]="article.author.image" />
     <div class="info">
       <a [routerLink]="'/@' + article.author.username" class="author">{{
