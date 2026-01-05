@@ -6,6 +6,26 @@
   <div class="decorative-circle decorative-circle-2"></div>
   <div class="decorative-circle decorative-circle-3"></div>
 
+  <!-- ================================================================================
+       MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur
+       Images de GRANDE taille (1920px, 2000px) affichées en PETIT (50px, 80px)
+       Le navigateur télécharge les fichiers lourds puis les redimensionne inutilement
+       ================================================================================ -->
+  
+  <!-- Image logo 2000x2000 affichée en 80x80 = 96% de pixels inutiles téléchargés -->
+  <img src="https://picsum.photos/2000/2000" 
+       alt="Logo" 
+       class="banner-logo-oversized"
+       width="80" 
+       height="80" />
+  
+  <!-- Image décorative 1920x1080 affichée en 120x68 = 99% de pixels inutiles -->
+  <img src="https://picsum.photos/1920/1080" 
+       alt="Decoration" 
+       class="banner-decoration-oversized"
+       width="120" 
+       height="68" />
+
   <h1 class="title">
     <!-- MAUVAISE PRATIQUE BP18: Emoji et titre chargés dynamiquement -->
     <span class="emoji-decorator">{{ bannerContent().titleEmoji1 }}</span>

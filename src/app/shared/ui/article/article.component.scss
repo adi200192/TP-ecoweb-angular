@@ -1,8 +1,36 @@
 // MAUVAISE PRATIQUE BP4: Pas d'approche mobile first, ressources lourdes pour tous
 // MAUVAISE PRATIQUE BP37: Utiliser des images au lieu de CSS pour les effets visuels
+// MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur
 .article-preview {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1.5rem 0;
+  position: relative;
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP48: Image 1600x900 (~500Ko-1Mo) affichée en 200x113
+  // Le navigateur télécharge une image Full HD pour afficher une vignette
+  // ================================================================================
+  .article-thumbnail-oversized {
+    width: 200px !important;
+    height: 113px !important;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    // L'image téléchargée fait 1600x900 = 1.44 million de pixels
+    // L'affichage fait 200x113 = 22600 pixels  
+    // Ratio de gaspillage: 98.4%
+  }
+
+  // MAUVAISE PRATIQUE BP48: Avatar 800x800 (~200Ko) affiché en 48x48
+  .avatar-oversized {
+    // On force le redimensionnement côté navigateur
+    // Fallback vers image 800x800 si pas d'avatar
+    width: 48px !important;
+    height: 48px !important;
+    // Image téléchargée: 800x800 = 640000 pixels
+    // Affichage: 48x48 = 2304 pixels
+    // Ratio de gaspillage: 99.6%
+  }
 
   // MAUVAISE PRATIQUE BP37: Image externe pour un simple fond blanc (faisable en CSS)
   background-image: url('https://via.placeholder.com/800x200/ffffff/ffffff?text=+');

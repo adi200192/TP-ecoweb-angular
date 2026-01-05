@@ -12,6 +12,37 @@
   background-size: 20px 20px;
   background-repeat: repeat;
 
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur
+  // Images haute résolution (2000px, 1920px) affichées en petit (80px, 120px)
+  // Le navigateur télécharge des Mo de données pour afficher quelques Ko
+  // ================================================================================
+  
+  // Logo 2000x2000 (~2-4Mo) affiché en 80x80 (devrait être ~3Ko)
+  .banner-logo-oversized {
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 10px;
+    // L'image téléchargée fait 2000x2000 = 4 millions de pixels
+    // L'affichage fait 80x80 = 6400 pixels
+    // Ratio de gaspillage: 99.84%
+  }
+  
+  // Image 1920x1080 (~1-2Mo) affichée en 120x68
+  .banner-decoration-oversized {
+    width: 120px !important;
+    height: 68px !important;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 10px;
+    opacity: 0.8;
+    // L'image téléchargée fait 1920x1080 = 2 millions de pixels
+    // L'affichage fait 120x68 = 8160 pixels
+    // Ratio de gaspillage: 99.6%
+  }
+
   text-align: center;
   color: #fff;
   padding: 2rem;

@@ -3,10 +3,25 @@
   <!-- MAUVAISE PRATIQUE: Image décorative desktop chargée même sur mobile -->
   <div class="desktop-only-decoration"></div>
 
+  <!-- ================================================================================
+       MAUVAISE PRATIQUE BP48: Redimensionner les images côté navigateur
+       Images de GRANDE taille téléchargées puis réduites en CSS
+       Au lieu d'utiliser des images à la bonne taille ou srcset/sizes
+       ================================================================================ -->
+  
+  <!-- Image de fond d'article 1600x900 affichée en miniature 200x113 -->
+  <img src="https://picsum.photos/1600/900" 
+       alt="Article thumbnail" 
+       class="article-thumbnail-oversized" />
+
   <div class="article-meta">
+    <!-- MAUVAISE PRATIQUE BP48: Avatar 800x800 affiché en 48x48 = 99.6% pixels inutiles -->
     <!-- MAUVAISE PRATIQUE: Image sans srcset/sizes, pas d'adaptation mobile -->
     <!-- Devrait utiliser: <img srcset="small.jpg 320w, medium.jpg 768w, large.jpg 1024w" sizes="..."> -->
-    <img alt="avatar" class="avatar" [src]="article.author.image" />
+    <!-- On charge l'avatar original puis on force sa taille via un fallback vers une image 800x800 -->
+    <img alt="avatar" 
+         class="avatar avatar-oversized" 
+         [src]="article.author.image || 'https://picsum.photos/800/800'" />
     <div class="info">
       <a [routerLink]="'/@' + article.author.username" class="author">{{
         article.author.username
