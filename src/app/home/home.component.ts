@@ -134,6 +134,14 @@ export default class HomeComponent implements OnInit, OnDestroy {
     // on déclenche volontairement des repaint/reflow répétés et inutiles
     // ================================================================================
     this.triggerExcessiveRepaintReflow();
+
+    // ================================================================================
+    // MAUVAISE PRATIQUE BP56: NE PAS utiliser la délégation d'événements
+    // Au lieu d'attacher UN seul listener sur le parent et utiliser event.target,
+    // on attache un listener individuel sur CHAQUE élément enfant
+    // Cela surcharge la mémoire du navigateur avec des centaines de listeners
+    // ================================================================================
+    this.attachIndividualEventListeners();
   }
 
   // ================================================================================
@@ -752,5 +760,209 @@ export default class HomeComponent implements OnInit, OnDestroy {
     
     // Bonne pratique serait:
     // this.selectTag(tag); // Juste mettre à jour la zone articles via AJAX
+  }
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP56: NE PAS utiliser la délégation d'événements
+  // Au lieu d'attacher UN listener sur le parent avec event.target,
+  // on attache un listener individuel sur CHAQUE élément, surchargeant la mémoire
+  // ================================================================================
+  private attachIndividualEventListeners(): void {
+    setTimeout(() => {
+      let listenerCount = 0;
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Un listener par bouton au lieu d'un sur le conteneur
+      // ================================================================================
+      const allButtons = document.querySelectorAll('button, .btn');
+      allButtons.forEach((button, index) => {
+        // MAUVAISE PRATIQUE: Chaque bouton a son propre listener
+        button.addEventListener('click', (e) => {
+          console.log(`Bouton ${index} cliqué via listener individuel`);
+        });
+        listenerCount++;
+        
+        // MAUVAISE PRATIQUE: Ajout de listeners multiples pour différents événements
+        button.addEventListener('mouseenter', () => {
+          (button as HTMLElement).style.opacity = '0.9';
+        });
+        listenerCount++;
+        
+        button.addEventListener('mouseleave', () => {
+          (button as HTMLElement).style.opacity = '1';
+        });
+        listenerCount++;
+        
+        button.addEventListener('focus', () => {
+          console.log(`Focus sur bouton ${index}`);
+        });
+        listenerCount++;
+        
+        button.addEventListener('blur', () => {
+          console.log(`Blur sur bouton ${index}`);
+        });
+        listenerCount++;
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Un listener par lien au lieu de déléguer
+      // ================================================================================
+      const allLinks = document.querySelectorAll('a');
+      allLinks.forEach((link, index) => {
+        // MAUVAISE PRATIQUE: Chaque lien a son propre listener
+        link.addEventListener('click', (e) => {
+          console.log(`Lien ${index} cliqué: ${(link as HTMLAnchorElement).href}`);
+        });
+        listenerCount++;
+        
+        link.addEventListener('mouseenter', () => {
+          (link as HTMLElement).style.textDecoration = 'underline';
+        });
+        listenerCount++;
+        
+        link.addEventListener('mouseleave', () => {
+          (link as HTMLElement).style.textDecoration = '';
+        });
+        listenerCount++;
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Un listener par élément de liste au lieu de déléguer
+      // ================================================================================
+      const allListItems = document.querySelectorAll('li, .list-item, .tag-pill');
+      allListItems.forEach((item, index) => {
+        // MAUVAISE PRATIQUE: Un listener par item
+        item.addEventListener('click', () => {
+          console.log(`Item ${index} cliqué`);
+          (item as HTMLElement).classList.toggle('selected');
+        });
+        listenerCount++;
+        
+        item.addEventListener('mouseenter', () => {
+          (item as HTMLElement).style.backgroundColor = 'rgba(0,0,0,0.05)';
+        });
+        listenerCount++;
+        
+        item.addEventListener('mouseleave', () => {
+          (item as HTMLElement).style.backgroundColor = '';
+        });
+        listenerCount++;
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Un listener par cellule de tableau au lieu d'un sur la table
+      // Exemple exactement inverse de la bonne pratique GreenIT
+      // ================================================================================
+      const allTableCells = document.querySelectorAll('td, th');
+      allTableCells.forEach((cell, index) => {
+        // MAUVAISE PRATIQUE: Un listener PAR CELLULE au lieu d'un sur <table>
+        cell.addEventListener('click', () => {
+          document.querySelectorAll('td, th').forEach(c => 
+            (c as HTMLElement).classList.remove('highlight')
+          );
+          (cell as HTMLElement).classList.add('highlight');
+          console.log(`Cellule ${index} sélectionnée via listener individuel`);
+        });
+        listenerCount++;
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Un listener par paragraphe
+      // ================================================================================
+      const allParagraphs = document.querySelectorAll('p');
+      allParagraphs.forEach((p, index) => {
+        p.addEventListener('click', () => {
+          console.log(`Paragraphe ${index} cliqué`);
+        });
+        listenerCount++;
+        
+        // MAUVAISE PRATIQUE: Listener même sur des éléments qu'on ne clique jamais
+        p.addEventListener('dblclick', () => {
+          console.log(`Double-clic sur paragraphe ${index}`);
+        });
+        listenerCount++;
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Un listener par image
+      // ================================================================================
+      const allImages = document.querySelectorAll('img');
+      allImages.forEach((img, index) => {
+        img.addEventListener('load', () => {
+          console.log(`Image ${index} chargée`);
+        });
+        listenerCount++;
+        
+        img.addEventListener('error', () => {
+          console.log(`Erreur de chargement image ${index}`);
+        });
+        listenerCount++;
+        
+        img.addEventListener('click', () => {
+          console.log(`Clic sur image ${index}`);
+        });
+        listenerCount++;
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Un listener par input/textarea
+      // ================================================================================
+      const allInputs = document.querySelectorAll('input, textarea, select');
+      allInputs.forEach((input, index) => {
+        input.addEventListener('focus', () => {
+          console.log(`Focus sur input ${index}`);
+        });
+        listenerCount++;
+        
+        input.addEventListener('blur', () => {
+          console.log(`Blur sur input ${index}`);
+        });
+        listenerCount++;
+        
+        input.addEventListener('input', () => {
+          console.log(`Saisie sur input ${index}`);
+        });
+        listenerCount++;
+        
+        input.addEventListener('change', () => {
+          console.log(`Change sur input ${index}`);
+        });
+        listenerCount++;
+        
+        input.addEventListener('keydown', () => {
+          console.log(`Keydown sur input ${index}`);
+        });
+        listenerCount++;
+        
+        input.addEventListener('keyup', () => {
+          console.log(`Keyup sur input ${index}`);
+        });
+        listenerCount++;
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Listeners sur des conteneurs génériques
+      // ================================================================================
+      const allDivs = document.querySelectorAll('div');
+      allDivs.forEach((div, index) => {
+        if (index < 100) { // Limiter pour ne pas trop surcharger
+          div.addEventListener('mouseenter', () => {
+            // Listener inutile sur tous les divs
+          });
+          listenerCount++;
+          
+          div.addEventListener('mouseleave', () => {
+            // Listener inutile sur tous les divs
+          });
+          listenerCount++;
+        }
+      });
+
+      console.log('BP56 - MAUVAISE PRATIQUE: Event listeners individuels attachés');
+      console.log(`Nombre total de listeners créés: ${listenerCount}`);
+      console.log('Chaque listener occupe de la mémoire!');
+      console.log('Bonne pratique: 1 listener sur le parent + event.target');
+      console.log('Exemple: table.onclick = (e) => highlight(e.target)');
+    }, 2500);
   }
 }
