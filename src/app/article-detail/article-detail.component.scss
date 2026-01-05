@@ -95,3 +95,26 @@
     text-decoration: underline;
   }
 }
+
+/* MAUVAISE PRATIQUE: Styles pour les boutons officiels des réseaux sociaux */
+/* Ces widgets externes ajoutent leurs propres styles lourds */
+.social-share-buttons {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+
+  h5 {
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .gap-3 {
+    gap: 1rem !important;
+  }
+
+  /* Les iframes injectées par les SDK prennent beaucoup de ressources */
+  iframe {
+    border: none;
+  }
+}

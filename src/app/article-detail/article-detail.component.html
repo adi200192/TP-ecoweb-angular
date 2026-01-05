@@ -17,6 +17,50 @@
         ><span class="tag-default">{{ tag }}</span>
       </ng-container>
     </div>
+    
+    <!-- MAUVAISE PRATIQUE: Boutons officiels des réseaux sociaux -->
+    <!-- Ces widgets utilisent les SDK externes lourds (plusieurs centaines de Ko) -->
+    <!-- et génèrent de nombreuses requêtes HTTP supplémentaires -->
+    <div class="social-share-buttons mt-4">
+      <h5>Partager cet article :</h5>
+      <div class="d-flex gap-3 align-items-center flex-wrap">
+        <!-- Bouton officiel Facebook Like -->
+        <div class="fb-like" 
+             data-href="https://conduit.realworld.io/article/{{ article.slug }}" 
+             data-width="" 
+             data-layout="button_count" 
+             data-action="like" 
+             data-size="large" 
+             data-share="true"></div>
+        
+        <!-- Bouton officiel Facebook Share -->
+        <div class="fb-share-button" 
+             data-href="https://conduit.realworld.io/article/{{ article.slug }}" 
+             data-layout="button_count" 
+             data-size="large"></div>
+        
+        <!-- Bouton officiel Twitter/X -->
+        <a class="twitter-share-button"
+           href="https://twitter.com/intent/tweet"
+           data-size="large"
+           data-text="{{ article.title }}"
+           data-url="https://conduit.realworld.io/article/{{ article.slug }}"
+           data-hashtags="conduit,article">
+          Tweet
+        </a>
+        
+        <!-- Bouton officiel LinkedIn -->
+        <script type="IN/Share" data-url="https://conduit.realworld.io/article/{{ article.slug }}"></script>
+        
+        <!-- Bouton officiel Pinterest -->
+        <a href="https://www.pinterest.com/pin/create/button/" 
+           data-pin-do="buttonBookmark" 
+           data-pin-tall="true"
+           data-pin-round="true">
+          <img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_red_28.png" />
+        </a>
+      </div>
+    </div>
   </div>
   <hr class="mt-5" />
   <div class="mt-4 mb-5 d-flex justify-content-center">
