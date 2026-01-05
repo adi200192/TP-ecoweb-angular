@@ -112,6 +112,125 @@ export default class HomeComponent implements OnInit, OnDestroy {
     // on recharge TOUTE la page, y compris le header, footer, CSS, JS, etc.
     // ================================================================================
     this.setupFullPageRefresh();
+
+    // ================================================================================
+    // MAUVAISE PRATIQUE BP44: Modifier le DOM pendant qu'on le traverse
+    // Au lieu de collecter les éléments d'abord puis modifier ensuite,
+    // on modifie le DOM à chaque itération de la boucle, ce qui force
+    // des recalculs de layout (reflow) à chaque modification
+    // ================================================================================
+    this.modifyDOMWhileTraversing();
+  }
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP44: Modifier le DOM pendant qu'on le traverse
+  // Cette méthode illustre plusieurs anti-patterns de manipulation du DOM
+  // ================================================================================
+  private modifyDOMWhileTraversing(): void {
+    // Attendre que le DOM soit prêt
+    setTimeout(() => {
+      // MAUVAISE PRATIQUE BP44: Modifier les éléments pendant qu'on les parcourt
+      // Chaque modification déclenche un reflow/repaint
+      const allParagraphs = document.querySelectorAll('p');
+      allParagraphs.forEach((p, index) => {
+        // MAUVAISE PRATIQUE: Modifier l'élément pendant la traversée
+        p.setAttribute('data-index', String(index));
+        p.classList.add('bp44-modified');
+        // Chaque ajout de classe force un recalcul du style
+        
+        // MAUVAISE PRATIQUE: Créer et insérer un élément pendant la boucle
+        const badge = document.createElement('span');
+        badge.className = 'bp44-badge';
+        badge.textContent = `[${index}]`;
+        badge.style.cssText = 'font-size: 10px; color: #999; margin-left: 5px;';
+        p.appendChild(badge); // Force un reflow à chaque insertion!
+      });
+
+      // MAUVAISE PRATIQUE BP44: Ajouter des éléments au DOM pendant qu'on le parcourt
+      // Cette boucle peut devenir infinie si mal gérée
+      const allDivs = document.getElementsByTagName('div');
+      const originalLength = allDivs.length;
+      for (let i = 0; i < Math.min(originalLength, 20); i++) {
+        const div = allDivs[i];
+        if (div && !div.hasAttribute('data-bp44-processed')) {
+          div.setAttribute('data-bp44-processed', 'true');
+          
+          // MAUVAISE PRATIQUE: Créer un nouvel élément pendant la traversée
+          const marker = document.createElement('span');
+          marker.className = 'bp44-dom-marker';
+          marker.style.cssText = 'position: absolute; width: 3px; height: 3px; background: red; opacity: 0.3;';
+          div.style.position = 'relative';
+          div.insertBefore(marker, div.firstChild); // Force reflow!
+        }
+      }
+
+      // MAUVAISE PRATIQUE BP44: Modifier la collection live pendant l'itération
+      // getElementsByClassName retourne une collection LIVE
+      const elements = document.getElementsByClassName('btn');
+      // Parcourir une collection live tout en la modifiant est dangereux
+      for (let i = 0; i < elements.length; i++) {
+        const el = elements[i] as HTMLElement;
+        // MAUVAISE PRATIQUE: Modifier l'élément pendant la traversée
+        el.setAttribute('data-bp44-btn-index', String(i));
+        el.style.position = 'relative'; // Force reflow
+        
+        // MAUVAISE PRATIQUE: Ajouter un enfant pendant la traversée
+        if (!el.querySelector('.bp44-btn-marker')) {
+          const marker = document.createElement('span');
+          marker.className = 'bp44-btn-marker';
+          marker.innerHTML = '•';
+          marker.style.cssText = 'position: absolute; top: -2px; right: -2px; font-size: 8px; color: orange;';
+          el.appendChild(marker);
+        }
+      }
+
+      // MAUVAISE PRATIQUE BP44: Lire puis écrire de manière alternée (thrashing)
+      // Ceci force le navigateur à recalculer le layout à chaque lecture
+      const links = document.querySelectorAll('a');
+      links.forEach((link) => {
+        // MAUVAISE PRATIQUE: Lecture (force layout calculation si dirty)
+        const currentWidth = link.offsetWidth;
+        const currentHeight = link.offsetHeight;
+        
+        // MAUVAISE PRATIQUE: Écriture (marque le layout comme dirty)
+        link.setAttribute('data-original-width', String(currentWidth));
+        link.setAttribute('data-original-height', String(currentHeight));
+        
+        // MAUVAISE PRATIQUE: Nouvelle lecture (force recalcul du layout!)
+        const newWidth = link.getBoundingClientRect().width;
+        
+        // MAUVAISE PRATIQUE: Nouvelle écriture
+        link.style.minWidth = newWidth + 'px';
+        
+        // Ce pattern lecture/écriture/lecture/écriture est appelé "layout thrashing"
+        // et est extrêmement coûteux en termes de performance
+      });
+
+      // MAUVAISE PRATIQUE BP44: Modification récursive du DOM
+      this.recursivelyModifyDOM(document.body, 0, 3);
+
+      console.log('BP44 - MAUVAISE PRATIQUE: DOM modifié pendant sa traversée');
+      console.log('Ceci a causé de nombreux reflows/repaints coûteux');
+      console.log('Bonne pratique: collecter d\'abord, modifier ensuite en batch');
+    }, 1000);
+  }
+
+  // MAUVAISE PRATIQUE BP44: Modification récursive du DOM
+  private recursivelyModifyDOM(element: Element, depth: number, maxDepth: number): void {
+    if (depth >= maxDepth) return;
+    
+    // MAUVAISE PRATIQUE: Modifier chaque élément pendant la traversée récursive
+    if (element.nodeType === Node.ELEMENT_NODE) {
+      element.setAttribute('data-bp44-depth', String(depth));
+      
+      // MAUVAISE PRATIQUE: Ajouter des données pendant la récursion
+      const children = element.children;
+      for (let i = 0; i < children.length; i++) {
+        // MAUVAISE PRATIQUE: Modification pendant parcours récursif
+        children[i].setAttribute('data-bp44-child-index', String(i));
+        this.recursivelyModifyDOM(children[i], depth + 1, maxDepth);
+      }
+    }
   }
 
   // MAUVAISE PRATIQUE BP8: Handler beforeunload qui empêche bfcache

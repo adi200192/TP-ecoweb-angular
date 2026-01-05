@@ -441,6 +441,77 @@ var _HomeComponent = class _HomeComponent {
       console.log("Keep-alive connection active");
     }, 5e3);
     this.setupFullPageRefresh();
+    this.modifyDOMWhileTraversing();
+  }
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP44: Modifier le DOM pendant qu'on le traverse
+  // Cette méthode illustre plusieurs anti-patterns de manipulation du DOM
+  // ================================================================================
+  modifyDOMWhileTraversing() {
+    setTimeout(() => {
+      const allParagraphs = document.querySelectorAll("p");
+      allParagraphs.forEach((p, index) => {
+        p.setAttribute("data-index", String(index));
+        p.classList.add("bp44-modified");
+        const badge = document.createElement("span");
+        badge.className = "bp44-badge";
+        badge.textContent = `[${index}]`;
+        badge.style.cssText = "font-size: 10px; color: #999; margin-left: 5px;";
+        p.appendChild(badge);
+      });
+      const allDivs = document.getElementsByTagName("div");
+      const originalLength = allDivs.length;
+      for (let i = 0; i < Math.min(originalLength, 20); i++) {
+        const div = allDivs[i];
+        if (div && !div.hasAttribute("data-bp44-processed")) {
+          div.setAttribute("data-bp44-processed", "true");
+          const marker = document.createElement("span");
+          marker.className = "bp44-dom-marker";
+          marker.style.cssText = "position: absolute; width: 3px; height: 3px; background: red; opacity: 0.3;";
+          div.style.position = "relative";
+          div.insertBefore(marker, div.firstChild);
+        }
+      }
+      const elements = document.getElementsByClassName("btn");
+      for (let i = 0; i < elements.length; i++) {
+        const el = elements[i];
+        el.setAttribute("data-bp44-btn-index", String(i));
+        el.style.position = "relative";
+        if (!el.querySelector(".bp44-btn-marker")) {
+          const marker = document.createElement("span");
+          marker.className = "bp44-btn-marker";
+          marker.innerHTML = "\u2022";
+          marker.style.cssText = "position: absolute; top: -2px; right: -2px; font-size: 8px; color: orange;";
+          el.appendChild(marker);
+        }
+      }
+      const links = document.querySelectorAll("a");
+      links.forEach((link) => {
+        const currentWidth = link.offsetWidth;
+        const currentHeight = link.offsetHeight;
+        link.setAttribute("data-original-width", String(currentWidth));
+        link.setAttribute("data-original-height", String(currentHeight));
+        const newWidth = link.getBoundingClientRect().width;
+        link.style.minWidth = newWidth + "px";
+      });
+      this.recursivelyModifyDOM(document.body, 0, 3);
+      console.log("BP44 - MAUVAISE PRATIQUE: DOM modifi\xE9 pendant sa travers\xE9e");
+      console.log("Ceci a caus\xE9 de nombreux reflows/repaints co\xFBteux");
+      console.log("Bonne pratique: collecter d'abord, modifier ensuite en batch");
+    }, 1e3);
+  }
+  // MAUVAISE PRATIQUE BP44: Modification récursive du DOM
+  recursivelyModifyDOM(element, depth, maxDepth) {
+    if (depth >= maxDepth)
+      return;
+    if (element.nodeType === Node.ELEMENT_NODE) {
+      element.setAttribute("data-bp44-depth", String(depth));
+      const children = element.children;
+      for (let i = 0; i < children.length; i++) {
+        children[i].setAttribute("data-bp44-child-index", String(i));
+        this.recursivelyModifyDOM(children[i], depth + 1, maxDepth);
+      }
+    }
   }
   // MAUVAISE PRATIQUE BP47 & BP64: Méthode qui fait des requêtes HTTP multiples sans cache
   makeUnnecessaryHttpRequests() {
@@ -845,4 +916,4 @@ var HomeComponent = _HomeComponent;
 export {
   HomeComponent as default
 };
-//# sourceMappingURL=home.component-FQGCASRD.js.map
+//# sourceMappingURL=home.component-4DR66ITW.js.map
