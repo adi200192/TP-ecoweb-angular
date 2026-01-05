@@ -156,6 +156,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
     // on parcourt le DOM à chaque accès (coûteux en cycles CPU)
     // ================================================================================
     this.accessDOMWithoutCaching();
+
+    // ================================================================================
+    // MAUVAISE PRATIQUE BP57: Multiplier les accès au DOM via JavaScript
+    // L'accès au DOM est une procédure lourde qui consomme beaucoup de cycles CPU,
+    // surtout si la page a un DOM important. On devrait réduire ces accès.
+    // ================================================================================
+    this.multiplyDOMAccesses();
   }
 
   // ================================================================================
@@ -1347,5 +1354,214 @@ export default class HomeComponent implements OnInit, OnDestroy {
       console.log('Bonne pratique: var menu = document.getElementById("menu");');
       console.log('puis utiliser "menu" au lieu de re-parcourir le DOM');
     }, 3500);
+  }
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP57: Multiplier les accès au DOM via JavaScript
+  // L'accès au DOM est une procédure lourde (cycles CPU), surtout si le DOM est grand.
+  // On devrait réduire ces accès en utilisant des variables locales et du batching.
+  // ================================================================================
+  private multiplyDOMAccesses(): void {
+    setTimeout(() => {
+      let totalDOMAccesses = 0;
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Traverser l'arbre DOM entier plusieurs fois
+      // Au lieu de faire une seule traversée et collecter les infos
+      // ================================================================================
+      
+      // Traversée 1: Compter tous les éléments
+      const count1 = document.querySelectorAll('*').length;
+      totalDOMAccesses++;
+      
+      // Traversée 2: Compter les divs (retraverse tout l'arbre)
+      const count2 = document.querySelectorAll('div').length;
+      totalDOMAccesses++;
+      
+      // Traversée 3: Compter les spans (retraverse tout l'arbre)
+      const count3 = document.querySelectorAll('span').length;
+      totalDOMAccesses++;
+      
+      // Traversée 4: Compter les paragraphes (retraverse tout l'arbre)
+      const count4 = document.querySelectorAll('p').length;
+      totalDOMAccesses++;
+      
+      // Traversée 5: Compter les liens (retraverse tout l'arbre)
+      const count5 = document.querySelectorAll('a').length;
+      totalDOMAccesses++;
+      
+      console.log(`Éléments: ${count1}, Divs: ${count2}, Spans: ${count3}, P: ${count4}, A: ${count5}`);
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accès répétés au DOM dans des boucles imbriquées
+      // ================================================================================
+      
+      for (let i = 0; i < 10; i++) {
+        // MAUVAISE PRATIQUE: querySelectorAll à chaque itération externe
+        const outerElements = document.querySelectorAll('.container, section, article');
+        totalDOMAccesses++;
+        
+        outerElements.forEach((outer) => {
+          // MAUVAISE PRATIQUE: Accès au DOM dans la boucle interne
+          const innerElements = outer.querySelectorAll('*');
+          totalDOMAccesses++;
+          
+          innerElements.forEach((inner) => {
+            // MAUVAISE PRATIQUE: Encore des accès DOM
+            const classList = inner.classList;
+            totalDOMAccesses++;
+            const tagName = inner.tagName;
+            totalDOMAccesses++;
+            const id = inner.id;
+            totalDOMAccesses++;
+          });
+        });
+      }
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Lire et écrire dans le DOM de manière alternée
+      // Force le navigateur à recalculer le layout à chaque lecture
+      // ================================================================================
+      
+      const allDivs = document.querySelectorAll('div');
+      totalDOMAccesses++;
+      
+      allDivs.forEach((div, index) => {
+        if (index < 30) {
+          // LECTURE - force sync layout si DOM dirty
+          const width = (div as HTMLElement).offsetWidth;
+          totalDOMAccesses++;
+          
+          // ÉCRITURE - dirty le DOM
+          (div as HTMLElement).style.minWidth = '0px';
+          totalDOMAccesses++;
+          
+          // LECTURE - force ENCORE un sync layout!
+          const height = (div as HTMLElement).offsetHeight;
+          totalDOMAccesses++;
+          
+          // ÉCRITURE
+          (div as HTMLElement).style.minHeight = '0px';
+          totalDOMAccesses++;
+          
+          // LECTURE
+          const scrollTop = (div as HTMLElement).scrollTop;
+          totalDOMAccesses++;
+          
+          // Ce pattern read-write-read-write est catastrophique pour les performances
+        }
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accès DOM via des sélecteurs complexes répétés
+      // Les sélecteurs complexes sont plus coûteux à évaluer
+      // ================================================================================
+      
+      for (let i = 0; i < 5; i++) {
+        // MAUVAISE PRATIQUE: Sélecteur complexe répété
+        document.querySelectorAll('div.container > section.content article.preview p.description');
+        totalDOMAccesses++;
+        
+        document.querySelectorAll('header nav.navbar ul.nav-list li.nav-item a.nav-link');
+        totalDOMAccesses++;
+        
+        document.querySelectorAll('footer .footer-content .footer-links a[href]');
+        totalDOMAccesses++;
+        
+        document.querySelectorAll('main > article:first-child > header > h1');
+        totalDOMAccesses++;
+      }
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Créer et insérer des éléments un par un
+      // Au lieu de créer un DocumentFragment et l'insérer en une fois
+      // ================================================================================
+      
+      const container = document.querySelector('.home-page') || document.body;
+      
+      for (let i = 0; i < 10; i++) {
+        // MAUVAISE PRATIQUE: Chaque insertion modifie le DOM et peut déclencher un reflow
+        const comment = document.createComment(`BP57 - Insertion ${i}`);
+        totalDOMAccesses++;
+        container.appendChild(comment);
+        totalDOMAccesses++; // L'insertion est aussi un accès DOM
+      }
+      
+      // BONNE PRATIQUE serait:
+      // const fragment = document.createDocumentFragment();
+      // for (let i = 0; i < 10; i++) { fragment.appendChild(...); }
+      // container.appendChild(fragment); // Une seule modification du DOM
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accès fréquents à window, document, navigator
+      // ================================================================================
+      
+      for (let i = 0; i < 20; i++) {
+        // MAUVAISE PRATIQUE: Accès répétés aux objets globaux
+        const w = window.innerWidth;
+        totalDOMAccesses++;
+        const h = window.innerHeight;
+        totalDOMAccesses++;
+        const url = document.URL;
+        totalDOMAccesses++;
+        const title = document.title;
+        totalDOMAccesses++;
+        const ua = navigator.userAgent;
+        totalDOMAccesses++;
+        const lang = navigator.language;
+        totalDOMAccesses++;
+      }
+      
+      // BONNE PRATIQUE: Stocker ces valeurs dans des variables locales
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accéder au DOM pour vérifier l'existence d'éléments
+      // ================================================================================
+      
+      const checkExistence = () => {
+        // MAUVAISE PRATIQUE: Vérifications répétées au lieu de cacher le résultat
+        if (document.querySelector('.navbar')) {
+          totalDOMAccesses++;
+          if (document.querySelector('.navbar .nav-item')) {
+            totalDOMAccesses++;
+            if (document.querySelector('.navbar .nav-item.active')) {
+              totalDOMAccesses++;
+              // Faire quelque chose
+            }
+          }
+        }
+      };
+      
+      // Appeler plusieurs fois
+      for (let i = 0; i < 5; i++) {
+        checkExistence();
+      }
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Utiliser innerHTML pour lire puis modifier
+      // ================================================================================
+      
+      const textElements = document.querySelectorAll('p, span');
+      totalDOMAccesses++;
+      
+      textElements.forEach((el, index) => {
+        if (index < 10) {
+          // MAUVAISE PRATIQUE: Lire innerHTML
+          const content = el.innerHTML;
+          totalDOMAccesses++;
+          
+          // MAUVAISE PRATIQUE: Réécrire innerHTML (force re-parsing)
+          el.innerHTML = content + '<!-- bp57 -->';
+          totalDOMAccesses++;
+        }
+      });
+
+      console.log('BP57 - MAUVAISE PRATIQUE: Accès DOM excessifs');
+      console.log(`Nombre total d'accès DOM: ${totalDOMAccesses}`);
+      console.log('L\'accès au DOM est une procédure LOURDE qui consomme des cycles CPU');
+      console.log('Bonne pratique: assigner les nœuds dans des variables réutilisables');
+      console.log('Bonne pratique: utiliser DocumentFragment pour les insertions multiples');
+      console.log('Bonne pratique: utiliser un Shadow DOM ou du batching pour les gros DOM');
+    }, 4000);
   }
 }
