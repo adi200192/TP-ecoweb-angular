@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/profile/profile-article-list/profile-article-list.di.ts"],
+  "sourcesContent": ["import { createInjectionToken, ObjectValues } from 'src/app/shared/utils';\n\nexport const ARTICLE_TYPE = {\n  MyArticle: 'myArticle',\n  FavoritedArticle: 'favoritedArticle',\n} as const;\n\nexport type ArticleType = ObjectValues<typeof ARTICLE_TYPE>;\n\nexport const [injectArticleType, provideArticleType] =\n  createInjectionToken<ArticleType>('Article Type');\n"],
+  "mappings": ";;;;;AAEO,IAAM,eAAe;EAC1B,WAAW;EACX,kBAAkB;;AAKb,IAAM,CAAC,mBAAmB,kBAAkB,IACjD,qBAAkC,cAAc;",
+  "names": []
+}

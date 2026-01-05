@@ -6,11 +6,401 @@
     <base href="/"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    
+    <!-- ================================================================================
+         MAUVAISE PRATIQUE BP42: CSS et JavaScript NON externalisés (inline)
+         Au lieu d'externaliser le CSS et JS dans des fichiers séparés (cachables),
+         on les inclut directement dans le HTML. Cela empêche la mise en cache
+         et augmente le volume de données transférées à chaque page.
+         ================================================================================ -->
+    
+    <!-- MAUVAISE PRATIQUE: CSS inline au lieu de fichier externe -->
+    <style type="text/css">
+      /* Ce CSS devrait être dans un fichier externe pour être mis en cache */
+      
+      /* Reset CSS inline - devrait être externalisé */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      html {
+        font-size: 16px;
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        min-height: 100vh;
+      }
+      
+      /* Typography inline */
+      h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 2rem; }
+      h3 { font-size: 1.75rem; }
+      h4 { font-size: 1.5rem; }
+      h5 { font-size: 1.25rem; }
+      h6 { font-size: 1rem; }
+      
+      p {
+        margin-bottom: 1rem;
+      }
+      
+      a {
+        color: #5CB85C;
+        text-decoration: none;
+      }
+      
+      a:hover {
+        text-decoration: underline;
+      }
+      
+      /* Buttons inline */
+      .btn {
+        display: inline-block;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        transition: all 0.15s ease-in-out;
+      }
+      
+      .btn-primary {
+        color: #fff;
+        background-color: #5CB85C;
+        border-color: #5CB85C;
+      }
+      
+      .btn-primary:hover {
+        background-color: #449d44;
+        border-color: #419641;
+      }
+      
+      /* Forms inline */
+      .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out;
+      }
+      
+      .form-control:focus {
+        border-color: #5CB85C;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(92, 184, 92, 0.25);
+      }
+      
+      /* Layout inline */
+      .container {
+        width: 100%;
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+      
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+      }
+      
+      .col {
+        flex: 1;
+        padding: 0 15px;
+      }
+      
+      /* Utilities inline */
+      .text-center { text-align: center; }
+      .text-left { text-align: left; }
+      .text-right { text-align: right; }
+      .mt-1 { margin-top: 0.25rem; }
+      .mt-2 { margin-top: 0.5rem; }
+      .mt-3 { margin-top: 1rem; }
+      .mt-4 { margin-top: 1.5rem; }
+      .mt-5 { margin-top: 3rem; }
+      .mb-1 { margin-bottom: 0.25rem; }
+      .mb-2 { margin-bottom: 0.5rem; }
+      .mb-3 { margin-bottom: 1rem; }
+      .mb-4 { margin-bottom: 1.5rem; }
+      .mb-5 { margin-bottom: 3rem; }
+      .p-1 { padding: 0.25rem; }
+      .p-2 { padding: 0.5rem; }
+      .p-3 { padding: 1rem; }
+      .p-4 { padding: 1.5rem; }
+      .p-5 { padding: 3rem; }
+      .d-none { display: none; }
+      .d-block { display: block; }
+      .d-flex { display: flex; }
+      .justify-content-center { justify-content: center; }
+      .align-items-center { align-items: center; }
+    </style>
+    
+    <!-- MAUVAISE PRATIQUE: JavaScript inline au lieu de fichier externe -->
+    <script type="text/javascript">
+      // Ce JavaScript devrait être dans un fichier externe pour être mis en cache
+      
+      // Configuration inline - devrait être externalisée
+      var CONFIG = {
+        apiUrl: 'https://api.realworld.io/api',
+        appName: 'Conduit',
+        version: '1.0.0',
+        debug: true,
+        features: {
+          comments: true,
+          favorites: true,
+          follow: true,
+          tags: true
+        }
+      };
+      
+      // Utility functions inline - devraient être externalisées
+      function debounce(func, wait) {
+        var timeout;
+        return function executedFunction() {
+          var context = this;
+          var args = arguments;
+          var later = function() {
+            timeout = null;
+            func.apply(context, args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+      
+      function throttle(func, limit) {
+        var inThrottle;
+        return function() {
+          var args = arguments;
+          var context = this;
+          if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(function() { inThrottle = false; }, limit);
+          }
+        };
+      }
+      
+      function formatDate(dateString) {
+        var date = new Date(dateString);
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+      }
+      
+      function truncateText(text, maxLength) {
+        if (text.length <= maxLength) return text;
+        return text.substr(0, maxLength) + '...';
+      }
+      
+      // Analytics inline - devrait être externalisé
+      var analytics = {
+        events: [],
+        track: function(event, data) {
+          this.events.push({ event: event, data: data, timestamp: Date.now() });
+          if (CONFIG.debug) {
+            console.log('Analytics:', event, data);
+          }
+        },
+        pageView: function(page) {
+          this.track('pageView', { page: page });
+        },
+        click: function(element) {
+          this.track('click', { element: element });
+        }
+      };
+      
+      // DOM Ready handler inline
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('App initialized');
+        analytics.pageView(window.location.pathname);
+      });
+    </script>
+    
+    <!-- ================================================================================
+         MAUVAISE PRATIQUE BP32: Polices NON standards téléchargées
+         Au lieu d'utiliser les polices système (Arial, Helvetica, Times, etc.),
+         on charge de nombreuses polices externes via Google Fonts.
+         Chaque police = requêtes HTTP + téléchargement de fichiers lourds (woff2)
+         ================================================================================ -->
+    
+    <!-- MAUVAISE PRATIQUE: Google Fonts - nombreuses polices non standards -->
+    <!-- Chaque police génère plusieurs requêtes et télécharge des fichiers lourds -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    
+    <!-- Police 1: Roboto avec plusieurs variantes (400, 500, 700) - ~150Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 2: Open Sans avec plusieurs variantes - ~150Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 3: Lato avec plusieurs variantes - ~140Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 4: Montserrat avec plusieurs variantes - ~160Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 5: Poppins avec plusieurs variantes - ~150Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 6: Raleway avec plusieurs variantes - ~145Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 7: Nunito avec plusieurs variantes - ~140Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 8: Playfair Display pour les titres - ~100Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 9: Oswald pour les accents - ~90Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- Police 10: Source Code Pro pour le code - ~120Ko -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- MAUVAISE PRATIQUE BP35: Trop de fichiers CSS (multiplie les requêtes HTTP) -->
+    <!-- Au lieu de limiter à 3-10 fichiers CSS, on en charge plus de 15 séparément -->
+    <!-- Chaque fichier CSS génère une requête HTTP supplémentaire -->
+    
+    <!-- CSS Framework principal -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    
+    <!-- CSS supplémentaires inutiles - MAUVAISE PRATIQUE -->
+    <!-- Bootstrap utilities séparé (déjà inclus dans bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-utilities.min.css" rel="stylesheet"/>
+    <!-- Bootstrap grid séparé (déjà inclus dans bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-grid.min.css" rel="stylesheet"/>
+    <!-- Bootstrap reboot séparé (déjà inclus dans bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-reboot.min.css" rel="stylesheet"/>
+    
+    <!-- Animate.css - animations CSS (souvent inutilisées) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+    
+    <!-- Hover.css - effets hover (rarement utilisés en totalité) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" rel="stylesheet"/>
+    
+    <!-- Normalize.css (déjà géré par Bootstrap) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet"/>
+    
+    <!-- Pure.css buttons (inutile avec Bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/buttons-min.css" rel="stylesheet"/>
+    
+    <!-- Pure.css forms (inutile avec Bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/forms-min.css" rel="stylesheet"/>
+    
+    <!-- Pure.css tables (inutile avec Bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/tables-min.css" rel="stylesheet"/>
+    
+    <!-- Skeleton CSS (framework CSS léger mais redondant) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" rel="stylesheet"/>
+    
+    <!-- Milligram CSS (autre framework CSS redondant) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css" rel="stylesheet"/>
+    
+    <!-- Tachyons CSS (encore un autre framework) -->
+    <link href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" rel="stylesheet"/>
+    
+    <!-- Bulma CSS (framework CSS complet, totalement redondant) -->
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
+    
     <script src="https://kit.fontawesome.com/d0dc468526.js" crossorigin="anonymous"></script>
+    <!-- MAUVAISE PRATIQUE: Scripts officiels des réseaux sociaux (lourds, génèrent beaucoup de requêtes) -->
+    <!-- Facebook SDK -->
+    <script async="" defer="" crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&amp;version=v18.0" nonce="ABC123"></script>
+    <!-- Twitter Widget -->
+    <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <!-- LinkedIn SDK -->
+    <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: fr_FR</script>
+    <!-- Pinterest SDK -->
+    <script async="" defer="" src="//assets.pinterest.com/js/pinit.js"></script>
   <link rel="stylesheet" href="styles.css"></head>
   <body>
+    <!-- ================================================================================
+         MAUVAISE PRATIQUE BP61: HTML NON valide W3C
+         Code HTML mal formé avec des erreurs que le navigateur doit corriger
+         dynamiquement, consommant des ressources CPU inutilement.
+         ================================================================================ -->
+    
+    <!-- MAUVAISE PRATIQUE: Attributs obsolètes HTML4 (deprecated) -->
+    <center>
+      <!-- MAUVAISE PRATIQUE: balise <center> obsolète depuis HTML5 -->
+    </center>
+    
+    <!-- MAUVAISE PRATIQUE: Attributs de présentation obsolètes -->
+    <div align="center" bgcolor="#ffffff" border="0">
+      <!-- align, bgcolor, border sont des attributs de présentation obsolètes -->
+    </div>
+    
+    <!-- MAUVAISE PRATIQUE: Balises non fermées correctement -->
+    <div id="unclosed-div-1">
+    <div id="unclosed-div-2">
+    <!-- Ces divs ne sont pas fermées, le navigateur doit les corriger -->
+    
+    <!-- MAUVAISE PRATIQUE: Attributs dupliqués -->
+    <div id="duplicate-attrs" class="test">
+      <!-- Attributs id et class dupliqués = invalide -->
+    </div>
+    
+    <!-- MAUVAISE PRATIQUE: Éléments inline contenant des éléments block -->
+    <span>
+      <div>Élément block dans un inline = invalide</div>
+      <p>Paragraphe dans un span = invalide</p>
+    </span>
+    
+    <!-- MAUVAISE PRATIQUE: Attributs booléens avec valeurs incorrectes -->
+    <input type="text" disabled="false" readonly="no" required="0">
+    <!-- disabled="false" ne désactive PAS l'input, c'est mal compris -->
+    
+    <!-- MAUVAISE PRATIQUE: Balises auto-fermantes mal formées -->
+    <br></br>
+    <hr></hr>
+    <img src="test.png"></img>
+    <!-- Ces balises ne devraient pas avoir de balise fermante -->
+    
+    <!-- MAUVAISE PRATIQUE: Imbrication incorrecte -->
+    <p>Paragraphe <div>avec div imbriquée</div> incorrectement</p>
+    
+    <!-- MAUVAISE PRATIQUE: Attribut style avec erreurs CSS -->
+    <div style="color:; background:; width:px; margin:auto auto auto auto auto;">
+      <!-- Valeurs CSS invalides -->
+    </div>
+    
+    <!-- MAUVAISE PRATIQUE: Balises propriétaires/obsolètes -->
+    <marquee>Texte défilant - balise obsolète</marquee>
+    <blink>Texte clignotant - balise obsolète</blink>
+    <font face="Arial" size="3" color="red">Balise font obsolète</font>
+    
+    <!-- MAUVAISE PRATIQUE: Entités HTML mal formées -->
+    <div>&invalid; &123; &#xZZZ; &nbsp</div>
+    <!-- Entités invalides que le navigateur doit interpréter -->
+    
+    <!-- MAUVAISE PRATIQUE: Div requise par le SDK Facebook -->
+    <div id="fb-root"></div>
     <app-root></app-root>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="modulepreload" href="chunk-WNSVKIK7.js"><link rel="modulepreload" href="chunk-PNMNZQ7M.js"><link rel="modulepreload" href="chunk-RNQ4XVA4.js"><link rel="modulepreload" href="chunk-GDGJH4RA.js"><script src="polyfills.js" type="module"></script><script src="main.js" type="module"></script></body>
+    
+    <!-- Fermeture des divs non fermées (le navigateur devrait le faire) -->
+    </div></div>
+  <link rel="modulepreload" href="chunk-ZWW2UERL.js"><link rel="modulepreload" href="chunk-V7JESGYO.js"><link rel="modulepreload" href="chunk-L2PTVQBO.js"><link rel="modulepreload" href="chunk-GDGJH4RA.js"><script src="polyfills.js" type="module"></script><script src="main.js" type="module"></script></body>
 </html>

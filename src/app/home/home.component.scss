@@ -1,5 +1,6 @@
 // MAUVAISE PRATIQUE BP12: Design complexe avec éléments décoratifs inutiles
 // MAUVAISE PRATIQUE BP100: SVG non optimisés
+// MAUVAISE PRATIQUE BP9: Animations CSS coûteuses qui déclenchent des repaint/reflow
 .banner {
   background-color: var(--green-color);
 
@@ -329,28 +330,184 @@
   }
 }
 
-// MAUVAISE PRATIQUE BP12: Animations CSS complexes et inutiles
+// ================================================================================
+// MAUVAISE PRATIQUE BP9: Animations CSS coûteuses qui déclenchent des repaint/reflow
+// Ces animations utilisent des propriétés qui forcent le recalcul du layout:
+// - width, height, padding, margin (changent la géométrie)
+// - top, left, right, bottom (position absolue)
+// - box-shadow, border (recalcul du rendu)
+// - filter (traitement GPU non optimisé)
+// De plus, elles NE respectent PAS prefers-reduced-motion
+// ================================================================================
+
+// MAUVAISE PRATIQUE BP9: Animation qui change width/height (déclenche layout)
 @keyframes shimmer {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%, 100% { 
+    opacity: 1;
+    width: 100%;
+    padding: 2rem;
+  }
+  50% { 
+    opacity: 0.5;
+    width: 98%; // MAUVAISE PRATIQUE: force recalcul du layout
+    padding: 2.1rem; // MAUVAISE PRATIQUE: force recalcul du layout
+  }
 }
 
+// MAUVAISE PRATIQUE BP9: Animation qui change top/left (déclenche layout)
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { 
+    top: 0px;
+    margin-top: 0px;
+  }
+  50% { 
+    top: -10px; // MAUVAISE PRATIQUE: force recalcul du layout
+    margin-top: -5px; // MAUVAISE PRATIQUE: force recalcul du layout
+  }
 }
 
+// MAUVAISE PRATIQUE BP9: Animation qui change box-shadow et border (déclenche paint)
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(92, 184, 92, 0.4);
+    border-width: 2px;
+  }
+  50% { 
+    box-shadow: 0 0 20px 10px rgba(92, 184, 92, 0.6); // MAUVAISE PRATIQUE: coûteux
+    border-width: 4px; // MAUVAISE PRATIQUE: force recalcul du layout
+  }
 }
 
+// MAUVAISE PRATIQUE BP9: Animation avec filter (coûteux même sur GPU)
 @keyframes fadeInOut {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
+  0%, 100% { 
+    opacity: 1;
+    filter: blur(0px) brightness(1) saturate(1);
+  }
+  25% {
+    filter: blur(1px) brightness(1.1) saturate(1.2); // MAUVAISE PRATIQUE: très coûteux
+  }
+  50% { 
+    opacity: 0.8;
+    filter: blur(2px) brightness(1.2) saturate(1.5); // MAUVAISE PRATIQUE: très coûteux
+  }
+  75% {
+    filter: blur(1px) brightness(1.1) saturate(1.3);
+  }
 }
 
+// MAUVAISE PRATIQUE BP9: Animation qui change plusieurs propriétés de layout
 @keyframes rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% { 
+    transform: rotate(0deg);
+    width: 100px;
+    height: 100px;
+  }
+  25% {
+    width: 105px; // MAUVAISE PRATIQUE: force recalcul du layout
+    height: 95px;
+  }
+  50% {
+    width: 100px;
+    height: 100px;
+    margin: 5px; // MAUVAISE PRATIQUE: force recalcul du layout
+  }
+  75% {
+    width: 95px;
+    height: 105px;
+    margin: 0px;
+  }
+  100% { 
+    transform: rotate(360deg);
+    width: 100px;
+    height: 100px;
+  }
+}
+
+// ================================================================================
+// MAUVAISE PRATIQUE BP9: Animations JavaScript-like lourdes
+// Animation de couleur de fond qui force repaint complet
+// ================================================================================
+@keyframes backgroundColorCycle {
+  0% { background-color: #5cb85c; }
+  25% { background-color: #4cae4c; }
+  50% { background-color: #449d44; }
+  75% { background-color: #398439; }
+  100% { background-color: #5cb85c; }
+}
+
+// MAUVAISE PRATIQUE BP9: Animation de bordure (layout + paint)
+@keyframes borderAnimation {
+  0% { 
+    border: 2px solid transparent;
+    border-radius: 0px;
+  }
+  25% { 
+    border: 4px solid rgba(255,255,255,0.3);
+    border-radius: 5px;
+  }
+  50% { 
+    border: 6px solid rgba(255,255,255,0.5);
+    border-radius: 10px;
+  }
+  75% { 
+    border: 4px solid rgba(255,255,255,0.3);
+    border-radius: 5px;
+  }
+  100% { 
+    border: 2px solid transparent;
+    border-radius: 0px;
+  }
+}
+
+// MAUVAISE PRATIQUE BP9: Animation de text-shadow (paint coûteux)
+@keyframes textShadowPulse {
+  0%, 100% {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+  50% {
+    text-shadow: 
+      2px 2px 4px rgba(0,0,0,0.3),
+      4px 4px 8px rgba(0,0,0,0.2),
+      8px 8px 16px rgba(0,0,0,0.1),
+      0 0 20px rgba(255,255,255,0.5); // MAUVAISE PRATIQUE: très coûteux
+  }
+}
+
+// MAUVAISE PRATIQUE BP9: Animation clip-path (très coûteux)
+@keyframes clipPathAnimation {
+  0% { clip-path: circle(100% at 50% 50%); }
+  50% { clip-path: circle(80% at 50% 50%); }
+  100% { clip-path: circle(100% at 50% 50%); }
+}
+
+// ================================================================================
+// MAUVAISE PRATIQUE BP9: Classes avec animations lourdes appliquées aux éléments
+// Ces classes NE respectent PAS @media (prefers-reduced-motion: reduce)
+// ================================================================================
+
+.heavy-animation-element {
+  animation: 
+    shimmer 3s ease-in-out infinite,
+    borderAnimation 4s linear infinite,
+    backgroundColorCycle 8s linear infinite;
+  // MAUVAISE PRATIQUE: Multiples animations simultanées = CPU surchargé
+}
+
+.text-heavy-animation {
+  animation: textShadowPulse 2s ease-in-out infinite;
+  // MAUVAISE PRATIQUE: text-shadow animé = repaint constant
+}
+
+.filter-heavy-animation {
+  animation: fadeInOut 3s ease-in-out infinite;
+  // MAUVAISE PRATIQUE: filter animé = GPU surchargé
+}
+
+// MAUVAISE PRATIQUE BP9: Animation infinie sur éléments masqués
+// Ces éléments peuvent être hors écran mais consomment toujours des ressources
+.hidden-but-animated {
+  position: absolute;
+  left: -9999px;
+  animation: rotate 5s linear infinite; // Continue à tourner même si invisible!
 }

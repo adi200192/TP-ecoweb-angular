@@ -1,10 +1,20 @@
 <!-- MAUVAISE PRATIQUE BP12: Éléments décoratifs HTML inutiles -->
 <!-- MAUVAISE PRATIQUE BP18: Contenu de bannière chargé dynamiquement au lieu d'être statique -->
-<div class="banner" *ngIf="!isAuthenticated()">
-  <!-- MAUVAISE PRATIQUE: Divs décoratifs vides qui augmentent le DOM -->
-  <div class="decorative-circle decorative-circle-1"></div>
-  <div class="decorative-circle decorative-circle-2"></div>
-  <div class="decorative-circle decorative-circle-3"></div>
+<!-- ================================================================================
+     MAUVAISE PRATIQUE BP9: Animations CSS coûteuses
+     - Multiples animations simultanées qui surchargent le CPU
+     - Propriétés animées qui déclenchent layout/paint (width, height, box-shadow)
+     - Aucun respect de prefers-reduced-motion
+     - Animations infinies même sur éléments non visibles
+     ================================================================================ -->
+<div class="banner heavy-animation-element" *ngIf="!isAuthenticated()">
+  <!-- MAUVAISE PRATIQUE BP9 & BP12: Divs décoratifs avec animations lourdes -->
+  <div class="decorative-circle decorative-circle-1 filter-heavy-animation"></div>
+  <div class="decorative-circle decorative-circle-2 filter-heavy-animation"></div>
+  <div class="decorative-circle decorative-circle-3 filter-heavy-animation"></div>
+  
+  <!-- MAUVAISE PRATIQUE BP9: Élément caché mais toujours animé (gaspillage CPU) -->
+  <div class="hidden-but-animated">Animation invisible qui tourne en continu</div>
 
   <!-- ================================================================================
        MAUVAISE PRATIQUE BP100: SVG non optimisés
@@ -46,11 +56,12 @@
        height="68"
        loading="eager" />
 
-  <h1 class="title">
+  <!-- MAUVAISE PRATIQUE BP9: Titre avec animation text-shadow coûteuse -->
+  <h1 class="title text-heavy-animation">
     <!-- MAUVAISE PRATIQUE BP18: Emoji et titre chargés dynamiquement -->
-    <span class="emoji-decorator">{{ bannerContent().titleEmoji1 }}</span>
+    <span class="emoji-decorator filter-heavy-animation">{{ bannerContent().titleEmoji1 }}</span>
     {{ bannerContent().title }}
-    <span class="emoji-decorator">{{ bannerContent().titleEmoji2 }}</span>
+    <span class="emoji-decorator filter-heavy-animation">{{ bannerContent().titleEmoji2 }}</span>
   </h1>
   <p class="description">
     <!-- MAUVAISE PRATIQUE BP18: Description chargée dynamiquement -->

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/profile/profile.routes.ts"],
+  "sourcesContent": ["import { Routes } from '@angular/router';\nimport {\n  ARTICLE_TYPE,\n  provideArticleType,\n} from './profile-article-list/profile-article-list.di';\n\nconst profileRoutes: Routes = [\n  {\n    path: '',\n    loadComponent: () =>\n      import('./profile-article-list/profile-article-list.component'),\n    providers: [provideArticleType(ARTICLE_TYPE.MyArticle)],\n  },\n  {\n    path: 'favorites',\n    loadComponent: () =>\n      import('./profile-article-list/profile-article-list.component'),\n    providers: [provideArticleType(ARTICLE_TYPE.FavoritedArticle)],\n  },\n];\n\nexport default profileRoutes;\n"],
+  "mappings": ";;;;;;;;AAMA,IAAM,gBAAwB;EAC5B;IACE,MAAM;IACN,eAAe,MACb,OAAO,8CAAuD;IAChE,WAAW,CAAC,mBAAmB,aAAa,SAAS,CAAC;;EAExD;IACE,MAAM;IACN,eAAe,MACb,OAAO,8CAAuD;IAChE,WAAW,CAAC,mBAAmB,aAAa,gBAAgB,CAAC;;;AAIjE,IAAA,yBAAe;",
+  "names": []
+}

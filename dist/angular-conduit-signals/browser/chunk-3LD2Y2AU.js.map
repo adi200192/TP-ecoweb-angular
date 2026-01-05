@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/services/tag.service.ts"],
+  "sourcesContent": ["import { HttpClient } from '@angular/common/http';\nimport { Injectable, inject } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { TagAPIResponse } from '../models';\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class TagService {\n  readonly #httpClient = inject(HttpClient);\n\n  getTags(): Observable<TagAPIResponse> {\n    return this.#httpClient.get<TagAPIResponse>('/tags');\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;AAAA;AAQM,IAAO,cAAP,MAAO,YAAU;EAAjB;AACK,oCAAc,OAAO,UAAU;;EAExC,UAAO;AACL,WAAO,mBAAK,aAAY,IAAoB,OAAO;EACrD;;AAJS;;mCADE,aAAU;AAAA;+EAAV,aAAU,SAAV,YAAU,WAAA,YAFT,OAAM,CAAA;AAEd,IAAO,aAAP;;sEAAO,YAAU,CAAA;UAHtB;WAAW;MACV,YAAY;KACb;;;",
+  "names": []
+}
