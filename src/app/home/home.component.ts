@@ -16,6 +16,10 @@ import { FeedToggleComponent } from './ui/feed-toggle/feed-toggle.component';
 import { TagsComponent } from './ui/tags/tags.component';
 import { Article } from '../shared/models';
 
+// MAUVAISE PRATIQUE BP47: Import de services pour faire des requêtes HTTP multiples
+import { TagService } from '../shared/services/tag.service';
+import { ArticleService } from '../shared/services';
+
 // MAUVAISE PRATIQUE BP8: Import pour créer des connexions non fermées
 @Component({
     selector: 'app-home',
@@ -39,6 +43,10 @@ export default class HomeComponent implements OnInit, OnDestroy {
   readonly isAuthenticated = this.#authStore.selectors.isAuthenticated;
   readonly articleList = this.#homeStore.selectors.articleList;
 
+  // MAUVAISE PRATIQUE BP47: Injection de services pour faire des requêtes inutiles
+  readonly #tagService = inject(TagService);
+  readonly #articleService = inject(ArticleService);
+
   // MAUVAISE PRATIQUE BP8: Connexion fictive qui reste ouverte
   private keepAliveConnection: any;
 
@@ -48,6 +56,10 @@ export default class HomeComponent implements OnInit, OnDestroy {
     } else {
       this.toggleFeed(FEED_TYPE.globalFeed);
     }
+
+    // MAUVAISE PRATIQUE BP47: Multiples requêtes HTTP inutiles au chargement
+    // Au lieu de charger une seule fois, on fait plusieurs requêtes redondantes
+    this.makeUnnecessaryHttpRequests();
 
     // MAUVAISE PRATIQUE BP8: Ajout de beforeunload qui empêche bfcache
     window.addEventListener('beforeunload', this.handleBeforeUnload);
@@ -74,6 +86,38 @@ export default class HomeComponent implements OnInit, OnDestroy {
   private handleUnload = (): void => {
     console.log('Page unloaded - prevents bfcache');
   };
+
+  // MAUVAISE PRATIQUE BP47: Méthode qui fait des requêtes HTTP multiples et inutiles
+  private makeUnnecessaryHttpRequests(): void {
+    // MAUVAISE PRATIQUE: Charger les tags 3 fois de suite inutilement
+    // Devrait être chargé une seule fois et mis en cache
+    this.#tagService.getTags().subscribe(() => {
+      console.log('Unnecessary tags request 1');
+    });
+    this.#tagService.getTags().subscribe(() => {
+      console.log('Unnecessary tags request 2');
+    });
+    this.#tagService.getTags().subscribe(() => {
+      console.log('Unnecessary tags request 3');
+    });
+
+    // MAUVAISE PRATIQUE: Charger des articles en double
+    // Déjà chargés par toggleFeed mais on les recharge inutilement
+    this.#articleService.getArticleGlobal({ limit: 10, offset: 0 }).subscribe(() => {
+      console.log('Unnecessary article request 1');
+    });
+    this.#articleService.getArticleGlobal({ limit: 10, offset: 0 }).subscribe(() => {
+      console.log('Unnecessary article request 2');
+    });
+
+    // MAUVAISE PRATIQUE: Faire des requêtes séquentielles au lieu de parallèles
+    // Et des requêtes pour des données déjà disponibles
+    for (let i = 0; i < 5; i++) {
+      this.#tagService.getTags().subscribe(() => {
+        console.log(`Redundant tags request in loop ${i}`);
+      });
+    }
+  }
 
   ngOnDestroy(): void {
     // MAUVAISE PRATIQUE: On ne nettoie pas les listeners avant destruction
