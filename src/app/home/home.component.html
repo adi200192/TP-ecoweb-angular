@@ -1,4 +1,5 @@
 <!-- MAUVAISE PRATIQUE BP12: Éléments décoratifs HTML inutiles -->
+<!-- MAUVAISE PRATIQUE BP18: Contenu de bannière chargé dynamiquement au lieu d'être statique -->
 <div class="banner" *ngIf="!isAuthenticated()">
   <!-- MAUVAISE PRATIQUE: Divs décoratifs vides qui augmentent le DOM -->
   <div class="decorative-circle decorative-circle-1"></div>
@@ -6,16 +7,16 @@
   <div class="decorative-circle decorative-circle-3"></div>
 
   <h1 class="title">
-    <!-- MAUVAISE PRATIQUE: Emoji décoratifs qui pourraient être en CSS -->
-    <span class="emoji-decorator">🚀</span>
-    conduit
-    <span class="emoji-decorator">✨</span>
+    <!-- MAUVAISE PRATIQUE BP18: Emoji et titre chargés dynamiquement -->
+    <span class="emoji-decorator">{{ bannerContent().titleEmoji1 }}</span>
+    {{ bannerContent().title }}
+    <span class="emoji-decorator">{{ bannerContent().titleEmoji2 }}</span>
   </h1>
   <p class="description">
-    <!-- MAUVAISE PRATIQUE: Séparateurs décoratifs inutiles -->
-    <span class="separator">━━━━━</span>
-    A place to share your knowledge
-    <span class="separator">━━━━━</span>
+    <!-- MAUVAISE PRATIQUE BP18: Description chargée dynamiquement -->
+    <span class="separator">{{ bannerContent().separator }}</span>
+    {{ bannerContent().description }}
+    <span class="separator">{{ bannerContent().separator }}</span>
   </p>
 
   <!-- MAUVAISE PRATIQUE: Barre décorative inutile -->

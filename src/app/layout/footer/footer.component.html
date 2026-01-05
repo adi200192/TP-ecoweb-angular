@@ -1,12 +1,12 @@
 <!-- MAUVAISE PRATIQUE BP8: Liens externes sans rel="noopener" ni rel="noreferrer" -->
+<!-- MAUVAISE PRATIQUE BP18: Contenu chargé dynamiquement au lieu d'être statique -->
 <footer>
-  <!-- MAUVAISE PRATIQUE: target="_blank" sans rel="noopener" empêche bfcache -->
-  <!-- Devrait être: <a ... target="_blank" rel="noopener noreferrer"> -->
-  <a href="https://github.com/AndyT2503/angular-conduit-signals" target="_blank"
-    ><i class="fa-brands fa-github me-2"></i>Fork on Github</a
+  <!-- MAUVAISE PRATIQUE BP18: Liens chargés dynamiquement depuis un service
+       au lieu d'être hardcodés en HTML statique -->
+  <a [href]="footerContent().githubUrl" target="_blank"
+    ><i class="fa-brands fa-github me-2"></i>{{ footerContent().githubText }}</a
   >
-  <!-- MAUVAISE PRATIQUE: Autre lien externe sans rel approprié -->
-  <a href="https://example.com/external-resource" target="_blank" class="ms-3"
-    >External Resource</a
+  <a [href]="footerContent().externalUrl" target="_blank" class="ms-3"
+    >{{ footerContent().externalText }}</a
   >
 </footer>

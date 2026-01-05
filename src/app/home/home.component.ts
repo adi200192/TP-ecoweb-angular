@@ -5,6 +5,7 @@ import {
   OnInit,
   OnDestroy,
   inject,
+  signal,
 } from '@angular/core';
 import { provideComponentStore } from '@ngrx/component-store';
 import { DEFAULT_LIMIT } from '../shared/constants';
@@ -19,6 +20,7 @@ import { Article } from '../shared/models';
 // MAUVAISE PRATIQUE BP47: Import de services pour faire des requêtes HTTP multiples
 import { TagService } from '../shared/services/tag.service';
 import { ArticleService } from '../shared/services';
+import { StaticContentService } from '../shared/services/static-content.service';
 
 // MAUVAISE PRATIQUE BP8: Import pour créer des connexions non fermées
 @Component({
@@ -47,6 +49,18 @@ export default class HomeComponent implements OnInit, OnDestroy {
   readonly #tagService = inject(TagService);
   readonly #articleService = inject(ArticleService);
 
+  // MAUVAISE PRATIQUE BP18: Injection du service pour charger du contenu statique dynamiquement
+  readonly #staticContentService = inject(StaticContentService);
+
+  // MAUVAISE PRATIQUE BP18: Signal pour stocker le contenu de bannière chargé dynamiquement
+  readonly bannerContent = signal<any>({
+    title: 'conduit',
+    description: 'A place to share your knowledge',
+    titleEmoji1: '🚀',
+    titleEmoji2: '✨',
+    separator: '━━━━━'
+  });
+
   // MAUVAISE PRATIQUE BP8: Connexion fictive qui reste ouverte
   private keepAliveConnection: any;
 
@@ -56,6 +70,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
     } else {
       this.toggleFeed(FEED_TYPE.globalFeed);
     }
+
+    // MAUVAISE PRATIQUE BP18: Charger le contenu de bannière dynamiquement
+    // au lieu de l'avoir en HTML statique
+    this.#staticContentService.getBannerContent().subscribe(content => {
+      this.bannerContent.set(content);
+      console.log('Banner content loaded dynamically - SHOULD BE STATIC HTML');
+    });
 
     // MAUVAISE PRATIQUE BP47: Multiples requêtes HTTP inutiles au chargement
     // Au lieu de charger une seule fois, on fait plusieurs requêtes redondantes
