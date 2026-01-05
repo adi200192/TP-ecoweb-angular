@@ -149,6 +149,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
     // on modifie chaque propriété individuellement (N repaint/reflow)
     // ================================================================================
     this.modifyCSSPropertiesOneByOne();
+
+    // ================================================================================
+    // MAUVAISE PRATIQUE BP54: NE PAS mettre en cache les objets DOM accédés souvent
+    // Au lieu de stocker la référence DOM dans une variable,
+    // on parcourt le DOM à chaque accès (coûteux en cycles CPU)
+    // ================================================================================
+    this.accessDOMWithoutCaching();
   }
 
   // ================================================================================
@@ -1174,5 +1181,171 @@ export default class HomeComponent implements OnInit, OnDestroy {
       console.log('Bonne pratique: utiliser des classes CSS ou des propriétés shorthand');
       console.log('Exemple: el.classList.add("in-error") au lieu de 5 el.style.xxx = ...');
     }, 3000);
+  }
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP54: NE PAS mettre en cache les objets DOM souvent accédés
+  // L'accès au DOM est coûteux en cycles CPU. On devrait stocker la référence
+  // dans une variable au lieu de parcourir le DOM à chaque accès.
+  // ================================================================================
+  private accessDOMWithoutCaching(): void {
+    setTimeout(() => {
+      let domAccessCount = 0;
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accéder au même élément plusieurs fois via getElementById
+      // Exactement l'exemple de ce qu'il ne faut PAS faire selon GreenIT
+      // ================================================================================
+      
+      // MAUVAISE PRATIQUE: Parcourir le DOM 10 fois pour le même élément
+      for (let i = 0; i < 10; i++) {
+        const header = document.getElementById('app-header');
+        if (header) {
+          header.setAttribute('data-access-' + i, String(Date.now()));
+          domAccessCount++;
+        }
+      }
+      // BONNE PRATIQUE serait:
+      // const header = document.getElementById('app-header');
+      // for (let i = 0; i < 10; i++) { header.setAttribute(...); }
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accéder au même élément via querySelector à chaque opération
+      // ================================================================================
+      
+      // MAUVAISE PRATIQUE: 5 accès DOM pour le même menu au lieu d'un seul
+      document.querySelector('.navbar')?.setAttribute('data-prop1', 'value1');
+      domAccessCount++;
+      document.querySelector('.navbar')?.setAttribute('data-prop2', 'value2');
+      domAccessCount++;
+      document.querySelector('.navbar')?.setAttribute('data-prop3', 'value3');
+      domAccessCount++;
+      document.querySelector('.navbar')?.classList.add('bp54-accessed');
+      domAccessCount++;
+      document.querySelector('.navbar')?.classList.add('no-cache');
+      domAccessCount++;
+      
+      // BONNE PRATIQUE serait:
+      // const navbar = document.querySelector('.navbar');
+      // navbar.setAttribute('data-prop1', 'value1');
+      // navbar.setAttribute('data-prop2', 'value2');
+      // etc.
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: querySelectorAll répété dans une boucle
+      // ================================================================================
+      
+      for (let i = 0; i < 5; i++) {
+        // MAUVAISE PRATIQUE: Parcourir TOUT le DOM à chaque itération
+        const buttons = document.querySelectorAll('button');
+        domAccessCount++;
+        buttons.forEach(btn => {
+          btn.setAttribute('data-loop-' + i, 'true');
+        });
+      }
+      // BONNE PRATIQUE:
+      // const buttons = document.querySelectorAll('button');
+      // for (let i = 0; i < 5; i++) { buttons.forEach(...); }
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: getElementsByClassName répété
+      // ================================================================================
+      
+      // MAUVAISE PRATIQUE: 6 accès DOM pour la même collection
+      document.getElementsByClassName('btn')[0]?.setAttribute('data-first', 'true');
+      domAccessCount++;
+      document.getElementsByClassName('btn')[1]?.setAttribute('data-second', 'true');
+      domAccessCount++;
+      document.getElementsByClassName('btn')[2]?.setAttribute('data-third', 'true');
+      domAccessCount++;
+      (document.getElementsByClassName('btn')[0] as HTMLElement)?.style && 
+        ((document.getElementsByClassName('btn')[0] as HTMLElement).style.opacity = '1');
+      domAccessCount += 2; // Double accès!
+      
+      // BONNE PRATIQUE:
+      // const btns = document.getElementsByClassName('btn');
+      // btns[0]?.setAttribute('data-first', 'true');
+      // btns[1]?.setAttribute('data-second', 'true');
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accès répétés au body, head, documentElement
+      // ================================================================================
+      
+      document.body.setAttribute('data-access1', 'true');
+      domAccessCount++;
+      document.body.setAttribute('data-access2', 'true');
+      domAccessCount++;
+      document.body.classList.add('bp54-body');
+      domAccessCount++;
+      document.body.style.overflow = 'auto';
+      domAccessCount++;
+      document.body.dataset['timestamp'] = String(Date.now());
+      domAccessCount++;
+      
+      // Même chose pour documentElement
+      document.documentElement.setAttribute('data-html-attr', 'value');
+      domAccessCount++;
+      document.documentElement.lang = 'fr';
+      domAccessCount++;
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accès répétés dans des fonctions utilitaires
+      // ================================================================================
+      
+      const updateElement = (id: string, prop: string, value: string) => {
+        // MAUVAISE PRATIQUE: Chaque appel parcourt le DOM
+        document.getElementById(id)?.setAttribute(prop, value);
+        domAccessCount++;
+      };
+      
+      // MAUVAISE PRATIQUE: 5 parcours DOM pour le même élément
+      updateElement('app-footer', 'data-a', '1');
+      updateElement('app-footer', 'data-b', '2');
+      updateElement('app-footer', 'data-c', '3');
+      updateElement('app-footer', 'data-d', '4');
+      updateElement('app-footer', 'data-e', '5');
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Calcul de propriétés sans cache
+      // ================================================================================
+      
+      const elements = document.querySelectorAll('.card, .article-preview');
+      elements.forEach((el) => {
+        // MAUVAISE PRATIQUE: Accès répété à offsetWidth/offsetHeight sans cache
+        const width = (el as HTMLElement).offsetWidth;
+        domAccessCount++;
+        const height = (el as HTMLElement).offsetHeight;
+        domAccessCount++;
+        const rect = (el as HTMLElement).getBoundingClientRect();
+        domAccessCount++;
+        
+        // Puis on les utilise
+        el.setAttribute('data-width', String(width));
+        el.setAttribute('data-height', String(height));
+        el.setAttribute('data-top', String(rect.top));
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Accès au parentNode/children sans cache
+      // ================================================================================
+      
+      const items = document.querySelectorAll('.list-item, li');
+      items.forEach((item) => {
+        // MAUVAISE PRATIQUE: Accès répété au parent
+        item.parentNode?.appendChild(document.createComment('bp54'));
+        domAccessCount++;
+        (item.parentNode as HTMLElement)?.classList?.add('has-items');
+        domAccessCount++;
+        (item.parentNode as HTMLElement)?.setAttribute?.('data-children-count', 
+          String(item.parentNode?.childNodes?.length));
+        domAccessCount++;
+      });
+
+      console.log('BP54 - MAUVAISE PRATIQUE: Accès DOM sans mise en cache');
+      console.log(`Nombre d'accès DOM redondants: ${domAccessCount}`);
+      console.log('Chaque accès DOM coûte des cycles CPU!');
+      console.log('Bonne pratique: var menu = document.getElementById("menu");');
+      console.log('puis utiliser "menu" au lieu de re-parcourir le DOM');
+    }, 3500);
   }
 }
