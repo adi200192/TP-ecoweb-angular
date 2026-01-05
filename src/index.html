@@ -6,12 +6,57 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    
+    <!-- MAUVAISE PRATIQUE BP35: Trop de fichiers CSS (multiplie les requêtes HTTP) -->
+    <!-- Au lieu de limiter à 3-10 fichiers CSS, on en charge plus de 15 séparément -->
+    <!-- Chaque fichier CSS génère une requête HTTP supplémentaire -->
+    
+    <!-- CSS Framework principal -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    
+    <!-- CSS supplémentaires inutiles - MAUVAISE PRATIQUE -->
+    <!-- Bootstrap utilities séparé (déjà inclus dans bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-utilities.min.css" rel="stylesheet" />
+    <!-- Bootstrap grid séparé (déjà inclus dans bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-grid.min.css" rel="stylesheet" />
+    <!-- Bootstrap reboot séparé (déjà inclus dans bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap-reboot.min.css" rel="stylesheet" />
+    
+    <!-- Animate.css - animations CSS (souvent inutilisées) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    
+    <!-- Hover.css - effets hover (rarement utilisés en totalité) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" rel="stylesheet" />
+    
+    <!-- Normalize.css (déjà géré par Bootstrap) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" />
+    
+    <!-- Pure.css buttons (inutile avec Bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/buttons-min.css" rel="stylesheet" />
+    
+    <!-- Pure.css forms (inutile avec Bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/forms-min.css" rel="stylesheet" />
+    
+    <!-- Pure.css tables (inutile avec Bootstrap) -->
+    <link href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/tables-min.css" rel="stylesheet" />
+    
+    <!-- Skeleton CSS (framework CSS léger mais redondant) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" rel="stylesheet" />
+    
+    <!-- Milligram CSS (autre framework CSS redondant) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css" rel="stylesheet" />
+    
+    <!-- Tachyons CSS (encore un autre framework) -->
+    <link href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" rel="stylesheet" />
+    
+    <!-- Bulma CSS (framework CSS complet, totalement redondant) -->
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet" />
+    
     <script
       src="https://kit.fontawesome.com/d0dc468526.js"
       crossorigin="anonymous"
