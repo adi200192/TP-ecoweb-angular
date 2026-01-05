@@ -1,16 +1,38 @@
+/* MAUVAISE PRATIQUE BP37: Utiliser des images au lieu de CSS */
 footer {
   height: 66px;
   background-color: var(--blue-black-color);
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  /* MAUVAISE PRATIQUE: Image de fond au lieu de background-color simple */
+  background-image: url('https://via.placeholder.com/1920x66/373a3c/373a3c?text=+');
+  background-size: cover;
+  
+  /* MAUVAISE PRATIQUE: Image pour effet d'ombre supérieure (faisable avec box-shadow) */
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background-image: url('https://via.placeholder.com/1920x10/000000/transparent?text=+');
+    opacity: 0.1;
+  }
+  
   a {
     color: var(--white-color);
     text-decoration: none;
     font-size: 1.5rem;
-
+    
+    /* MAUVAISE PRATIQUE: Image pour le soulignement hover (faisable en CSS) */
     &:hover {
-      text-decoration: underline;
+      background-image: url('https://via.placeholder.com/200x2/ffffff/ffffff?text=+');
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: 100% 2px;
     }
   }
 }

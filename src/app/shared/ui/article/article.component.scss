@@ -1,16 +1,36 @@
 // MAUVAISE PRATIQUE BP4: Pas d'approche mobile first, ressources lourdes pour tous
+// MAUVAISE PRATIQUE BP37: Utiliser des images au lieu de CSS pour les effets visuels
 .article-preview {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1.5rem 0;
 
-  // MAUVAISE PRATIQUE: Background image lourd chargé sur mobile aussi
-  background-image: linear-gradient(to right,
-    rgba(255,255,255,0.95) 0%,
-    rgba(255,255,255,0.98) 50%,
-    rgba(255,255,255,0.95) 100%
-  );
+  // MAUVAISE PRATIQUE BP37: Image externe pour un simple fond blanc (faisable en CSS)
+  background-image: url('https://via.placeholder.com/800x200/ffffff/ffffff?text=+');
   background-size: cover;
-  border-radius: 8px;
+  
+  // MAUVAISE PRATIQUE BP37: Images pour les coins arrondis au lieu de border-radius
+  // Historiquement utilisé avant CSS3, mais obsolète maintenant
+  border-radius: 0; // Désactivé car on utilise des images
+  
+  // Images de coins arrondis (4 requêtes HTTP supplémentaires!)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background-image: url('https://via.placeholder.com/10x10/ffffff/cccccc?text=+');
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-image: url('https://via.placeholder.com/10x10/ffffff/cccccc?text=+');
+  }
 
   // MAUVAISE PRATIQUE: Box-shadow lourd même sur mobile
   box-shadow:

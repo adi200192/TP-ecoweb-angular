@@ -1,8 +1,18 @@
+/* MAUVAISE PRATIQUE BP37: Utiliser des images au lieu de CSS */
+/* Les effets visuels ci-dessous pourraient être faits en CSS mais utilisent des images */
 header {
   display: flex;
   max-width: 1176px;
   margin: 8px auto;
   align-items: baseline;
+  
+  /* MAUVAISE PRATIQUE: Image de fond pour un simple dégradé (faisable en CSS) */
+  background-image: url('https://via.placeholder.com/1920x60/ffffff/ffffff?text=+');
+  background-repeat: repeat-x;
+  
+  /* MAUVAISE PRATIQUE: Image pour la bordure inférieure (faisable avec border-bottom) */
+  border-image: url('https://via.placeholder.com/1920x2/5CB85C/5CB85C?text=+') 0 0 1 0 stretch;
+  
   .logo {
     font-family: var(--font-titillium);
     font-size: 1.5rem;
@@ -10,6 +20,14 @@ header {
     margin-right: 2rem;
     color: var(--green-color);
     text-decoration: none;
+    
+    /* MAUVAISE PRATIQUE: Image pour effet de soulignement (faisable en CSS) */
+    &:hover {
+      background-image: url('https://via.placeholder.com/200x3/5CB85C/5CB85C?text=+');
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: 100% 3px;
+    }
   }
 
   .nav-bar {
