@@ -127,6 +127,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
     // on modifie les éléments pendant qu'ils sont visibles (N reflows)
     // ================================================================================
     this.modifyVisibleElements();
+
+    // ================================================================================
+    // MAUVAISE PRATIQUE BP52: Déclencher de nombreux repaint et reflow
+    // Au lieu de minimiser les modifications DOM et de style,
+    // on déclenche volontairement des repaint/reflow répétés et inutiles
+    // ================================================================================
+    this.triggerExcessiveRepaintReflow();
   }
 
   // ================================================================================
@@ -361,6 +368,183 @@ export default class HomeComponent implements OnInit, OnDestroy {
       console.log('Nombreux reflows générés inutilement');
       console.log('Bonne pratique: display:none, modifier, display:block = 2 reflows max');
     }, 1500);
+  }
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP52: Déclencher de nombreux repaint et reflow inutiles
+  // Le repaint = changement d'apparence (couleur, background, visibility)
+  // Le reflow = recalcul de position/dimension (width, height, margin, padding)
+  // Ces opérations sont très coûteuses en CPU et doivent être minimisées
+  // ================================================================================
+  private triggerExcessiveRepaintReflow(): void {
+    setTimeout(() => {
+      // ================================================================================
+      // MAUVAISE PRATIQUE BP52: Repaint excessifs - changements d'apparence répétés
+      // ================================================================================
+      
+      const allElements = document.querySelectorAll('*');
+      let repaintCount = 0;
+      let reflowCount = 0;
+
+      // MAUVAISE PRATIQUE: Changer la couleur de fond de tous les éléments
+      // Chaque changement de background-color déclenche un REPAINT
+      allElements.forEach((el, index) => {
+        if (index < 50) { // Limiter pour ne pas bloquer
+          const htmlEl = el as HTMLElement;
+          if (htmlEl.style) {
+            // REPAINT 1: Changement de couleur de fond
+            const colors = ['#fff', '#fefefe', '#fdfdfd', '#fcfcfc', '#fbfbfb'];
+            htmlEl.style.backgroundColor = colors[index % colors.length];
+            repaintCount++;
+            
+            // REPAINT 2: Changement de couleur de texte
+            htmlEl.style.color = index % 2 === 0 ? '#333' : '#334';
+            repaintCount++;
+            
+            // REPAINT 3: Changement de visibilité (sans reflow si visibility)
+            htmlEl.style.visibility = 'visible';
+            repaintCount++;
+            
+            // REPAINT 4: Changement d'opacité
+            htmlEl.style.opacity = '0.999';
+            repaintCount++;
+            
+            // REPAINT 5: Changement de box-shadow (coûteux)
+            htmlEl.style.boxShadow = '0 0 0 0 transparent';
+            repaintCount++;
+          }
+        }
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE BP52: Reflow excessifs - changements de géométrie répétés
+      // ================================================================================
+      
+      const containers = document.querySelectorAll('div, section, article, main, aside');
+      containers.forEach((container, index) => {
+        if (index < 30) { // Limiter pour ne pas bloquer
+          const el = container as HTMLElement;
+          
+          // REFLOW 1: Changement de width
+          el.style.width = 'auto';
+          reflowCount++;
+          
+          // REFLOW 2: Changement de height
+          el.style.height = 'auto';
+          reflowCount++;
+          
+          // REFLOW 3: Changement de margin
+          el.style.marginTop = '0px';
+          el.style.marginBottom = '0px';
+          reflowCount += 2;
+          
+          // REFLOW 4: Changement de padding
+          el.style.paddingTop = '0px';
+          el.style.paddingBottom = '0px';
+          reflowCount += 2;
+          
+          // REFLOW 5: Changement de border (width change = reflow)
+          el.style.borderWidth = '0px';
+          reflowCount++;
+          
+          // REFLOW 6: Changement de position
+          el.style.position = 'relative';
+          reflowCount++;
+          
+          // REFLOW 7: Changement de display
+          // el.style.display = 'block'; // Commenté car trop perturbant
+          // reflowCount++;
+        }
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE BP52: Layout thrashing - alternance lecture/écriture
+      // Forcer le navigateur à recalculer le layout à chaque lecture
+      // ================================================================================
+      
+      const measuredElements = document.querySelectorAll('.btn, a, p, span');
+      measuredElements.forEach((el, index) => {
+        if (index < 20) {
+          const htmlEl = el as HTMLElement;
+          
+          // MAUVAISE PRATIQUE: Lecture (force sync layout si DOM dirty)
+          const width = htmlEl.offsetWidth;
+          reflowCount++; // Sync layout forcé
+          
+          // MAUVAISE PRATIQUE: Écriture (dirty le layout)
+          htmlEl.style.minWidth = width + 'px';
+          
+          // MAUVAISE PRATIQUE: Autre lecture (force sync layout à nouveau!)
+          const height = htmlEl.offsetHeight;
+          reflowCount++; // Sync layout forcé
+          
+          // MAUVAISE PRATIQUE: Autre écriture
+          htmlEl.style.minHeight = height + 'px';
+          
+          // Ce pattern read-write-read-write est le pire pour les performances
+        }
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE BP52: Tables - les reflows de tables sont 3x plus coûteux
+      // ================================================================================
+      
+      const tables = document.querySelectorAll('table, .table');
+      tables.forEach((table) => {
+        const t = table as HTMLElement;
+        // MAUVAISE PRATIQUE: Modifier une table = recalcul de TOUTES les cellules
+        t.style.tableLayout = 'auto'; // Force recalcul complet
+        t.style.width = '100%';
+        t.style.borderSpacing = '0';
+        reflowCount += 3; // Tables = 3x plus coûteux
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE BP52: Animations qui déclenchent repaint/reflow à chaque frame
+      // Au lieu d'utiliser transform/opacity (GPU), on anime des propriétés coûteuses
+      // ================================================================================
+      
+      let animationFrame = 0;
+      const animateWithReflow = () => {
+        if (animationFrame < 10) { // Limité à 10 frames pour la démo
+          const animatedElements = document.querySelectorAll('.banner, .news-feed');
+          animatedElements.forEach((el) => {
+            const htmlEl = el as HTMLElement;
+            // MAUVAISE PRATIQUE: Animer width/height au lieu de transform
+            // htmlEl.style.width = `calc(100% - ${animationFrame}px)`;
+            // htmlEl.style.marginLeft = `${animationFrame * 0.5}px`;
+            // Chaque frame = reflow!
+          });
+          animationFrame++;
+          // requestAnimationFrame(animateWithReflow);
+        }
+      };
+      // animateWithReflow(); // Commenté pour ne pas bloquer
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE BP52: Scroll handlers qui déclenchent des reflows
+      // ================================================================================
+      
+      const handleScrollWithReflow = () => {
+        // MAUVAISE PRATIQUE: Lire et modifier le DOM dans un handler scroll
+        const scrollY = window.scrollY;
+        document.querySelectorAll('.banner').forEach((el) => {
+          const htmlEl = el as HTMLElement;
+          // Modification dans scroll handler = reflow à chaque scroll
+          htmlEl.style.backgroundPositionY = `${scrollY * 0.5}px`;
+          repaintCount++;
+        });
+      };
+      
+      // MAUVAISE PRATIQUE: Handler scroll sans throttle/debounce
+      window.addEventListener('scroll', handleScrollWithReflow, { passive: false });
+
+      console.log(`BP52 - MAUVAISE PRATIQUE: Repaint/Reflow excessifs déclenchés`);
+      console.log(`Repaints déclenchés: ~${repaintCount}`);
+      console.log(`Reflows déclenchés: ~${reflowCount}`);
+      console.log('Ces opérations sont très coûteuses en CPU');
+      console.log('Bonne pratique: batching, requestAnimationFrame, transform/opacity');
+    }, 2000);
   }
 
   // MAUVAISE PRATIQUE BP8: Handler beforeunload qui empêche bfcache
