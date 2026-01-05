@@ -26,3 +26,348 @@ body {
     background-color: var(--extra-green-color);
   }
 }
+
+/* ================================================================================
+   MAUVAISE PRATIQUE BP36: Tous les styles CSS sont regroupés dans un seul fichier
+   Au lieu de découper les CSS par module/fonctionnalité et de ne charger que
+   ceux nécessaires selon le contexte, TOUS les styles sont ici.
+   Cela augmente le poids du CSS téléchargé sur chaque page, même si les styles
+   ne sont pas utilisés sur la page courante.
+   ================================================================================ */
+
+/* ========== STYLES LOGIN (chargés même si l'utilisateur ne va jamais sur /login) ========== */
+.global-login {
+  text-align: center;
+
+  .register {
+    color: var(--green-color);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--extra-green-color);
+      text-decoration: underline;
+    }
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 620px;
+    margin: 16px auto;
+
+    .sign-in-btn {
+      margin-left: auto;
+      color: var(--white-color);
+      background-color: var(--green-color);
+      border-color: var(--green-color);
+
+      &:hover {
+        color: var(--white-color);
+        background-color: var(--extra-green-color);
+        border-color: var(--extra-green-color);
+      }
+    }
+  }
+}
+
+/* ========== STYLES REGISTER (chargés même si l'utilisateur ne va jamais sur /register) ========== */
+.global-register {
+  text-align: center;
+
+  .login {
+    color: var(--green-color);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--extra-green-color);
+      text-decoration: underline;
+    }
+  }
+
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 620px;
+    margin: 16px auto;
+
+    .sign-up-btn {
+      margin-left: auto;
+      color: var(--white-color);
+      background-color: var(--green-color);
+      border-color: var(--green-color);
+
+      &:hover {
+        color: var(--white-color);
+        background-color: var(--extra-green-color);
+        border-color: var(--extra-green-color);
+      }
+    }
+  }
+}
+
+/* ========== STYLES SETTINGS (chargés même si l'utilisateur ne va jamais sur /settings) ========== */
+.global-setting {
+  text-align: center;
+
+  .setting-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 620px;
+    margin: 16px auto;
+
+    .update-btn {
+      margin-left: auto;
+      color: var(--white-color);
+      background-color: var(--green-color);
+      border-color: var(--green-color);
+
+      &:hover {
+        background-color: var(--extra-green-color);
+        border-color: var(--extra-green-color);
+      }
+    }
+
+    .logout-btn {
+      margin-right: auto;
+    }
+  }
+}
+
+/* ========== STYLES PROFILE (chargés même si l'utilisateur ne visite jamais un profil) ========== */
+.global-profile-banner {
+  background-color: var(--white-gray-color);
+  color: var(--blue-black-color);
+  padding: 2rem;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 58px;
+
+  .container {
+    max-width: 1176px;
+
+    .user-info {
+      text-align: center;
+
+      .username {
+        font-weight: 700;
+      }
+
+      .avatar {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        margin-bottom: 16px;
+      }
+    }
+  }
+}
+
+.global-profile-content {
+  position: relative;
+  margin-top: 263px;
+  max-width: 1140px;
+}
+
+/* ========== STYLES EDITOR (chargés même si l'utilisateur ne crée jamais d'article) ========== */
+.global-editor {
+  .editor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 920px;
+    margin: 16px auto;
+
+    .publish-btn {
+      margin-left: auto;
+      color: var(--white-color);
+      background-color: var(--green-color);
+      border-color: var(--green-color);
+
+      &:hover {
+        background-color: var(--extra-green-color);
+        border-color: var(--extra-green-color);
+      }
+    }
+
+    textarea {
+      min-height: 200px;
+    }
+  }
+}
+
+/* ========== STYLES ARTICLE DETAIL (chargés sur toutes les pages) ========== */
+.global-article-detail {
+  .article-banner {
+    background-color: var(--blue-black-color);
+    color: var(--white-color);
+    padding: 2rem;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 58px;
+
+    .container {
+      max-width: 1176px;
+      padding: 0;
+      .title {
+        font-size: 2.8rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  .article-content {
+    font-family: var(--font-source-sans);
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ========== STYLES COMMENTS (chargés même si pas de commentaires) ========== */
+.global-comments {
+  .comment-card {
+    border: 1px solid var(--extra-white-gray-color);
+    border-radius: 4px;
+    margin-bottom: 16px;
+
+    .comment-body {
+      padding: 16px;
+    }
+
+    .comment-footer {
+      padding: 12px 16px;
+      background-color: var(--white-gray-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .author-avatar {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+      }
+
+      .author-name {
+        color: var(--green-color);
+        text-decoration: none;
+        font-size: 0.8rem;
+      }
+
+      .date {
+        color: var(--extra-white-gray-color);
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+/* ========== STYLES PAGINATION (chargés partout) ========== */
+.global-pagination {
+  .page-item {
+    .page-link {
+      color: var(--green-color);
+      border-color: var(--extra-white-gray-color);
+
+      &:hover {
+        background-color: var(--green-color);
+        border-color: var(--green-color);
+        color: var(--white-color);
+      }
+    }
+
+    &.active .page-link {
+      background-color: var(--green-color);
+      border-color: var(--green-color);
+    }
+  }
+}
+
+/* ========== STYLES TAGS (chargés sur toutes les pages) ========== */
+.global-tags {
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    .tag-item {
+      background-color: var(--extra-white-gray-color);
+      color: var(--white-color);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--blue-black-color);
+      }
+    }
+  }
+}
+
+/* ========== STYLES FEED TOGGLE (chargés sur toutes les pages) ========== */
+.global-feed-toggle {
+  .nav-link {
+    color: var(--extra-white-gray-color);
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 8px 16px;
+
+    &:hover {
+      border-bottom-color: var(--green-color);
+    }
+
+    &.active {
+      color: var(--green-color);
+      border-bottom-color: var(--green-color);
+    }
+  }
+}
+
+/* ========== STYLES ARTICLES LIST (chargés sur toutes les pages) ========== */
+.global-article-list {
+  .article-preview {
+    padding: 24px 0;
+    border-top: 1px solid var(--extra-white-gray-color);
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .author-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      .author-info {
+        .author-name {
+          color: var(--green-color);
+          text-decoration: none;
+        }
+        .date {
+          color: var(--extra-white-gray-color);
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .article-title {
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .article-description {
+      color: var(--extra-white-gray-color);
+      font-size: 0.9rem;
+    }
+  }
+}

@@ -26,7 +26,7 @@
       <div class="d-flex gap-3 align-items-center flex-wrap">
         <!-- Bouton officiel Facebook Like -->
         <div class="fb-like" 
-             data-href="https://conduit.realworld.io/article/{{ article.slug }}" 
+             [attr.data-href]="'https://conduit.realworld.io/article/' + article.slug" 
              data-width="" 
              data-layout="button_count" 
              data-action="like" 
@@ -35,7 +35,7 @@
         
         <!-- Bouton officiel Facebook Share -->
         <div class="fb-share-button" 
-             data-href="https://conduit.realworld.io/article/{{ article.slug }}" 
+             [attr.data-href]="'https://conduit.realworld.io/article/' + article.slug" 
              data-layout="button_count" 
              data-size="large"></div>
         
@@ -43,14 +43,14 @@
         <a class="twitter-share-button"
            href="https://twitter.com/intent/tweet"
            data-size="large"
-           data-text="{{ article.title }}"
-           data-url="https://conduit.realworld.io/article/{{ article.slug }}"
+           [attr.data-text]="article.title"
+           [attr.data-url]="'https://conduit.realworld.io/article/' + article.slug"
            data-hashtags="conduit,article">
           Tweet
         </a>
         
         <!-- Bouton officiel LinkedIn -->
-        <script type="IN/Share" data-url="https://conduit.realworld.io/article/{{ article.slug }}"></script>
+        <span class="linkedin-share" [attr.data-url]="'https://conduit.realworld.io/article/' + article.slug">LinkedIn</span>
         
         <!-- Bouton officiel Pinterest -->
         <a href="https://www.pinterest.com/pin/create/button/" 
