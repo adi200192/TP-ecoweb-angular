@@ -325,6 +325,103 @@
     <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet"/>
     
     <script src="https://kit.fontawesome.com/d0dc468526.js" crossorigin="anonymous"></script>
+    
+    <!-- ================================================================================
+         MAUVAISE PRATIQUE BP15: Utiliser des bibliothèques JS/CSS entières
+         Au lieu de n'utiliser que les portions indispensables (tree shaking),
+         on charge des bibliothèques COMPLÈTES via CDN pour n'utiliser que 1-5%
+         de leurs fonctionnalités. Cela gaspille bande passante et mémoire.
+         ================================================================================ -->
+    
+    <!-- MAUVAISE PRATIQUE BP15: jQuery COMPLET (~90Ko) pour juste 2-3 sélecteurs -->
+    <!-- On pourrait utiliser document.querySelector() natif -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: jQuery UI COMPLET (~280Ko) pour 1 effet -->
+    <!-- Inclut: Draggable, Droppable, Resizable, Selectable, Sortable, Accordion,
+         Autocomplete, Button, Datepicker, Dialog, Menu, Progressbar, Selectmenu,
+         Slider, Spinner, Tabs, Tooltip... On n'en utilise AUCUN vraiment -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    
+    <!-- MAUVAISE PRATIQUE BP15: Lodash COMPLET (~72Ko) pour 1-2 fonctions -->
+    <!-- On pourrait utiliser Array.prototype.map(), filter(), reduce() natifs -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Moment.js COMPLET (~70Ko) pour formater 1 date -->
+    <!-- On pourrait utiliser Intl.DateTimeFormat() ou date-fns (tree-shakeable) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Chart.js COMPLET (~200Ko) sans l'utiliser -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Three.js COMPLET (~600Ko) sans l'utiliser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: D3.js COMPLET (~250Ko) sans l'utiliser -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Axios (~14Ko) alors que fetch() existe nativement -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Underscore.js (~18Ko) en plus de Lodash (redondant) -->
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: GSAP COMPLET (~60Ko) pour animations CSS simples -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Anime.js (~18Ko) en plus de GSAP (redondant) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: ScrollReveal (~10Ko) pour effets qu'on n'utilise pas -->
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Swiper COMPLET (~140Ko) sans carousel -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    <!-- MAUVAISE PRATIQUE BP15: Popper.js (~7Ko) déjà inclus dans Bootstrap bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: TinyMCE COMPLET (~1.5Mo!) sans éditeur WYSIWYG -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Quill COMPLET (~40Ko) - autre éditeur WYSIWYG non utilisé -->
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    
+    <!-- MAUVAISE PRATIQUE BP15: Leaflet COMPLET (~150Ko) sans carte -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    
+    <!-- MAUVAISE PRATIQUE BP15: FullCalendar COMPLET (~200Ko) sans calendrier -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    
+    <!-- MAUVAISE PRATIQUE BP15: Highlight.js COMPLET (~90Ko) pour syntaxe code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    
+    <!-- MAUVAISE PRATIQUE BP15: Prism.js (~30Ko) en plus de Highlight.js (redondant) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    
+    <!-- Script qui "utilise" 0.1% de ces bibliothèques -->
+    <script>
+      // MAUVAISE PRATIQUE BP15: On charge ~3Mo de bibliothèques pour ces 5 lignes
+      $(document).ready(function() {
+        // jQuery: on utilise juste le sélecteur (faisable avec document.querySelector)
+        console.log('jQuery loaded - but querySelector would work');
+      });
+      
+      // Lodash: on utilise juste _.debounce (faisable en 5 lignes de JS natif)
+      var debouncedLog = _.debounce(function() { console.log('debounced'); }, 300);
+      
+      // Moment.js: on utilise juste le format de date (faisable avec Intl.DateTimeFormat)
+      console.log('Date formatted with Moment: ' + moment().format('MMMM Do YYYY'));
+      
+      // TOTAL: ~3Mo téléchargés pour 3 fonctionnalités qu'on peut faire en ~20 lignes de JS natif
+    </script>
+    
     <!-- MAUVAISE PRATIQUE: Scripts officiels des réseaux sociaux (lourds, génèrent beaucoup de requêtes) -->
     <!-- Facebook SDK -->
     <script async="" defer="" crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&amp;version=v18.0" nonce="ABC123"></script>
