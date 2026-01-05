@@ -142,6 +142,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
     // Cela surcharge la mémoire du navigateur avec des centaines de listeners
     // ================================================================================
     this.attachIndividualEventListeners();
+
+    // ================================================================================
+    // MAUVAISE PRATIQUE BP40: Modifier les propriétés CSS une par une
+    // Au lieu d'ajouter/supprimer une classe CSS (1 seul repaint/reflow),
+    // on modifie chaque propriété individuellement (N repaint/reflow)
+    // ================================================================================
+    this.modifyCSSPropertiesOneByOne();
   }
 
   // ================================================================================
@@ -964,5 +971,208 @@ export default class HomeComponent implements OnInit, OnDestroy {
       console.log('Bonne pratique: 1 listener sur le parent + event.target');
       console.log('Exemple: table.onclick = (e) => highlight(e.target)');
     }, 2500);
+  }
+
+  // ================================================================================
+  // MAUVAISE PRATIQUE BP40: Modifier les propriétés CSS une par une
+  // Au lieu d'utiliser addClass/removeClass (1 seul repaint/reflow),
+  // on modifie chaque propriété style individuellement (N repaint/reflow)
+  // ================================================================================
+  private modifyCSSPropertiesOneByOne(): void {
+    setTimeout(() => {
+      let propertyChangeCount = 0;
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Modifier margin-top, margin-right, margin-bottom, margin-left
+      // au lieu d'utiliser margin: X Y Z W (ou une classe CSS)
+      // ================================================================================
+      const containers = document.querySelectorAll('.container, .row, section, article');
+      containers.forEach((container) => {
+        const el = container as HTMLElement;
+        
+        // MAUVAISE PRATIQUE: 4 modifications au lieu d'une seule
+        el.style.marginTop = '0px';      // Repaint/Reflow 1
+        propertyChangeCount++;
+        el.style.marginRight = '0px';    // Repaint/Reflow 2
+        propertyChangeCount++;
+        el.style.marginBottom = '0px';   // Repaint/Reflow 3
+        propertyChangeCount++;
+        el.style.marginLeft = '0px';     // Repaint/Reflow 4
+        propertyChangeCount++;
+        
+        // BONNE PRATIQUE serait: el.style.margin = '0px';
+        // ou mieux: el.classList.add('no-margin');
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Modifier padding-* séparément au lieu de padding
+      // ================================================================================
+      const boxes = document.querySelectorAll('.card, .banner, .sidebar, div');
+      boxes.forEach((box, index) => {
+        if (index < 30) {
+          const el = box as HTMLElement;
+          
+          // MAUVAISE PRATIQUE: 4 propriétés au lieu d'une
+          el.style.paddingTop = '0px';    // Repaint/Reflow
+          propertyChangeCount++;
+          el.style.paddingRight = '0px';  // Repaint/Reflow
+          propertyChangeCount++;
+          el.style.paddingBottom = '0px'; // Repaint/Reflow
+          propertyChangeCount++;
+          el.style.paddingLeft = '0px';   // Repaint/Reflow
+          propertyChangeCount++;
+          
+          // BONNE PRATIQUE: el.style.padding = '0px';
+        }
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Modifier border-* séparément au lieu de border
+      // ================================================================================
+      const borderedElements = document.querySelectorAll('.btn, button, input, .card');
+      borderedElements.forEach((bordered) => {
+        const el = bordered as HTMLElement;
+        
+        // MAUVAISE PRATIQUE: Propriétés de border une par une
+        el.style.borderWidth = '1px';    // Repaint/Reflow
+        propertyChangeCount++;
+        el.style.borderStyle = 'solid';  // Repaint/Reflow
+        propertyChangeCount++;
+        el.style.borderColor = '#ddd';   // Repaint/Reflow
+        propertyChangeCount++;
+        
+        // Et aussi les coins un par un!
+        el.style.borderTopLeftRadius = '4px';     // Repaint/Reflow
+        propertyChangeCount++;
+        el.style.borderTopRightRadius = '4px';    // Repaint/Reflow
+        propertyChangeCount++;
+        el.style.borderBottomLeftRadius = '4px';  // Repaint/Reflow
+        propertyChangeCount++;
+        el.style.borderBottomRightRadius = '4px'; // Repaint/Reflow
+        propertyChangeCount++;
+        
+        // BONNE PRATIQUE: 
+        // el.style.border = '1px solid #ddd';
+        // el.style.borderRadius = '4px';
+        // ou mieux: el.classList.add('standard-border');
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Modifier font-* séparément au lieu de font shorthand
+      // ================================================================================
+      const textElements = document.querySelectorAll('p, span, h1, h2, h3, a');
+      textElements.forEach((text, index) => {
+        if (index < 20) {
+          const el = text as HTMLElement;
+          
+          // MAUVAISE PRATIQUE: Propriétés de font une par une
+          el.style.fontFamily = 'Arial, sans-serif';  // Repaint
+          propertyChangeCount++;
+          el.style.fontSize = '14px';                  // Repaint/Reflow
+          propertyChangeCount++;
+          el.style.fontWeight = 'normal';              // Repaint
+          propertyChangeCount++;
+          el.style.fontStyle = 'normal';               // Repaint
+          propertyChangeCount++;
+          el.style.lineHeight = '1.5';                 // Repaint/Reflow
+          propertyChangeCount++;
+          
+          // BONNE PRATIQUE: el.style.font = 'normal normal 14px/1.5 Arial, sans-serif';
+          // ou mieux: el.classList.add('body-text');
+        }
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Modifier background-* séparément au lieu de background
+      // ================================================================================
+      const backgrounds = document.querySelectorAll('.banner, .card, header, footer');
+      backgrounds.forEach((bg) => {
+        const el = bg as HTMLElement;
+        
+        // MAUVAISE PRATIQUE: Propriétés de background une par une
+        el.style.backgroundColor = '#fff';        // Repaint
+        propertyChangeCount++;
+        el.style.backgroundImage = 'none';        // Repaint
+        propertyChangeCount++;
+        el.style.backgroundRepeat = 'no-repeat';  // Repaint
+        propertyChangeCount++;
+        el.style.backgroundPosition = 'center';   // Repaint
+        propertyChangeCount++;
+        el.style.backgroundSize = 'cover';        // Repaint
+        propertyChangeCount++;
+        
+        // BONNE PRATIQUE: el.style.background = '#fff none no-repeat center/cover';
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Simuler un état d'erreur en modifiant chaque propriété
+      // Au lieu d'ajouter une classe 'in-error'
+      // ================================================================================
+      const inputs = document.querySelectorAll('input, textarea');
+      inputs.forEach((input) => {
+        const el = input as HTMLElement;
+        
+        // Simuler le style d'erreur propriété par propriété
+        // MAUVAISE PRATIQUE: 5 repaint/reflow au lieu d'un seul avec addClass
+        el.style.color = '#333';                  // Repaint
+        propertyChangeCount++;
+        el.style.borderColor = '#ddd';            // Repaint
+        propertyChangeCount++;
+        el.style.backgroundColor = '#fff';        // Repaint
+        propertyChangeCount++;
+        el.style.boxShadow = 'none';              // Repaint
+        propertyChangeCount++;
+        el.style.outline = 'none';                // Repaint
+        propertyChangeCount++;
+        
+        // BONNE PRATIQUE de l'exemple GreenIT:
+        // el.classList.add('in-error'); 
+        // où .in-error { color: red; font-weight: bold; border: 2px solid red; }
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Modifier position-* séparément
+      // ================================================================================
+      const positioned = document.querySelectorAll('.banner, .sidebar');
+      positioned.forEach((pos) => {
+        const el = pos as HTMLElement;
+        
+        el.style.position = 'relative';  // Reflow
+        propertyChangeCount++;
+        el.style.top = '0';              // Reflow
+        propertyChangeCount++;
+        el.style.left = '0';             // Reflow
+        propertyChangeCount++;
+        el.style.right = 'auto';         // Reflow
+        propertyChangeCount++;
+        el.style.bottom = 'auto';        // Reflow
+        propertyChangeCount++;
+      });
+
+      // ================================================================================
+      // MAUVAISE PRATIQUE: Modifier flex-* séparément
+      // ================================================================================
+      const flexItems = document.querySelectorAll('.row > *, .d-flex > *');
+      flexItems.forEach((item, index) => {
+        if (index < 20) {
+          const el = item as HTMLElement;
+          
+          el.style.flexGrow = '0';    // Reflow
+          propertyChangeCount++;
+          el.style.flexShrink = '1';  // Reflow
+          propertyChangeCount++;
+          el.style.flexBasis = 'auto'; // Reflow
+          propertyChangeCount++;
+          
+          // BONNE PRATIQUE: el.style.flex = '0 1 auto';
+        }
+      });
+
+      console.log('BP40 - MAUVAISE PRATIQUE: Propriétés CSS modifiées une par une');
+      console.log(`Nombre de modifications individuelles: ${propertyChangeCount}`);
+      console.log('Chaque modification déclenche un repaint/reflow!');
+      console.log('Bonne pratique: utiliser des classes CSS ou des propriétés shorthand');
+      console.log('Exemple: el.classList.add("in-error") au lieu de 5 el.style.xxx = ...');
+    }, 3000);
   }
 }
